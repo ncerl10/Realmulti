@@ -5,6 +5,7 @@ from accessory import *
 from spell import *
 from item import *
 
+
 class Character:
     """
     A class that creates an instance of the game
@@ -85,7 +86,7 @@ class Character:
     + get_items(self) -> list[Item]
 
     """
-    
+
     def __init__(self) -> None:
         self.name = ""
         self.health = 0
@@ -105,15 +106,15 @@ class Character:
         self.mana_flask = 0
         self.items = []
 
-    def set_name(self, name : str) -> None:
+    def set_name(self, name: str) -> None:
         """updates the name of the character"""
         self.name = name
 
     def get_name(self) -> str:
         """gets the name of the character"""
         return self.name
-        
-    def set_health(self, health : int) -> None:
+
+    def set_health(self, health: int) -> None:
         """updates the health of the character"""
         self.health = health
 
@@ -121,7 +122,7 @@ class Character:
         """gets the health of the character"""
         return self.health
 
-    def set_max_health(self, max_health : int) -> None:
+    def set_max_health(self, max_health: int) -> None:
         """updates the max health of the character"""
         self.max_health = max_health
 
@@ -129,15 +130,15 @@ class Character:
         """gets the max health of the character"""
         return self.max_health
 
-    def set_defence(self, defence : int) -> None:
+    def set_defence(self, defence: int) -> None:
         """updates the defence of the character"""
         self.defence = defence
 
     def get_defence(self) -> int:
         """gets the defenece of the character"""
         return self.defence
-        
-    def set_spells(self, spell : Spell) -> None:
+
+    def set_spells(self, spell: Spell) -> None:
         """updates the list of spells of the character"""
         self.spells.append(spell)
 
@@ -145,7 +146,7 @@ class Character:
         """gets the list of spells of the character"""
         return self.spells
 
-    def set_attack(self, attack : int) -> None:
+    def set_attack(self, attack: int) -> None:
         """updates the attack of the character"""
         self.attack = attack
 
@@ -153,7 +154,7 @@ class Character:
         """gets the attack of the character"""
         return self.attack
 
-    def set_mana(self, mana : int) -> None:
+    def set_mana(self, mana: int) -> None:
         """updates the mana of the character"""
         self.mana = mana
 
@@ -161,7 +162,7 @@ class Character:
         """gets the mana of the character"""
         return self.mana
 
-    def set_max_mana(self, max_mana : int) -> None:
+    def set_max_mana(self, max_mana: int) -> None:
         """updates the max mana of the character"""
         self.max_mana = max_mana
 
@@ -169,7 +170,7 @@ class Character:
         """gets the max mana of the character"""
         return self.max_mana
 
-    def set_weapon(self, weapon : Weapon) -> None:
+    def set_weapon(self, weapon: Weapon) -> None:
         """updates the equipped weapon of the character"""
         self.weapon = weapon
 
@@ -177,15 +178,15 @@ class Character:
         """gets the equipped weapon of the character"""
         return self.weapon
 
-    def set_weapons(self, weapon : Weapon) -> None:
+    def set_weapons(self, weapon: Weapon) -> None:
         """updates the list of weapons of the character"""
         self.weapons.append(weapon)
 
     def get_weapons(self) -> list[Weapon]:
         """gets the list of weapons of the character"""
         return self.weapons
-        
-    def set_armour(self, armour : Armour) -> None:
+
+    def set_armour(self, armour: Armour) -> None:
         """updates the equipped armour of the character"""
         self.armour = armour
 
@@ -193,7 +194,7 @@ class Character:
         """gets the equipped armour of the character"""
         return self.armour
 
-    def set_armours(self, armour : Armour) -> None:
+    def set_armours(self, armour: Armour) -> None:
         """updates the list of armours of the character"""
         self.armours.append(armour)
 
@@ -201,7 +202,7 @@ class Character:
         """gets the list of armour of the character"""
         return self.armours
 
-    def set_accessory(self, accessory : Accessory) -> None:
+    def set_accessory(self, accessory: Accessory) -> None:
         """updates the equipped accessory of the character"""
         self.accessory = accessory
 
@@ -209,7 +210,7 @@ class Character:
         """gets the equipped accessory of the character"""
         return self.accessory
 
-    def set_accessories(self, accessory : Accessory) -> None:
+    def set_accessories(self, accessory: Accessory) -> None:
         """updates the equipped accessory of the character"""
         self.accessories.append(accessory)
 
@@ -217,7 +218,7 @@ class Character:
         """gets the list of armour of the character"""
         return self.accessories
 
-    def set_health_flask(self, number : int) -> None:
+    def set_health_flask(self, number: int) -> None:
         """updates the number of health flask of the character"""
         self.health_flask += number
 
@@ -225,7 +226,7 @@ class Character:
         """gets the number of health flask of the character"""
         return self.health_flask
 
-    def set_mana_flask(self, number : int) -> None:
+    def set_mana_flask(self, number: int) -> None:
         """updates the number of mana flask of the character"""
         self.mana_flask += number
 
@@ -233,11 +234,10 @@ class Character:
         """gets the number of mana flask of the character"""
         return self.mana_flask
 
-    def set_items(self, item : Item) -> None:
+    def set_items(self, item: Item) -> None:
         """updates the list of items of the character"""
         self.items.append(item)
 
     def get_items(self) -> list[Item]:
         """gets the list of items of the character"""
         return self.items
-

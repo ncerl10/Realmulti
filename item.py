@@ -24,14 +24,14 @@ class Item:
     + set_mana(self, mana : int) -> None
     + get_mana(self, mana : int) -> int
     """
-    
+
     def __init__(self):
         self.name = ""
         self.description = ""
         self.health = 0
         self.mana = 0
 
-    def set_name(self, name : str) -> None:
+    def set_name(self, name: str) -> None:
         """updates the name of the item"""
         self.name = name
 
@@ -63,6 +63,7 @@ class Item:
         """gets the mana of the item"""
         return self.mana
 
+
 class FlaskOfCrimsonTears(Item):
     """
     An item that inherits from the Item class
@@ -72,7 +73,10 @@ class FlaskOfCrimsonTears(Item):
         super().__init__()
         self.set_name("Flask of Crimson Tears")
         self.set_health(50)
-        self.set_description(f"The Flask of Crimson Tears is a sacred flask modelled after a golden holy chalice that was once graced by a tear of life\nHeals {self.get_health()} health")
+        self.set_description(
+            f"The Flask of Crimson Tears is a sacred flask modelled after a golden holy chalice that was once graced by a tear of life\nHeals {self.get_health()} health"
+        )
+
 
 class FlaskOfCeruleanTears(Item):
     """
@@ -83,7 +87,10 @@ class FlaskOfCeruleanTears(Item):
         super().__init__()
         self.set_name("Flask of Cerulean Tears")
         self.set_mana(50)
-        self.set_description(f"The Flask of Cerulean Tears is a sacred flask modelled after a golden holy chalice that was once graced by a tear of life\nHeals {self.get_mana()} mana")
+        self.set_description(
+            f"The Flask of Cerulean Tears is a sacred flask modelled after a golden holy chalice that was once graced by a tear of life\nHeals {self.get_mana()} mana"
+        )
+
 
 class DectusMedallionRight(Item):
     """
@@ -93,7 +100,10 @@ class DectusMedallionRight(Item):
     def __init__(self):
         super().__init__()
         self.set_name("Dectus Medallion (right)")
-        self.set_description("The right half of a medallion with the power to break a powerful spell")
+        self.set_description(
+            "The right half of a medallion with the power to break a powerful spell"
+        )
+
 
 class DectusMedallionLeft(Item):
     """
@@ -103,5 +113,6 @@ class DectusMedallionLeft(Item):
     def __init__(self):
         super().__init__()
         self.set_name("Dectus Medallion (left)")
-        self.set_description("The left half of a medallion with the power to break a powerful spell")
-        
+        self.set_description(
+            "The left half of a medallion with the power to break a powerful spell"
+        )

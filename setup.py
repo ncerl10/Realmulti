@@ -4,12 +4,13 @@ from character import *
 from weapon import *
 from spell import *
 
+
 def setup() -> [Room, Character]:
     """
     Generates the map and the character and returns it in a list
     """
 
-    # Generates the starting room 
+    # Generates the starting room
     map = Dirtmouth()
 
     # Generates the character
@@ -25,5 +26,5 @@ def setup() -> [Room, Character]:
     character.set_max_mana(100)
     character.set_health_flask(2)
     character.set_mana_flask(2)
-    
+
     return [map, character]

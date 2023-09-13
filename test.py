@@ -1,9 +1,10 @@
 from game import Game
 
+
 def test() -> bool:
-    
+
     test = Game()
-    
+
     try:
         test.intro()
     except:
@@ -15,4 +16,3 @@ def test() -> bool:
         return False
 
     return True
-    
