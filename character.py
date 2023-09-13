@@ -74,30 +74,34 @@ class Character:
         self.accessories: list[Accessory] = []
         self.items: list[Item] = []
 
-    def set_spells(self, spell: Spell) -> None:
+    def take_spell(self, spell: Spell) -> None:
         """updates the list of spells of the character"""
         self.spells.append(spell)
 
-    def set_weapons(self, weapon: Weapon) -> None:
+    def take_weapon(self, weapon: Weapon) -> None:
         """updates the list of weapons of the character"""
         self.weapons.append(weapon)
 
-    def set_armours(self, armour: Armour) -> None:
+    def take_armour(self, armour: Armour) -> None:
         """updates the list of armours of the character"""
         self.armours.append(armour)
 
-    def set_accessories(self, accessory: Accessory) -> None:
+    def take_accessory(self, accessory: Accessory) -> None:
         """updates the equipped accessory of the character"""
         self.accessories.append(accessory)
 
-    def set_health_flask(self, number: int) -> None:
-        """updates the number of health flask of the character"""
+    def consume_health_flask(self, number: int = 1) -> None:
+        self.health_flask -= number
+
+    def consume_mana_flask(self, number: int = 1) -> None:
+        self.mana_flask -= number
+
+    def take_health_flask(self, number: int = 1) -> None:
         self.health_flask += number
 
-    def set_mana_flask(self, number: int) -> None:
-        """updates the number of mana flask of the character"""
+    def take_mana_flask(self, number: int = 1) -> None:
         self.mana_flask += number
 
-    def set_items(self, item: Item) -> None:
+    def take_item(self, item: Item) -> None:
         """updates the list of items of the character"""
         self.items.append(item)

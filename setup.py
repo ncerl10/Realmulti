@@ -17,14 +17,14 @@ def setup() -> tuple[Room, Character]:
     character = Character()
 
     # Sets the default statistics of the character
-    character.set_spells(WingardiumLeviosa())
-    character.set_weapon(Wand())
-    character.set_weapons(character.get_weapon())
-    character.set_health(100)
-    character.set_max_health(100)
-    character.set_mana(100)
-    character.set_max_mana(100)
-    character.set_health_flask(2)
-    character.set_mana_flask(2)
+    character.take_spell(WingardiumLeviosa())
+    character.take_weapon(Wand())
+    character.take_weapon(character.weapon)
+    character.health = 100
+    character.max_health = 100
+    character.mana = 100
+    character.max_mana = 100
+    character.take_health_flask(2)
+    character.take_mana_flask(2)
 
     return map, character

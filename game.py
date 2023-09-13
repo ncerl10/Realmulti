@@ -581,7 +581,7 @@ class Game:
             )
             time.sleep(1)
             user.mana = final_mana
-            user.set_mana_flask(-1)
+            user.consume_mana_flask(1)
 
     def use_flask(self, user: Character) -> None:
         """Function to allow the user to use flask but also allows them to cancel the action"""
@@ -630,7 +630,7 @@ class Game:
             )
             time.sleep(1)
             user.health = final_health
-            user.set_health_flask(-1)
+            user.consume_health_flask(1)
 
         elif selection.lower() == "flask of cerulean tears":
             # Makes sure the mana gained does not exceed the maximum mana
@@ -643,7 +643,7 @@ class Game:
             )
             time.sleep(1)
             user.mana = final_mana
-            user.set_mana_flask(-1)
+            user.consume_mana_flask(1)
 
     def display_flask(self, user: Character) -> None:
         """sub action from use_flask to display flask in inventory"""
@@ -1060,22 +1060,22 @@ class Game:
     def collect_loot(self, attacker: Character, loot: Item) -> None:
         """sub method from attack() to collect loot of defeated monster"""
         if loot.type == "weapon":
-            attacker.set_weapons(loot)
+            attacker.take_weapon(loot)
             print(f"\nYou obtained a {loot.name}, a powerful weapon")
             time.sleep(1)
 
         elif loot.type == "spell":
-            attacker.set_spells(loot)
+            attacker.take_spell(loot)
             print(f"\nYou obtained a {loot.name}, a powerful spell")
             time.sleep(1)
 
         elif loot.type == "armour":
-            attacker.set_armours(loot)
+            attacker.take_armour(loot)
             print(f"\nYou obtained a {loot.name}, a powerful armour")
             time.sleep(1)
 
         elif loot.type == "accessory":
-            attacker.set_accessories(loot)
+            attacker.take_accessory(loot)
             print(f"\nYou obtained a {loot.name}, a powerful accessory")
             time.sleep(1)
 
