@@ -95,7 +95,7 @@ class Game:
 
         if decision.lower() == "yes":
             name = input('\nTarnished, key in your name: ')
-            self.character.set_name(name)
+            self.character.name = name
             # Check if the user used the secret easter egg name
             if name == "meow":
                 self.secret()
@@ -126,7 +126,7 @@ class Game:
         self.display_room_name()
 
         # Checks if the player has entered the room before
-        if not self.room.get_been_here():
+        if not self.room.been_here:
             # Displays a description of the room if the player has not been there before
             self.display_room_description()
 
@@ -144,10 +144,10 @@ class Game:
             self.move(self.room)
 
         elif decision.lower() == "attack":
-            self.attack(self.character, self.room.get_enemy())
+            self.attack(self.character, self.room.enemy)
 
         elif decision.lower() == "loot":
-            self.loot(self.character, self.room.get_loot())
+            self.loot(self.character, self.room.loot)
 
         elif decision.lower() == "flask":
             self.flask(self.character)
@@ -180,24 +180,24 @@ class Game:
         print("\n", end="")
 
         # Displays the connected rooms
-        if room.get_left() != None:
-            print(f"To the left is {room.get_left().get_name()}")
+        if room.left != None:
+            print(f"To the left is {room.left.name}")
 
-        if room.get_right() != None:
-            print(f"To the right is {room.get_right().get_name()}")
+        if room.right != None:
+            print(f"To the right is {room.right.name}")
 
-        if room.get_forward() != None:
-            print(f"In front of you is {room.get_forward().get_name()}")
+        if room.forward != None:
+            print(f"In front of you is {room.forward.name}")
 
-        if room.get_back() != None:
-            print(f"Behind you is {room.get_back().get_name()}")
+        if room.back != None:
+            print(f"Behind you is {room.back.name}")
 
         time.sleep(1)
 
         # Displays the enemy in the room
-        if room.get_enemy() != None:
+        if room.enemy != None:
             print(
-                f"\nIn the middle of the room is {room.get_enemy().get_name()}, {room.get_enemy().get_description()}"
+                f"\nIn the middle of the room is {room.enemy.name}, {room.enemy.description}"
             )
 
         time.sleep(1)
@@ -219,47 +219,47 @@ class Game:
         chance = random.randint(1, 3)
         caught = False
 
-        if room.get_enemy() != None:
+        if room.enemy != None:
             if chance == 1:
                 caught = True
             else:
                 print(
-                    f"\nYou managed to sneak past {room.get_enemy().get_name()}"
+                    f"\nYou managed to sneak past {room.enemy.name}"
                 )
                 time.sleep(1)
 
         if not caught:
             if movement.lower() == "left":
-                if room.get_left() == None:
+                if room.left == None:
                     print("\nYou walked to the left and smashed into a wall")
                     time.sleep(1)
 
                 else:
-                    self.room = room.get_left()
+                    self.room = room.left
 
             if movement.lower() == "right":
-                if room.get_right() == None:
+                if room.right == None:
                     print("\nYou walked to the right and smashed into a wall")
                     time.sleep(1)
                 else:
-                    self.room = room.get_right()
+                    self.room = room.right
 
             if movement.lower() == "forward":
-                if room.get_forward() == None:
+                if room.forward == None:
                     print("\nYou walked forward and smashed into a wall")
                     time.sleep(1)
                 # Check if you are going to the final boss room
-                elif room.get_forward().get_name() == "The Shrieking Shack":
+                elif room.forward.name == "The Shrieking Shack":
                     items = []
-                    for item in self.character.get_items():
-                        items.append(item.get_name())
+                    for item in self.character.items:
+                        items.append(item.name)
                     # Checks if you have the required items to enter the final boss room
                     if "Dectus Medallion (right)" in items and "Dectus Medallion (left)" in items:
                         print(
                             "\nCongratulations, you placed the two Dectus Medallions together releasing trememndous amounts of energy, breaking the powerful spell on the door"
                         )
                         time.sleep(1)
-                        self.room = room.get_forward()
+                        self.room = room.forward
                     else:
                         print(
                             "\nYou tried entering the The Shrieking Shack but the door was locked by a powerful spell"
@@ -270,21 +270,21 @@ class Game:
                         )
                         time.sleep(1)
                 else:
-                    self.room = room.get_forward()
+                    self.room = room.forward
 
             if movement.lower() == "back":
-                if room.get_back() == None:
+                if room.back == None:
                     print("\nYou turned back and smashed into a wall")
                     time.sleep(1)
                 else:
-                    self.room = room.get_back()
+                    self.room = room.back
 
         else:
             print(
-                f"\nYou tried to sneak to another room but {room.get_enemy().get_name()} noticed you"
+                f"\nYou tried to sneak to another room but {room.enemy.name} noticed you"
             )
             time.sleep(1)
-            self.attack(self.character, room.get_enemy())
+            self.attack(self.character, room.enemy)
 
     def loot(self, user: Character, loot: Item) -> None:
         """main action for user to search the room for loot"""
@@ -293,12 +293,12 @@ class Game:
         chance = random.randint(1, 3)
         caught = False
 
-        if self.room.get_enemy() != None:
+        if self.room.enemy != None:
             if chance != 1:
                 caught = True
             else:
                 print(
-                    f"\nBy some miracle you managed to loot the room without {self.room.get_enemy().get_name()} noticing"
+                    f"\nBy some miracle you managed to loot the room without {self.room.enemy.name} noticing"
                 )
                 time.sleep(1)
 
@@ -310,41 +310,41 @@ class Game:
                 )
                 time.sleep(1)
 
-            elif loot.get_name() == "Flask of Crimson Tears":
-                print(f"\nYou found a {loot.get_name()}, a powerful flask")
+            elif loot.name == "Flask of Crimson Tears":
+                print(f"\nYou found a {loot.name}, a powerful flask")
                 time.sleep(1)
                 user.set_health_flask(1)
-                self.room.set_loot(None)
+                self.room.loot = None
 
-            elif loot.get_name() == "Flask of Cerulean Tears":
-                print(f"\nYou found a {loot.get_name()}, a powerful flask")
+            elif loot.name == "Flask of Cerulean Tears":
+                print(f"\nYou found a {loot.name}, a powerful flask")
                 time.sleep(1)
                 user.set_mana_flask(1)
-                self.room.set_loot(None)
+                self.room.loot = None
 
-            elif loot.get_name() == "Dectus Medallion (right)":
-                print(f"\nYou found a {loot.get_name()}, a powerful item")
+            elif loot.name == "Dectus Medallion (right)":
+                print(f"\nYou found a {loot.name}, a powerful item")
                 time.sleep(1)
                 user.set_items(loot)
-                self.room.set_loot(None)
+                self.room.loot = None
 
-            elif loot.get_name() == "Dectus Medallion (left)":
-                print(f"\nYou found a {loot.get_name()}, a powerful item")
+            elif loot.name == "Dectus Medallion (left)":
+                print(f"\nYou found a {loot.name}, a powerful item")
                 time.sleep(1)
                 user.set_items(loot)
-                self.room.set_loot(None)
+                self.room.loot = None
 
         else:
             print(
-                f"\n{self.room.get_enemy().get_name()} noticed you while you tried to loot the room"
+                f"\n{self.room.enemy.name} noticed you while you tried to loot the room"
             )
             time.sleep(1)
-            self.attack(user, self.room.get_enemy())
+            self.attack(user, self.room.enemy)
 
     def flask(self, user: Character) -> None:
         """main action for user to drink their flasks"""
         # Check if the user still has available flasks
-        if (user.get_health_flask() + user.get_mana_flask()) == 0:
+        if (user.health_flask + user.mana_flask) == 0:
             print("\nYou ran out of flasks\n")
             time.sleep(1)
         else:
@@ -357,23 +357,23 @@ class Game:
             print("\nYou attacked the air and realised how insane you looked")
             time.sleep(1)
         else:
-            while attacker.get_health() > 0:
+            while attacker.health > 0:
                 # Display users health and mana
                 print(f"\n{'-'*50}\n")
                 print(
-                    f"{attacker.get_name()} has {attacker.get_health()} health"
+                    f"{attacker.name} has {attacker.health} health"
                 )
-                print(f"{attacker.get_name()} has {attacker.get_mana()} mana")
+                print(f"{attacker.name} has {attacker.mana} mana")
                 print(
-                    f"{attacker.get_name()} has {attacker.get_health_flask()} Flask of Crimson Tears"
+                    f"{attacker.name} has {attacker.health_flask} Flask of Crimson Tears"
                 )
                 print(
-                    f"{attacker.get_name()} has {attacker.get_mana_flask()} Flask of Cerulean Tears"
+                    f"{attacker.name} has {attacker.mana_flask} Flask of Cerulean Tears"
                 )
                 time.sleep(1)
                 # Display enemy's health
                 print(
-                    f"\n{victim.get_name()} has {victim.get_health()} health\n"
+                    f"\n{victim.name} has {victim.health} health\n"
                 )
                 time.sleep(1)
 
@@ -381,13 +381,13 @@ class Game:
 
                 if decision == "flask":
                     self.use_flask_battle(attacker)
-                    if victim.get_health() > 0:
+                    if victim.health > 0:
                         damage = max(
                             1,
-                            victim.get_attack() - attacker.get_defence())
-                        attacker.set_health(attacker.get_health() - damage)
+                            victim.attack - attacker.defence)
+                        attacker.health = attacker.health - damage
                         print(
-                            f"\n{victim.get_name()} used {victim.get_move()}, dealing {damage} damage to {attacker.get_name()}"
+                            f"\n{victim.name} used {victim.move}, dealing {damage} damage to {attacker.name}"
                         )
                         time.sleep(1)
 
@@ -395,104 +395,103 @@ class Game:
                     damage, weapon = self.get_attack(attacker, decision)
 
                     # Deal damage to enemy
-                    victim.set_health(victim.get_health() -
-                                      (damage + attacker.get_attack()))
+                    victim.health = victim.health -                                       (damage + attacker.attack)
                     # Check if enemy died
-                    if victim.get_health() > 0:
+                    if victim.health > 0:
                         print(
-                            f"\n{attacker.get_name()}{weapon.get_move()}, dealing {damage} damage to {victim.get_name()}"
+                            f"\n{attacker.name}{weapon.move}, dealing {damage} damage to {victim.name}"
                         )
                         time.sleep(1)
                     # Allow enemy to attack if it didn't die yet
-                    if victim.get_health() > 0:
+                    if victim.health > 0:
                         damage = max(
                             1,
-                            victim.get_attack() - attacker.get_defence())
-                        attacker.set_health(attacker.get_health() - damage)
+                            victim.attack - attacker.defence)
+                        attacker.health = attacker.health - damage
                         print(
-                            f"\n{victim.get_name()} used {victim.get_move()}, dealing {damage} damage to {attacker.get_name()}"
+                            f"\n{victim.name} used {victim.move}, dealing {damage} damage to {attacker.name}"
                         )
                         time.sleep(1)
 
                     else:
                         # Check if dead enemy is the final boss
-                        if victim.get_name() == "Voldemort":
+                        if victim.name == "Voldemort":
                             self.win(weapon)
                             return
                         print(
-                            f"\n{attacker.get_name()}{weapon.get_win_front()}{victim.get_name()}{weapon.get_win_back()}"
+                            f"\n{attacker.name}{weapon.win_front}{victim.name}{weapon.win_back}"
                         )
                         time.sleep(1)
                         print(
-                            f"\n{victim.get_name()} dropped a {victim.get_loot().get_name()}"
+                            f"\n{victim.name} dropped a {victim.loot.name}"
                         )
                         time.sleep(1)
                         choice = input(
-                            f"\nDo you want to pick {victim.get_loot().get_name()}? ( yes / no ): "
+                            f"\nDo you want to pick {victim.loot.name}? ( yes / no ): "
                         )
                         if choice.lower() == "yes":
-                            self.collect_loot(attacker, victim.get_loot())
+                            self.collect_loot(attacker, victim.loot)
                             time.sleep(1)
                             print()
-                            print(victim.get_loot().get_description())
+                            print(victim.loot.description)
                             print()
                             time.sleep(1)
 
                         elif choice.lower() == "no":
                             print(
-                                f"\nYou left {victim.get_loot().get_name()} on the ground and allowed the resourceful rat to steal it"
+                                f"\nYou left {victim.loot.name} on the ground and allowed the resourceful rat to steal it"
                             )
                             time.sleep(1)
                         else:
                             print(
-                                f"\nYour indecisiveness allowed the resourceful rat to steal the {victim.get_loot().get_name()} when you weren't looking"
+                                f"\nYour indecisiveness allowed the resourceful rat to steal the {victim.loot.name} when you weren't looking"
                             )
                             time.sleep(1)
                         # Removes the enemy from the room
-                        self.room.set_enemy(None)
+                        self.room.enemy = None
                         break
             # Check if the user died
-            if attacker.get_health() <= 0:
+            if attacker.health <= 0:
                 self.end_game()
 
     def get_choice(self, user: Character) -> str:
         """sub action from attack() to prompt user for attack methods or use of flask"""
         decision = input(
-            f"What do you want to use? ({user.get_weapon().get_name()} / Spell / Flask): "
+            f"What do you want to use? ({user.weapon.name} / Spell / Flask): "
         )
 
         # Get a list of spell cost
         cost = []
-        for spell in user.get_spells():
-            cost.append(spell.get_cost())
+        for spell in user.spells:
+            cost.append(spell.cost)
 
         valid = False
         while not valid:
             valid = True
             if decision.lower() not in [
-                    user.get_weapon().get_name().lower(), "spell", "flask"
+                    user.weapon.name.lower(), "spell", "flask"
             ]:
                 print(f"\nYou tried to use {decision} but nothing happened")
                 time.sleep(1)
                 decision = input(
-                    f"\nWhat do you want to use? ({user.get_weapon().get_name()} / Spell / Flask): "
+                    f"\nWhat do you want to use? ({user.weapon.name} / Spell / Flask): "
                 )
                 valid = False
             # Check if user has enough mana to cast spells
-            elif decision.lower() == "spell" and user.get_mana() < min(cost):
+            elif decision.lower() == "spell" and user.mana < min(cost):
                 print("\nYou do not have enough mana to cast spells\n")
                 time.sleep(1)
                 decision = input(
-                    f"What do you want to use? ({user.get_weapon().get_name()} / Spell / Flask): "
+                    f"What do you want to use? ({user.weapon.name} / Spell / Flask): "
                 )
                 valid = False
             # Check if user has any flask to drink
-            elif decision.lower() == "flask" and (user.get_health_flask() +
-                                                  user.get_mana_flask()) == 0:
+            elif decision.lower() == "flask" and (user.health_flask +
+                                                  user.mana_flask) == 0:
                 print("\nYou ran out of flasks\n")
                 time.sleep(1)
                 decision = input(
-                    f"What do you want to use? ({user.get_weapon().get_name()} / Spell / Flask): "
+                    f"What do you want to use? ({user.weapon.name} / Spell / Flask): "
                 )
                 valid = False
 
@@ -502,8 +501,8 @@ class Game:
         """sub action from attack() to get total damage done to victim"""
 
         # Check if user used his weapon
-        if decision.lower() == user.get_weapon().get_name().lower():
-            return user.get_weapon().get_attack(), user.get_weapon()
+        if decision.lower() == user.weapon.name.lower():
+            return user.weapon.attack, user.weapon
 
         # check if user used spells
         elif decision.lower() == "spell":
@@ -511,7 +510,7 @@ class Game:
             time.sleep(1)
             spells = []
             for spell in user.spells:
-                spells.append(spell.get_name().lower())
+                spells.append(spell.name.lower())
             choice = input("\nWhich spell would you like to cast?: ")
             while choice.lower() not in spells:
                 print(
@@ -519,12 +518,12 @@ class Game:
                 )
                 time.sleep(1)
                 choice = input("\nWhich spell would you like to cast?: ")
-            cost = user.get_spells()[spells.index(choice.lower())].get_cost()
+            cost = user.spells[spells.index(choice.lower())].cost
             print(f"\nYou used up {cost} mana points")
             time.sleep(1)
-            user.set_mana(user.get_mana() - cost)
-            return user.get_spells()[spells.index(
-                choice.lower())].get_attack(), user.get_spells()[spells.index(
+            user.mana = user.mana - cost
+            return user.spells[spells.index(
+                choice.lower())].attack, user.spells[spells.index(
                     choice)]
 
     def use_flask_battle(self, user: Character) -> None:
@@ -545,14 +544,14 @@ class Game:
                 valid = False
             # Checks if the user has enough flask of crimson tears
             elif selection.lower(
-            ) == "flask of crimson tears" and user.get_health_flask() == 0:
+            ) == "flask of crimson tears" and user.health_flask == 0:
                 print("\nYou ran out of Flask of Crimson Tears\n")
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
             # Checks if the user has enough flask of cerulean tears
             elif selection.lower(
-            ) == "flask of cerulean tears" and user.get_mana_flask() == 0:
+            ) == "flask of cerulean tears" and user.mana_flask == 0:
                 print("\nYou ran out of Flask of Cerulean Tears\n")
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
@@ -561,27 +560,27 @@ class Game:
         if selection.lower() == "flask of crimson tears":
             # Makes sure the health healed does not exceed the maximum health
             final_health = min(
-                user.get_max_health(),
-                user.get_health() + FlaskOfCrimsonTears().get_health())
-            healing = final_health - user.get_health()
+                user.max_health,
+                user.health + FlaskOfCrimsonTears().health)
+            healing = final_health - user.health
             print(
                 f"\nYou drank a Flask of Crimson Tears and gained {healing} health"
             )
             time.sleep(1)
-            user.set_health(final_health)
+            user.health = final_health
             user.set_health_flask(-1)
 
         elif selection.lower() == "flask of cerulean tears":
             # Makes sure the mana gained does not exceed the maximum mana
             final_mana = min(
-                user.get_max_mana(),
-                user.get_mana() + FlaskOfCeruleanTears().get_mana())
-            healing = final_mana - user.get_mana()
+                user.mana,
+                user.mana + FlaskOfCeruleanTears().mana)
+            healing = final_mana - user.mana
             print(
                 f"\nYou drank a Flask of Cerulean Tears and gained {healing} mana"
             )
             time.sleep(1)
-            user.set_mana(final_mana)
+            user.mana = final_mana
             user.set_mana_flask(-1)
 
     def use_flask(self, user: Character) -> None:
@@ -604,14 +603,14 @@ class Game:
                 valid = False
             # Checks if the user has enough flask of crimson tears
             elif selection.lower(
-            ) == "flask of crimson tears" and user.get_health_flask() == 0:
+            ) == "flask of crimson tears" and user.health_flask == 0:
                 print("\nYou ran out of Flask of Crimson Tears\n")
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
             # Checks if the user has enough flask of cerulean tears
             elif selection.lower(
-            ) == "flask of cerulean tears" and user.get_mana_flask() == 0:
+            ) == "flask of cerulean tears" and user.mana_flask == 0:
                 print("\nYou ran out of Flask of Cerulean Tears\n")
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
@@ -623,36 +622,36 @@ class Game:
         if selection.lower() == "flask of crimson tears":
             # Makes sure the health healed does not exceed the maximum health
             final_health = min(
-                user.get_max_health(),
-                user.get_health() + FlaskOfCrimsonTears().get_health())
-            healing = final_health - user.get_health()
+                user.max_health,
+                user.health + FlaskOfCrimsonTears().health)
+            healing = final_health - user.health
             print(
                 f"\nYou drank a Flask of Crimson Tears and gained {healing} health"
             )
             time.sleep(1)
-            user.set_health(final_health)
+            user.health = final_health
             user.set_health_flask(-1)
 
         elif selection.lower() == "flask of cerulean tears":
             # Makes sure the mana gained does not exceed the maximum mana
             final_mana = min(
-                user.get_max_mana(),
-                user.get_mana() + FlaskOfCeruleanTears().get_mana())
-            healing = final_mana - user.get_mana()
+                user.mana,
+                user.mana + FlaskOfCeruleanTears().mana)
+            healing = final_mana - user.mana
             print(
                 f"\nYou drank a Flask of Cerulean Tears and gained {healing} mana"
             )
             time.sleep(1)
-            user.set_mana(final_mana)
+            user.mana = final_mana
             user.set_mana_flask(-1)
 
     def display_flask(self, user: Character) -> None:
         """sub action from use_flask to display flask in inventory"""
         print(
-            f"\nNumber of Flask of Crimson Tears in inventory : {user.get_health_flask()} (restores {FlaskOfCrimsonTears().get_health()} health)"
+            f"\nNumber of Flask of Crimson Tears in inventory : {user.health_flask} (restores {FlaskOfCrimsonTears().health} health)"
         )
         print(
-            f"Number of Flask of Cerulean Tears in inventory: {user.get_mana_flask()} (restores {FlaskOfCeruleanTears().get_mana()} mana)\n"
+            f"Number of Flask of Cerulean Tears in inventory: {user.mana_flask} (restores {FlaskOfCeruleanTears().mana} mana)\n"
         )
         time.sleep(1)
 
@@ -697,38 +696,38 @@ class Game:
         if user.armour == None:
             print("\nArmour : Empty")
         else:
-            print(f"\nArmour : {user.armour.get_name()}")
+            print(f"\nArmour : {user.armour.name}")
 
         if user.weapon == None:
             print("Weapon : Empty")
         else:
-            print(f"Weapon : {user.weapon.get_name()}")
+            print(f"Weapon : {user.weapon.name}")
 
         if user.accessory == None:
             print("Accessory : Empty")
         else:
-            print(f"Accessory : {user.accessory.get_name()}")
+            print(f"Accessory : {user.accessory.name}")
         time.sleep(1)
 
     def display_spells(self, user: Character) -> None:
-        """sub action from get_attack() to display spells that the user have"""
+        """sub action from attack to display spells that the user have"""
         # Displays all spells owned
         print("\nSpells:")
         for i, spell in enumerate(user.spells):
-            print(f"- {spell.get_name()} ({spell.get_cost()} mana)")
+            print(f"- {spell.name} ({spell.cost} mana)")
 
     def equip_armour(self, user: Character) -> None:
         """sub action from equip() for user to choose an armour to equip"""
-        if len(user.get_armours()) == 0:
+        if len(user.armours) == 0:
             print("\nYou do not have any armour to equip")
             time.sleep(1)
         else:
             # Displays the armours the user owns
             print("\nIn your inventory you have: ")
             items = []
-            for armour in user.get_armours():
-                print(f"- {armour.get_name()}")
-                items.append(armour.get_name().lower())
+            for armour in user.armours:
+                print(f"- {armour.name}")
+                items.append(armour.name.lower())
             time.sleep(1)
             option = input("\nWhich armour do you want to equip?: ")
             # Validates the users choice
@@ -741,27 +740,26 @@ class Game:
                 print(f"\nYou equipped {option}")
                 time.sleep(1)
                 # Removes the defence increase of the previous armour
-                if user.get_armour() != None:
-                    user.set_defence(user.get_defence() -
-                                     user.get_armour().get_defence())
-                armour = user.get_armours()[items.index(option.lower())]
+                if user.armour != None:
+                    user.defence = user.defence - user.armour.defence
+                armour = user.armours[items.index(option.lower())]
                 # Adds the defence of the new armour
-                user.set_defence(user.get_defence() + armour.get_defence())
-                user.set_armour(armour)
+                user.defence = user.defence + armour.defence
+                user.armour = armour
                 self.display_equipment(user)
 
     def equip_weapon(self, user: Character) -> None:
         """sub action from equip() for user to choose a weapon to equip"""
-        if len(user.get_weapons()) == 0:
+        if len(user.weapons) == 0:
             print("\nYou do not have any weapon to equip")
             time.sleep(1)
         else:
             # Displays the weapons the user owns
             print("\nIn your inventory you have: ")
             items = []
-            for weapon in user.get_weapons():
-                print(f"- {weapon.get_name()}")
-                items.append(weapon.get_name().lower())
+            for weapon in user.weapons:
+                print(f"- {weapon.name}")
+                items.append(weapon.name.lower())
             time.sleep(1)
             # Validates the user's choice
             option = input("\nWhich weapon do you want to equip?: ")
@@ -772,8 +770,8 @@ class Game:
             else:
                 print(f"\nYou equipped {option}")
                 time.sleep(1)
-                user.set_weapon(user.get_weapons()[items.index(
-                    option.lower())])
+                user.weapon = user.weapons[items.index(
+                    option.lower())]
                 self.display_equipment(user)
 
     def equip_accessory(self, user: Character) -> None:
@@ -784,9 +782,9 @@ class Game:
         else:
             print("\nIn your inventory you have: ")
             items = []
-            for accessory in user.get_accessories():
-                print(f"- {accessory.get_name()}")
-                items.append(accessory.get_name().lower())
+            for accessory in user.accessories:
+                print(f"- {accessory.name}")
+                items.append(accessory.name.lower())
             time.sleep(1)
             option = input("\nWhich accessory do you want to equip?: ")
             if option.lower() not in items:
@@ -798,60 +796,50 @@ class Game:
                 time.sleep(1)
 
                 # Removes the stat boost from the previous accessory
-                if user.get_accessory() != None:
-                    user.set_max_health(
-                        user.get_max_health() -
-                        user.get_accessory().get_health_boost())
+                if user.accessory != None:
+                    user.max_health =                         user.max_health - user.accessory.health_boost
 
                     new_health = min(
                         max(
                             1,
-                            user.get_health() -
-                            user.get_accessory().get_health_boost()),
-                        user.get_max_health())
-                    user.set_health(new_health)
+                            user.health -
+                            user.accessory.health_boost),
+                        user.max_health)
+                    user.health = new_health
 
-                    user.set_max_mana(user.get_max_mana() -
-                                      user.get_accessory().get_mana_boost())
+                    user.max_mana = user.mana - user.accessory.mana_boost
 
                     new_mana = min(
                         max(
                             0,
-                            user.get_mana() -
-                            user.get_accessory().get_mana_boost()),
-                        user.get_max_mana())
-                    user.set_mana(new_mana)
+                            user.mana -
+                            user.accessory.mana_boost),
+                        user.mana)
+                    user.mana = new_mana
 
-                    user.set_attack(user.get_attack() -
-                                    user.get_accessory().get_attack_boost())
+                    user.attack = user.attack - user.accessory.attack_boost
 
-                    user.set_defence(user.get_defence() -
-                                     user.get_accessory().get_defence_boost())
+                    user.defence = user.defence - user.accessory.defence_boost
 
                 # Adds the stat boost from the new accessory
-                accessory = user.get_accessories()[items.index(option.lower())]
-                user.set_health(user.get_health() +
-                                accessory.get_health_boost())
-                user.set_max_health(user.get_max_health() +
-                                    accessory.get_health_boost())
-                user.set_attack(user.get_attack() +
-                                accessory.get_attack_boost())
-                user.set_mana(user.get_mana() + accessory.get_mana_boost())
-                user.set_max_mana(user.get_max_mana() +
-                                  accessory.get_mana_boost())
-                user.set_accessory(accessory)
-                user.set_defence(user.get_defence() +
-                                 user.get_accessory().get_defence_boost())
+                accessory = user.accessories[items.index(option.lower())]
+                user.health = user.health + accessory.health_boost
+                user.max_health = user.max_health + accessory.health_boost
+                user.attack = user.attack + accessory.attack_boost
+                user.mana = user.mana + accessory.mana_boost
+                user.max_mana = user.mana + accessory.mana_boost
+                user.accessory = accessory
+                user.defence = user.defence + user.accessory.defence_boost
                 self.display_equipment(user)
 
     def status(self, user: Character) -> None:
         """main action that prints user's status"""
         # Displays the users statistics
-        print(f"\nName: {user.get_name()}")
-        print(f"Health: {user.get_health()} / {user.get_max_health()}")
-        print(f"Mana: {user.get_mana()} / {user.get_max_mana()}")
-        print(f"Defence: {user.get_defence()}")
-        print(f"Strength: {user.get_attack()}")
+        print(f"\nName: {user.name}")
+        print(f"Health: {user.health} / {user.max_health}")
+        print(f"Mana: {user.mana} / {user.mana}")
+        print(f"Defence: {user.defence}")
+        print(f"Strength: {user.attack}")
         time.sleep(1)
 
     def info(self, user: Character) -> None:
@@ -887,16 +875,16 @@ class Game:
     def weapon_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific weapon to find out more about"""
         # Check if the user owns any weapons
-        if len(user.get_weapons()) == 0:
+        if len(user.weapons) == 0:
             print("\nYou do not own any weapons yet")
 
         else:
             # Displays the weapons the user owns
             weapons = []
             print("\nIn your inventory you have: ")
-            for weapon in user.get_weapons():
-                print(f"- {weapon.get_name()}")
-                weapons.append(weapon.get_name().lower())
+            for weapon in user.weapons:
+                print(f"- {weapon.name}")
+                weapons.append(weapon.name.lower())
             time.sleep(1)
 
             decision = input(
@@ -907,23 +895,23 @@ class Game:
             else:
                 # Displays the description of the weapon
                 print("\n", end="")
-                print(user.get_weapons()[weapons.index(
-                    decision)].get_description())
+                print(user.weapons[weapons.index(
+                    decision)].description)
                 time.sleep(1)
 
     def spell_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific spell to find out more about"""
         # Check if the user knows any spells
-        if len(user.get_spells()) == 0:
+        if len(user.spells) == 0:
             print("\nYou do not own any spells yet")
 
         else:
             # Displays the spells the user knows
             spells = []
             print("\nIn your inventory you have: ")
-            for spell in user.get_spells():
-                print(f"- {spell.get_name()}")
-                spells.append(spell.get_name().lower())
+            for spell in user.spells:
+                print(f"- {spell.name}")
+                spells.append(spell.name.lower())
             time.sleep(1)
 
             decision = input(
@@ -934,23 +922,23 @@ class Game:
             else:
                 # Displays the description of the spell
                 print("\n", end="")
-                print(user.get_spells()[spells.index(
-                    decision)].get_description())
+                print(user.spells[spells.index(
+                    decision)].description)
                 time.sleep(1)
 
     def armour_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific armour to find out more about"""
         # Check if the user owns any armours
-        if len(user.get_armours()) == 0:
+        if len(user.armours) == 0:
             print("\nYou do not own any amours yet")
 
         else:
             # Displays the armours the user owns
             armours = []
             print("\nIn your inventory you have: ")
-            for armour in user.get_armours():
-                print(f"- {armour.get_name()}")
-                armours.append(armour.get_name().lower())
+            for armour in user.armours:
+                print(f"- {armour.name}")
+                armours.append(armour.name.lower())
             time.sleep(1)
 
             decision = input(
@@ -961,23 +949,23 @@ class Game:
             else:
                 # Displays the description of the armour
                 print("\n", end="")
-                print(user.get_armours()[armours.index(
-                    decision)].get_description())
+                print(user.armours[armours.index(
+                    decision)].description)
                 time.sleep(1)
 
     def accessory_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific accessory to find out more about"""
         # Checks if the user owns any accessories
-        if len(user.get_accessories()) == 0:
+        if len(user.accessories) == 0:
             print("\nYou do not own any accessories yet")
 
         else:
             # Displays the accessories the user owns
             accessories = []
             print("\nIn your inventory you have: ")
-            for accessory in user.get_accessories():
-                print(f"- {accessory.get_name()}")
-                accessories.append(accessory.get_name().lower())
+            for accessory in user.accessories:
+                print(f"- {accessory.name}")
+                accessories.append(accessory.name.lower())
             time.sleep(1)
 
             decision = input(
@@ -988,8 +976,8 @@ class Game:
             else:
                 # Displays the description of the accessory
                 print("\n", end="")
-                print(user.get_accessories()[accessories.index(
-                    decision)].get_description())
+                print(user.accessories[accessories.index(
+                    decision)].description)
                 time.sleep(1)
 
     def flask_info(self) -> None:
@@ -1002,11 +990,11 @@ class Game:
             "\nWhich accesssory do you want to find out more about? : ")
         if decision.lower() == "flask of crimson tears":
             print("\n", end="")
-            print(FlaskOfCrimsonTears().get_description())
+            print(FlaskOfCrimsonTears().description)
             time.sleep(1)
         elif decision.lower() == "flask of cerulean tears":
             print("\n", end="")
-            print(FlaskOfCecruleanTears().get_description())
+            print(FlaskOfCecruleanTears().description)
             time.sleep(1)
         else:
             print(f"You do not own {decision}")
@@ -1014,15 +1002,15 @@ class Game:
     def item_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific special item to find out more about"""
         # Check if the user owns any items
-        if len(user.get_items()) == 0:
+        if len(user.items) == 0:
             print("\nYou do not own any items yet")
         else:
             # Displays the items the user owns
             items = []
             print("\nIn your inventory you have: ")
-            for item in user.get_items():
-                print(f"- {item.get_name()}")
-                items.append(item.get_name().lower())
+            for item in user.items:
+                print(f"- {item.name}")
+                items.append(item.name.lower())
             time.sleep(1)
 
             decision = input(
@@ -1034,14 +1022,14 @@ class Game:
                 # Displays the description of the items
                 print()
                 print(
-                    user.get_items()[items.index(decision)].get_description())
+                    user.items[items.index(decision)].description)
                 time.sleep(1)
 
     def display_room_name(self) -> None:
         """prints the room's name in a cool way"""
         print("=" * 25)
-        space = " " * int((25 - len(self.room.get_name())) / 2)
-        print(f"{space}{self.room.get_name()}{space}")
+        space = " " * int((25 - len(self.room.name)) / 2)
+        print(f"{space}{self.room.name}{space}")
         print("=" * 25)
         time.sleep(1)
 
@@ -1051,7 +1039,7 @@ class Game:
         print(self.room.description)
         time.sleep(2)
         self.look(self.room)
-        self.room.set_been_here(True)
+        self.room.been_here = True
 
     def get_action(self) -> str:
         """sub action for run() that prompts user for a main action"""
@@ -1071,24 +1059,24 @@ class Game:
 
     def collect_loot(self, attacker: Character, loot: Item) -> None:
         """sub method from attack() to collect loot of defeated monster"""
-        if loot.get_type() == "weapon":
+        if loot.type == "weapon":
             attacker.set_weapons(loot)
-            print(f"\nYou obtained a {loot.get_name()}, a powerful weapon")
+            print(f"\nYou obtained a {loot.name}, a powerful weapon")
             time.sleep(1)
 
-        elif loot.get_type() == "spell":
+        elif loot.type == "spell":
             attacker.set_spells(loot)
-            print(f"\nYou obtained a {loot.get_name()}, a powerful spell")
+            print(f"\nYou obtained a {loot.name}, a powerful spell")
             time.sleep(1)
 
-        elif loot.get_type() == "armour":
+        elif loot.type == "armour":
             attacker.set_armours(loot)
-            print(f"\nYou obtained a {loot.get_name()}, a powerful armour")
+            print(f"\nYou obtained a {loot.name}, a powerful armour")
             time.sleep(1)
 
-        elif loot.get_type() == "accessory":
+        elif loot.type == "accessory":
             attacker.set_accessories(loot)
-            print(f"\nYou obtained a {loot.get_name()}, a powerful accessory")
+            print(f"\nYou obtained a {loot.name}, a powerful accessory")
             time.sleep(1)
 
     def end_game(self) -> None:
@@ -1104,7 +1092,7 @@ class Game:
     def win(self, weapon) -> None:
         """displays scenario when user wins"""
         print(
-            f"\nUsing the almighty {weapon.get_name()}, you struck the Dark Lord Voldemort down, crippling him of all his powers and stop his evil tyranny over the school"
+            f"\nUsing the almighty {weapon.name}, you struck the Dark Lord Voldemort down, crippling him of all his powers and stop his evil tyranny over the school"
         )
         time.sleep(1)
         print(" _____ ___________   _____ _       ___  _____ _   _ ")
@@ -1126,14 +1114,14 @@ class Game:
             "\nWelcome chosen one, the Gods smile upon you and have rained down their blessing\n"
         )
         time.sleep(1)
-        self.character.set_health(999)
-        self.character.set_max_health(999)
-        self.character.set_mana(999)
-        self.character.set_max_mana(999)
-        self.character.set_attack(999)
-        self.character.set_defence(999)
-        self.character.set_health_flask(997)
-        self.character.set_mana_flask(997)
+        self.character.health = 999
+        self.character.max_health = 999
+        self.character.mana = 999
+        self.character.max_mana = 999
+        self.character.attack = 999
+        self.character.defence = 999
+        self.character.health_flask = 997
+        self.character.mana_flask = 997
 
     def meow(self) -> None:
         choice = random.randint(1, 10)

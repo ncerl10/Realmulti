@@ -7,7 +7,7 @@ from item import *
 
 
 class Room:
-    """    The parent class for a room
+    """The parent class for a room
 
     Attributes
     ----------
@@ -32,24 +32,7 @@ class Room:
 
     Methods
     -------
-    + set_been_here(self, status: bool) -> None
-    + get_been_here(self) -> bool
-    + link_left(self, room : Room) -> None
-    + get_left(self) -> Room
-    + link_right(self, room : Room) -> None
-    + get_right(self) -> Room
-    + link_forward(self, room : Room) -> None
-    + get_forward(self) -> Room
-    + link_back(self, room : Room) -> None
-    + get_back(self) -> Room
-    + set_enemy(self, enemy : Enemy) -> None
-    + get_enemy(self) -> Enemy
-    + set_name(self, name : str) -> None
-    + get_name(self) -> str
-    + set_description(self, description : str) -> None
-    + get_description(self) -> str
-    + set_loot(self, loot : Item) -> None
-    + get_loot(self) -> Item
+    None
     """
 
     def __init__(self,
