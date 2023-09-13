@@ -1,6 +1,5 @@
 class Item:
-    """
-    The parent class for an item
+    """    The parent class for an item
 
     Attributes
     ----------
@@ -15,53 +14,18 @@ class Item:
 
     Methods
     -------
-    + set_name(self, name : str) -> None
-    + get_name(self) -> str
-    + set_description(self) -> None
-    + get_description(self, description : str) -> str
-    + set_health(self, health : int) -> None
-    + get_health(self, health : int) -> int
-    + set_mana(self, mana : int) -> None
-    + get_mana(self, mana : int) -> int
+    None
     """
 
-    def __init__(self):
-        self.name = ""
-        self.description = ""
-        self.health = 0
-        self.mana = 0
-
-    def set_name(self, name: str) -> None:
-        """updates the name of the item"""
+    def __init__(self,
+                 name: str,
+                 description: str,
+                 health: int,
+                 mana: int):
         self.name = name
-
-    def get_name(self):
-        """gets the name of the item"""
-        return self.name
-
-    def set_description(self, description):
-        """updates the description of the item"""
         self.description = description
-
-    def get_description(self):
-        """gets the description of the item"""
-        return self.description
-
-    def set_health(self, health):
-        """updates the health of the item"""
         self.health = health
-
-    def get_health(self):
-        """gets the health of the item"""
-        return self.health
-
-    def set_mana(self, mana):
-        """updates the mana of the item"""
         self.mana = mana
-
-    def get_mana(self):
-        """gets the mana of the item"""
-        return self.mana
 
 
 class FlaskOfCrimsonTears(Item):

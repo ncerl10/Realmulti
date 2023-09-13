@@ -1,6 +1,5 @@
 class Armour:
-    """
-    The parent class for an armour
+    """The parent class for an armour
 
     Attributes
     ----------
@@ -15,48 +14,18 @@ class Armour:
 
     Methods
     -------
-    + get_type(self) -> str
-    + set_name(self, name : str) -> None
-    + get_name(self) -> str
-    + set_description(self) -> None
-    + get_description(self, description : str) -> str
-    + set_defence(self) -> None
-    + get_defence(self, defence : int) -> int
+    None
     """
 
-    def __init__(self) -> None:
+    def __init__(self,
+                 name: str,
+                 description: str,
+                 *,  # all parameters below this line are keyword arguments
+                 defence: int = 0) -> None:
         self.type = "armour"
-        self.name = ""
-        self.description = ""
-        self.defence = 0
-
-    def get_type(self) -> str:
-        """gets the type of the armour"""
-        return self.type
-
-    def set_name(self, name: str) -> None:
-        """updates the name of the armour"""
         self.name = name
-
-    def get_name(self) -> str:
-        """gets the name of the armour"""
-        return self.name
-
-    def set_description(self, description: str) -> None:
-        """updates the description of the armour"""
         self.description = description
-
-    def get_description(self) -> str:
-        """gets the description of the armour"""
-        return self.description
-
-    def set_defence(self, defence: int) -> None:
-        """updates the defence of the armour"""
         self.defence = defence
-
-    def get_defence(self) -> int:
-        """gets the defence of the armour"""
-        return self.defence
 
 
 class NetheriteArmour(Armour):

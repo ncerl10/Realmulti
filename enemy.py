@@ -7,8 +7,7 @@ from item import *
 
 
 class Enemy:
-    """
-    The parent class for an enemy
+    """The parent class for an enemy
 
     Attributes
     ----------
@@ -27,75 +26,23 @@ class Enemy:
 
     Methods
     -------
-    + set_health(self, health : int) -> None
-    + get_health(self) -> int
-    + set_name(self, name : str) -> None
-    + get_name(self) -> str
-    + set_description(self, description : str) -> None
-    + get_description(self) -> str
-    + set_attack(self, attack : int) -> None
-    + get_attack(self) -> int
-    + set_move(self, move : str) -> None
-    + get_move(self) -> str
-    + set_loot(self, loot : Weapon) -> None
-    + get_loot(self) -> Weapon
+    None
     """
 
-    def __init__(self) -> None:
-        self.name = ""
-        self.health = 0
-        self.attack = 0
-        self.loot = None
-        self.description = ""
-        self.move = ""
-
-    def set_health(self, health: int) -> None:
-        """updates the health of the enemy"""
-        self.health = health
-
-    def get_health(self) -> int:
-        """gets the health of the enemy"""
-        return self.health
-
-    def set_name(self, name: str) -> None:
-        """updates the name of the enemy"""
+    def __init__(self,
+                 name: str,
+                 description: str,
+                 health: int,
+                 attack: int,
+                 move: str,
+                 loot) -> None:
         self.name = name
-
-    def get_name(self) -> str:
-        """gets the name of the enemy"""
-        return self.name
-
-    def set_description(self, description: str) -> None:
-        """updates the description of the enemy"""
         self.description = description
-
-    def get_description(self) -> str:
-        """gets the description of the enemy"""
-        return self.description
-
-    def set_attack(self, attack: int) -> None:
-        """updates the attack of the enemy"""
+        self.health = health
         self.attack = attack
-
-    def get_attack(self) -> int:
-        """gets the attack of the enemy"""
-        return self.attack
-
-    def set_move(self, move: str) -> None:
-        """updates the description of the attack of the enemy"""
         self.move = move
-
-    def get_move(self) -> str:
-        """gets the description of the attack of the enemy"""
-        return self.move
-
-    def set_loot(self, loot: Weapon) -> None:
-        """updates the loot of the enemy"""
         self.loot = loot
 
-    def get_loot(self) -> Weapon:
-        """gets the loot of the enemy"""
-        return self.loot
 
 
 class TheRadiance(Enemy):
