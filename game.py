@@ -498,7 +498,7 @@ class Game:
 
         return decision
 
-    def get_attack(self, user: Character, decision: str) -> [int, Weapon]:
+    def get_attack(self, user: Character, decision: str) -> tuple[int, Spell]:
         """sub action from attack() to get total damage done to victim"""
 
         # Check if user used his weapon

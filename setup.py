@@ -5,7 +5,7 @@ from weapon import *
 from spell import *
 
 
-def setup() -> [Room, Character]:
+def setup() -> tuple[Room, Character]:
     """
     Generates the map and the character and returns it in a list
     """
@@ -27,4 +27,4 @@ def setup() -> [Room, Character]:
     character.set_health_flask(2)
     character.set_mana_flask(2)
 
-    return [map, character]
+    return map, character
