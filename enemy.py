@@ -43,6 +43,9 @@ class Enemy:
         self.move = move
         self.loot = loot
 
+    def is_dead(self) -> bool:
+        return self.health <= 0
+
 
 def TheRadiance() -> Enemy:
     return Enemy(
