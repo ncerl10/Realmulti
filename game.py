@@ -342,7 +342,7 @@ class Game:
                 if decision == "flask":
                     self.use_flask_battle(attacker)
                     if victim.health > 0:
-                        damage = max(1, victim.attack - attacker.defence)
+                        damage = max(1, victim.attack - attacker.get_defence())
                         attacker.health = attacker.health - damage
                         print(
                             f"\n{victim.name} used {victim.move}, dealing {damage} damage to {attacker.name}"
@@ -352,7 +352,7 @@ class Game:
                     damage, weapon = self.get_attack(attacker, decision)
 
                     # Deal damage to enemy
-                    victim.health = victim.health - (damage + attacker.attack)
+                    victim.health = victim.health - (damage + attacker.get_attack())
                     # Check if enemy died
                     if victim.health > 0:
                         print(
@@ -361,7 +361,7 @@ class Game:
                         time.sleep(1)
                     # Allow enemy to attack if it didn't die yet
                     if victim.health > 0:
-                        damage = max(1, victim.attack - attacker.defence)
+                        damage = max(1, victim.attack - attacker.get_defence())
                         attacker.health = attacker.health - damage
                         print(
                             f"\n{victim.name} used {victim.move}, dealing {damage} damage to {attacker.name}"
@@ -666,12 +666,7 @@ class Game:
             else:
                 print(f"\nYou equipped {option}")
                 time.sleep(1)
-                # Removes the defence increase of the previous armour
-                if user.armour:
-                    user.defence = user.defence - user.armour.defence
                 armour = user.armours[items.index(option.lower())]
-                # Adds the defence of the new armour
-                user.defence = user.defence + armour.defence
                 user.armour = armour
                 self.display_equipment(user)
 
@@ -723,43 +718,31 @@ class Game:
 
                 # Removes the stat boost from the previous accessory
                 if user.accessory:
-                    user.max_health = user.max_health - user.accessory.health_boost
-
                     new_health = min(
                         max(1, user.health - user.accessory.health_boost),
                         user.max_health)
                     user.health = new_health
-
-                    user.max_mana = user.mana - user.accessory.mana_boost
 
                     new_mana = min(
                         max(0, user.mana - user.accessory.mana_boost),
                         user.mana)
                     user.mana = new_mana
 
-                    user.attack = user.attack - user.accessory.attack_boost
-
-                    user.defence = user.defence - user.accessory.defence_boost
-
                 # Adds the stat boost from the new accessory
                 accessory = user.accessories[items.index(option.lower())]
                 user.health = user.health + accessory.health_boost
-                user.max_health = user.max_health + accessory.health_boost
-                user.attack = user.attack + accessory.attack_boost
                 user.mana = user.mana + accessory.mana_boost
-                user.max_mana = user.mana + accessory.mana_boost
                 user.accessory = accessory
-                user.defence = user.defence + user.accessory.defence_boost
                 self.display_equipment(user)
 
     def status(self, user: Character) -> None:
         """main action that prints user's status"""
         # Displays the users statistics
         print(f"\nName: {user.name}")
-        print(f"Health: {user.health} / {user.max_health}")
+        print(f"Health: {user.health} / {user.get_max_health()}")
         print(f"Mana: {user.mana} / {user.mana}")
-        print(f"Defence: {user.defence}")
-        print(f"Strength: {user.attack}")
+        print(f"Defence: {user.get_defence()}")
+        print(f"Strength: {user.get_attack()}")
         time.sleep(1)
 
     def info(self, user: Character) -> None:
