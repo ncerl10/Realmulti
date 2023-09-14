@@ -85,33 +85,34 @@ class QuestItem(Item):
     """An item required to complete the quest or win the game"""
 
 
-def FlaskOfCrimsonTears() -> HealthFlask:
+def health_flask(count: int = 0) -> HealthFlask:
     return HealthFlask(
         name="Flask of Crimson Tears",
         description="A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.",
-        count=0,
+        count=count,
         health=50,
     )
 
 
-def FlaskOfCeruleanTears() -> ManaFlask:
+def mana_flask(count: int = 0) -> ManaFlask:
     return ManaFlask(
         name="Flask of Cerulean Tears",
         description="A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.",
-        count=0,
+        count=count,
         mana=50,
     )
 
 
-def DectusMedallionRight() -> QuestItem:
-    return QuestItem(
+_quest_items = {
+    "DectusMedallionRight": QuestItem(
         name="Dectus Medallion (right)",
         description="The right half of a medallion with the power to break a powerful spell",
-    )
-
-
-def DectusMedallionLeft() -> QuestItem:
-    return QuestItem(
+    ),
+    "DectusMedallionLeft": QuestItem(
         name="Dectus Medallion (left)",
         description="The left half of a medallion with the power to break a powerful spell",
-    )
+    ),
+}
+
+def get_quest_item(name: str) -> QuestItem:
+    return _quest_items[name]

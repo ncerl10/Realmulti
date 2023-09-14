@@ -3,7 +3,7 @@ from enemy import Enemy, get_enemy
 from weapon import *
 from armour import *
 from spell import *
-from item import *
+import item
 
 
 class Room:
@@ -85,7 +85,7 @@ class Dirtmouth(Room):
             name="Dirtmouth",
             description="You stepped into Dirtmouth, a haunting cliffside town in the depths of Hallownest, standing as a silent sentinel overlooking a dark and mysterious underground world. Its dilapidated buildings and eerie stillness set the tone for your perilous journey",
             enemy=get_enemy("TheRadiance"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
         self.link_left(Midgar())
         self.link_right(HyruleKingdom())
@@ -102,7 +102,7 @@ class CelestialResort(Room):
             name="Celestial Resort",
             description="You stepped into a towering sanctuary of serenity nestled amidst the treacherous slopes of Celeste Mountain, a paradoxical challenge and a refuge for your weary soul. Its elegant halls and perilous puzzles mirrored your personal journey, a delicate dance between inner turmoil and newfound strength.",
             enemy=get_enemy("MrOshiro"),
-            loot=FlaskOfCeruleanTears(),
+            loot=item.mana_flask(1),
         )
         self.link_back(Ascent())
 
@@ -122,7 +122,7 @@ class TheForge(Room):
                 "to conquer it and uncover the ultimate weapon hidden within."
             ),
             enemy=get_enemy("TheHighDragun"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
         self.link_forward(Mementos())
 
@@ -140,7 +140,7 @@ class StormveilCastle(Room):
                 "littered with hoards of enemies."
             ),
             enemy=get_enemy("GodrickTheGrafted"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
         self.link_forward(Kamurocho())
         self.link_right(TheHallow())
@@ -160,7 +160,7 @@ class ApertureLab(Room):
                 "for answers, a desperate struggle to escape its surreal confines and unmask the secrets lurking within."
             ),
             enemy=get_enemy("Glados"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
         self.link_forward(StormveilCastle())
         self.link_back(TowerOfFate())
@@ -199,7 +199,7 @@ class Bunker(Room):
                 "and prepare for the constant struggle to reclaim your planet from the alien invaders."
             ),
             enemy=get_enemy("Emil"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
 
 
@@ -216,7 +216,7 @@ class Asphodel(Room):
                 "You travel between these islands through small bone rafts."
             ),
             enemy=get_enemy("TheBoneHyrda"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
         self.link_back(Commencement())
         self.link_forward(GreenhillZone())
@@ -236,7 +236,7 @@ class KingdomOfKu(Room):
                 "by the aging King Jigo Ku, until a coup removed him from power."
             ),
             enemy=get_enemy("GeneralMugen"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
         self.link_right(Bunker())
         self.link_forward(Zebes())
@@ -256,7 +256,7 @@ class GreenhillZone(Room):
                 "for your never-ending quest to thwart Dr. Robotnik and collect the precious Chaos Emerald."
             ),
             enemy=get_enemy("DoctorEggman"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
         self.link_forward(KingdomOfKu())
         self.link_left(TheMushroomKingdom())
@@ -276,7 +276,7 @@ class TheHallow(Room):
                 "to avoid its relentless and otherworldly foes."
             ),
             enemy=get_enemy("TheMoonLord"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
         self.link_back(TheObraDinn())
 
@@ -295,7 +295,7 @@ class Commencement(Room):
                 "sections, emblematic of Mithrix and Providence's tools of creation."
             ),
             enemy=get_enemy("Mithrix"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
 
 
@@ -313,7 +313,7 @@ class Midgar(Room):
                 "quest for justice and redemption."
             ),
             enemy=get_enemy("Sephiroth"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
         self.link_forward(TheForge())
 
@@ -332,7 +332,7 @@ class HyruleKingdom(Room):
                 "as you battle the forces of darkness and seek to rescue Princess Zelda."
             ),
             enemy=get_enemy("Ganondorf"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
         self.link_back(CelestialResort())
 
@@ -350,7 +350,7 @@ class TheEndDimension(Room):
                 "It is inhabited by endermen and shulkers."
             ),
             enemy=get_enemy("TheEnderDragon"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
         self.link_forward(TheShriekingShack())
 
@@ -369,7 +369,7 @@ class Kamurocho(Room):
                 "as well as intra-clan conflicts between Tojo subsidiaries."
             ),
             enemy=get_enemy("Shibusawa"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
         self.link_forward(Snowdin())
 
@@ -388,7 +388,7 @@ class TowerOfFate(Room):
                 "driving you to prove that you am truly a knight worthy of legend."
             ),
             enemy=get_enemy("Enchantress"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
 
 
@@ -406,7 +406,7 @@ class ShoresOfNine(Room):
                 "while battling the threats lurking in these uncharted waters."
             ),
             enemy=get_enemy("Freya"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
 
 
@@ -424,7 +424,7 @@ class Mementos(Room):
                 "a mission to change hearts and expose the hidden darkness that plagues Tokyo."
             ),
             enemy=get_enemy("Yaldabaoth"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
         self.link_right(ShoresOfNine())
         self.link_left(Asphodel())
@@ -445,7 +445,7 @@ class Ascent(Room):
                 "It is only when you turn around that you realise the entire city is several hundred metres above the ground."
             ),
             enemy=get_enemy("Reyna"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
         self.link_right(ApertureLab())
         self.link_left(SixthCircleOfHell())
@@ -464,7 +464,7 @@ class TheShriekingShack(Room):
                 "reputation as the most haunted building in Britain."
             ),
             enemy=get_enemy("Voldemort"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
 
 
@@ -482,7 +482,7 @@ class SixthCircleOfHell(Room):
                 "organ looms over you, an eerie, melancholic melody flowing from its pipes. Its player, a lone figure clad in gold and silver armour."
             ),
             enemy=get_enemy("Gabriel"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
 
 
@@ -500,7 +500,7 @@ class Snowdin(Room):
                 "that contrasts the rest of your journey."
             ),
             enemy=get_enemy("Flowey"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
         self.link_left(TheAstralPlane())
         self.link_right(TheSealedTemple())
@@ -537,7 +537,7 @@ class TheAstralPlane(Room):
                 "otherworldly creatures known as Chimeras."
             ),
             enemy=get_enemy("JenaAnderson"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
 
 
@@ -554,7 +554,7 @@ class TheObraDinn(Room):
                 "all of its crew either dead or missing."
             ),
             enemy=get_enemy("TheKraken"),
-            loot=FlaskOfCeruleanTears()
+            loot=item.mana_flask(1)
         )
 
 
@@ -571,5 +571,5 @@ class TheMushroomKingdom(Room):
                 "like Toads and Yoshis."
             ),
             enemy=get_enemy("Bowser"),
-            loot=FlaskOfCrimsonTears()
+            loot=item.health_flask(1)
         )
