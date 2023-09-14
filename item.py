@@ -27,20 +27,32 @@ class Item:
 class Flask(Item):
     """A flask that provides a boost to one or more stats.
 
+    Attributes
+    ----------
+    - count: int
+      The number of flasks held
+
     Methods
     -------
     - effect() -> str
       Describes the effect of the item
     """
-    
+    def __init__(self,
+                 name: str,
+                 description: str,
+                 count: int):
+        super().__init__(name, description)
+        self.count = count    
+
 
 class HealthFlask(Flask):
     """A flask that provides a boost to health"""
     def __init__(self,
                  name: str,
                  description: str,
+                 count: int,
                  health: int):
-        super().__init__(name, description)
+        super().__init__(name, description, count)
         self.health = health
 
     def effect(self) -> str:
@@ -52,8 +64,9 @@ class ManaFlask(Flask):
     def __init__(self,
                  name: str,
                  description: str,
+                 count: int,
                  mana: int):
-        super().__init__(name, description)
+        super().__init__(name, description, count)
         self.mana = mana
 
     def effect(self) -> str:
