@@ -180,7 +180,7 @@ class Zebes(Room):
                 "hide the secrets of the Chozo and your relentless pursuit of justice."
             ),
             enemy=get_enemy("Ridley"),
-            loot=DectusMedallionLeft()
+            loot=item.get_quest_item("DectusMedallionLeft")
         )
 
 
@@ -520,7 +520,7 @@ class TheSealedTemple(Room):
                 "of intrigue and discovery."
             ),
             enemy=get_enemy("TheHeir"),
-            loot=DectusMedallionRight()
+            loot=item.get_quest_item("DectusMedallionRight")
         )
 
 
