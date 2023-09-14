@@ -137,7 +137,7 @@ class Character:
         """Adds amt to health, without exceeding the maximum.
         Returns the amt of health added.
         """
-        boost = min(amt, self.max_health - self.health)
+        boost = min(amt, self.get_max_health() - self.health)
         self.health += boost
         return boost
 
@@ -145,7 +145,7 @@ class Character:
         """Adds amt to mana, without exceeding the maximum
         Returns the amt of mana added.
         """
-        boost = min(amt, self.max_mana - self.mana)
+        boost = min(amt, self.get_max_mana() - self.mana)
         self.mana += boost
         return boost
 
