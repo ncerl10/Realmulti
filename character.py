@@ -76,8 +76,6 @@ class Character:
 
     def get_attack(self) -> int:
         attack = self.attack
-        if self.weapon:
-            attack += self.weapon.attack
         if self.accessory:
             attack += self.accessory.attack_boost
         return attack
