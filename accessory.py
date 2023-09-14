@@ -43,10 +43,6 @@ class Accessory:
         self.attack_boost = attack_boost
         self.mana_boost = mana_boost
         self.defence_boost = defence_boost
-        
-
-    def effect(self) -> str:
-        raise NotImplementedError
 
 
 def GoldenFeather() -> Accessory:
