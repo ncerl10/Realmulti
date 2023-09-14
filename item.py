@@ -1,5 +1,5 @@
 class Item:
-    """    The parent class for an item
+    """The parent class for an item
 
     Attributes
     ----------
@@ -19,13 +19,50 @@ class Item:
 
     def __init__(self,
                  name: str,
-                 description: str,
-                 health: int,
-                 mana: int):
+                 description: str):
         self.name = name
         self.description = description
+
+
+class Flask(Item):
+    """A flask that provides a boost to one or more stats.
+
+    Methods
+    -------
+    - effect() -> str
+      Describes the effect of the item
+    """
+    
+
+class HealthFlask(Flask):
+    """A flask that provides a boost to health"""
+    def __init__(self,
+                 name: str,
+                 description: str,
+                 health: int):
+        super().__init__(name, description)
         self.health = health
+
+    def effect(self) -> str:
+        return f"restores {self.health} health"
+    
+
+class ManaFlask(Flask):
+    """A flask that provides a boost to mana"""
+    def __init__(self,
+                 name: str,
+                 description: str,
+                 mana: int):
+        super().__init__(name, description)
         self.mana = mana
+
+    def effect(self) -> str:
+        return f"restores {self.mana} mana"
+    
+
+
+class QuestItem(Item):
+    """An item required to complete the quest or win the game"""
 
 
 class FlaskOfCrimsonTears(Item):
