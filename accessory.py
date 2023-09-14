@@ -54,7 +54,7 @@ with open("data/accessory.json", "r") as f:
         _data[record["name"]] = record
 
 
-def create_accessory(name: str) -> Accessory:
+def create(name: str) -> Accessory:
     record = _data[name]
     # The ** operator unpacks a dict as keyword arguments
     return Accessory(**record)
