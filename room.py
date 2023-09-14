@@ -198,7 +198,7 @@ class Bunker(Room):
                 "You receive orders, grapple with the complexities of your existence, "
                 "and prepare for the constant struggle to reclaim your planet from the alien invaders."
             ),
-            enemy=Emil(),
+            enemy=get_enemy("Emil"),
             loot=FlaskOfCrimsonTears()
         )
 
