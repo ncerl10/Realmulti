@@ -6,6 +6,11 @@ from weapon import *
 from accessory import *
 from spell import *
 from item import *
+import armour
+import weapon
+import accessory
+import spell
+import item
 
 
 class Enemy:
@@ -68,8 +73,21 @@ with open("data/enemy.json", "r") as f:
 def create(name: str) -> Enemy:
     record = _data[name]
     # The ** operator unpacks a dict as keyword arguments
-    return Enemy(**record)
-
+    enemy = Enemy(**record)
+    if enemy.loot in accessory._data:
+        loot = accessory.create(enemy.loot)
+    elif enemy.loot in armour._data:
+        loot = armour.create(enemy.loot)
+    elif enemy.loot in weapon._data:
+        loot = weapon.create(enemy.loot)
+    elif enemy.loot in spell._data:
+        loot = spell.create(enemy.loot)
+    elif enemy.loot in item._flask:
+        loot = item.create(enemy.loot)
+    elif enemy.loot in item._quest:
+        loot = item.create(enemy.loot)
+    enemy.loot = loot
+    return enemy
 
 
 _enemy = {
