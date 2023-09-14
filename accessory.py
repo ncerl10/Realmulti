@@ -37,7 +37,7 @@ class Accessory:
                  defence_boost: int = 0) -> None:
         self.type = "accessory"
         self.name = name
-        self.descripton = description
+        self.description = description
         self.effect = effect
         self.health_boost = health_boost
         self.attack_boost = attack_boost
