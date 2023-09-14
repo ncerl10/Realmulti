@@ -38,8 +38,8 @@ class Room:
     def __init__(self,
                  name: str,
                  description: str,
-                 enemy: Enemy,
-                 loot):
+                 enemy: str,
+                 loot: str):
         self.name = name
         self.description = description
         self.enemy = enemy

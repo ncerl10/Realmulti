@@ -37,7 +37,7 @@ class Enemy:
                  health: int,
                  attack: int,
                  move: str,
-                 loot) -> None:
+                 loot: str) -> None:
         self.name = name
         self.description = description
         self.health = health
