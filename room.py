@@ -82,9 +82,7 @@ class Room:
 
 
 _data = {}
-with open("data/room.json", "r") as f:
-    for record in json.load(f):
-        _data[record["name"]] = record
+_rooms = {}
 
 
 def create(name: str) -> Room:
@@ -100,6 +98,27 @@ def create(name: str) -> Room:
     room.loot = loot
     room.enemy = enemy.create(room.enemy)
     return room
+
+def get(name: str) -> Room:
+    return _rooms[name]
+
+
+with open("data/room.json", "r") as f:
+    for record in json.load(f):
+        _data[record["name"]] = record
+# Instantiate rooms
+for name in _data:
+    _rooms[name] = create(name)
+# Link rooms to instantiated rooms
+for room in _rooms.values():
+    if room.left:
+        room.left = get(room.left)
+    if room.right:
+        room.right = get(room.right)
+    if room.front:
+        room.front = get(room.front)
+    if room.back:
+        room.back = get(room.back)
 
 
 class Dirtmouth(Room):
