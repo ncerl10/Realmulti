@@ -285,22 +285,15 @@ class Game:
                 )
                 time.sleep(1)
 
-            elif loot.name == "Flask of Crimson Tears":
+            elif isinstance(loot, Flask):
                 print(f"\nYou found a {loot.name}, a powerful flask")
                 time.sleep(1)
-                user.take_health_flask(1)
+                if isinstance(loot, HealthFlask):
+                    user.take_health_flask(1)
+                elif isinstance(loot, ManaFlask):
+                    user.take_mana_flask(1)
                 self.room.loot = None
-            elif loot.name == "Flask of Cerulean Tears":
-                print(f"\nYou found a {loot.name}, a powerful flask")
-                time.sleep(1)
-                user.take_mana_flask(1)
-                self.room.loot = None
-            elif loot.name == "Dectus Medallion (right)":
-                print(f"\nYou found a {loot.name}, a powerful item")
-                time.sleep(1)
-                user.take_item(loot)
-                self.room.loot = None
-            elif loot.name == "Dectus Medallion (left)":
+            elif isinstance(loot, QuestItem):
                 print(f"\nYou found a {loot.name}, a powerful item")
                 time.sleep(1)
                 user.take_item(loot)
