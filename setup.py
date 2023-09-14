@@ -1,24 +1,24 @@
 # importing from other files
-from room import *
+import room
 from character import *
-from weapon import *
-from spell import *
+import weapon
+import spell
 
 
-def setup() -> tuple[Room, Character]:
+def setup() -> tuple[room.Room, Character]:
     """
     Generates the map and the character and returns it in a list
     """
 
     # Generates the starting room
-    map = Dirtmouth()
+    map = room.get("Dirtmouth")
 
     # Generates the character
     character = Character("")
 
     # Sets the default statistics of the character
-    character.take_spell(WingardiumLeviosa())
-    character.take_weapon(Wand())
+    character.take_spell(spell.create("WingardiumLeviosa"))
+    character.take_weapon(weapon.create("Wand"))
     character.health = 100
     character.max_health = 100
     character.mana = 100
