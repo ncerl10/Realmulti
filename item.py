@@ -36,14 +36,21 @@ class Flask(Item):
     -------
     - effect() -> str
       Describes the effect of the item
+    - report() -> str
+      Reports the name, count, and effect of each item
     """
     def __init__(self,
                  name: str,
                  description: str,
                  count: int):
         super().__init__(name, description)
-        self.count = count    
+        self.count = count
 
+    def effect(self) -> str:
+        raise NotImplementedError
+
+    def report(self) -> str:
+        return f"Number of {self.name} in inventory: {self.count} ({self.effect()})"
 
 class HealthFlask(Flask):
     """A flask that provides a boost to health"""
@@ -78,32 +85,22 @@ class QuestItem(Item):
     """An item required to complete the quest or win the game"""
 
 
-class FlaskOfCrimsonTears(Item):
-    """
-    An item that inherits from the Item class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Flask of Crimson Tears")
-        self.set_health(50)
-        self.set_description(
-            f"The Flask of Crimson Tears is a sacred flask modelled after a golden holy chalice that was once graced by a tear of life\nHeals {self.get_health()} health"
-        )
+def FlaskOfCrimsonTears() -> HealthFlask:
+    return HealthFlask(
+        name="Flask of Crimson Tears",
+        description="A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.",
+        count=0,
+        health=50,
+    )
 
 
-class FlaskOfCeruleanTears(Item):
-    """
-    An item that inherits from the Item class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Flask of Cerulean Tears")
-        self.set_mana(50)
-        self.set_description(
-            f"The Flask of Cerulean Tears is a sacred flask modelled after a golden holy chalice that was once graced by a tear of life\nHeals {self.get_mana()} mana"
-        )
+def FlaskOfCeruleanTears() -> ManaFlask:
+    return ManaFlask(
+        name="Flask of Cerulean Tears",
+        description="A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.",
+        count=0,
+        mana=50,
+    )
 
 
 class DectusMedallionRight(Item):

@@ -37,7 +37,6 @@ class Game:
     - get_attack(self, user : Character, decision : str) -> [int, Weapon]
     - use_flask_battle(self, user : Character) -> None
     - use_flask(self, user : Character) -> None
-    - display_flask(self, user : Character) -> None
     - equip(self, user) -> None
     - display_equipment(self, user : Character) -> None
     - display_spells(self, user : Character) -> None
@@ -487,7 +486,8 @@ class Game:
 
     def use_flask_battle(self, user: Character) -> None:
         """sub action from get_choice() to prompt user for the flask to drink"""
-        self.display_flask(user)
+        user.display_flask()
+        time.sleep(1)
         selection = input("Which flask would you like to drink?: ")
         valid = False
         while not valid:
@@ -536,7 +536,8 @@ class Game:
 
     def use_flask(self, user: Character) -> None:
         """Function to allow the user to use flask but also allows them to cancel the action"""
-        self.display_flask(user)
+        user.display_flask()
+        time.sleep(1)
         selection = input(
             "Which flask would you like to drink? (type cancel to quit): ")
         valid = False
@@ -587,16 +588,6 @@ class Game:
             )
             time.sleep(1)
             user.consume_mana_flask(1)
-
-    def display_flask(self, user: Character) -> None:
-        """sub action from use_flask to display flask in inventory"""
-        print(
-            f"\nNumber of Flask of Crimson Tears in inventory : {user.health_flask} (restores {FlaskOfCrimsonTears().health} health)"
-        )
-        print(
-            f"Number of Flask of Cerulean Tears in inventory: {user.mana_flask} (restores {FlaskOfCeruleanTears().mana} mana)\n"
-        )
-        time.sleep(1)
 
     def equip(self, user) -> None:
         """main action for user to equip various items"""

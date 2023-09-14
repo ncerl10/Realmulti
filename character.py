@@ -62,8 +62,8 @@ class Character:
         self.attack = 0
         self.defence = 0
         # Equipment
-        self.health_flask = 0
-        self.mana_flask = 0
+        self.health_flask = FlaskOfCrimsonTears()
+        self.mana_flask = FlaskOfCeruleanTears()
         self.armour = None
         self.weapon = None
         self.accessory = None
@@ -89,6 +89,12 @@ class Character:
         boost = min(amt, self.max_mana - self.mana)
         self.mana += boost
         return boost
+
+    def display_flask(self) -> None:
+        print()  # line break
+        print(self.health_flask.report())
+        print(self.mana_flask.report())
+        print()  # line break
 
     def take_spell(self, spell: Spell) -> None:
         """updates the list of spells of the character"""
