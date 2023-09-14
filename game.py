@@ -506,7 +506,7 @@ class Game:
                 valid = False
 
         if selection.lower() == "flask of crimson tears":
-            healing = user.add_health(FlaskOfCrimsonTears().health)
+            healing = user.add_health(user.health_flask.health)
             print(
                 f"\nYou drank a Flask of Crimson Tears and gained {healing} health"
             )
@@ -514,7 +514,7 @@ class Game:
             user.consume_health_flask(1)
 
         elif selection.lower() == "flask of cerulean tears":
-            healing = user.add_mana(FlaskOfCeruleanTears().mana)
+            healing = user.add_mana(user.mana_flask.mana)
             print(
                 f"\nYou drank a Flask of Cerulean Tears and gained {healing} mana"
             )
@@ -560,7 +560,7 @@ class Game:
 
         if selection.lower() == "flask of crimson tears":
             # Makes sure the health healed does not exceed the maximum health
-            healing = user.add_health(FlaskOfCrimsonTears().health)
+            healing = user.add_health(user.health_flask.health)
             print(
                 f"\nYou drank a Flask of Crimson Tears and gained {healing} health"
             )
@@ -569,7 +569,7 @@ class Game:
 
         elif selection.lower() == "flask of cerulean tears":
             # Makes sure the mana gained does not exceed the maximum mana
-            healing = user.add_mana(FlaskOfCeruleanTears().mana)
+            healing = user.add_mana(user.mana_flask.mana)
             print(
                 f"\nYou drank a Flask of Cerulean Tears and gained {healing} mana"
             )
@@ -875,11 +875,11 @@ class Game:
             "\nWhich accesssory do you want to find out more about? : ")
         if decision.lower() == "flask of crimson tears":
             print("\n", end="")
-            print(FlaskOfCrimsonTears().description)
+            print(self.health_flask.description)
             time.sleep(1)
         elif decision.lower() == "flask of cerulean tears":
             print("\n", end="")
-            print(FlaskOfCecruleanTears().description)
+            print(self.mana_flask.description)
             time.sleep(1)
         else:
             print(f"You do not own {decision}")
