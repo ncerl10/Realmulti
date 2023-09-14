@@ -110,6 +110,8 @@ class Character:
         if damage < 1:
             damage = 1
         self.health -= damage
+        # Do not go below 0
+        self.health = max(0, self.health)
         return damage
 
     def use_mana(self, amt: int) -> None:

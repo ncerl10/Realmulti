@@ -322,7 +322,7 @@ class Game:
             print("\nYou attacked the air and realised how insane you looked")
             time.sleep(1)
         else:
-            while attacker.health > 0:
+            while not attacker.is_dead():
                 # Display users health and mana
                 print(f"\n{'-'*50}\n")
                 print(f"{attacker.name} has {attacker.health} health")
@@ -341,9 +341,8 @@ class Game:
                 decision = self.get_choice(attacker)
                 if decision == "flask":
                     self.use_flask_battle(attacker)
-                    if victim.health > 0:
-                        damage = max(1, victim.attack - attacker.get_defence())
-                        attacker.health = attacker.health - damage
+                    if not victim.is_dead():
+                        damage = attacker.take_damage(victim.attack - attacker.get_defence())
                         print(
                             f"\n{victim.name} used {victim.move}, dealing {damage} damage to {attacker.name}"
                         )
@@ -351,18 +350,15 @@ class Game:
                 else:
                     damage, weapon = self.get_attack(attacker, decision)
 
-                    # Deal damage to enemy
-                    victim.health = victim.health - (damage + attacker.get_attack())
-                    # Check if enemy died
-                    if victim.health > 0:
+                    victim.take_damage(damage + attacker.get_attack())
+                    if not victim.is_dead():
                         print(
                             f"\n{attacker.name}{weapon.move}, dealing {damage} damage to {victim.name}"
                         )
                         time.sleep(1)
                     # Allow enemy to attack if it didn't die yet
-                    if victim.health > 0:
-                        damage = max(1, victim.attack - attacker.get_defence())
-                        attacker.health = attacker.health - damage
+                    if not victim.is_dead():
+                        damage = attacker.take_damage(victim.attack - attacker.get_defence())
                         print(
                             f"\n{victim.name} used {victim.move}, dealing {damage} damage to {attacker.name}"
                         )
@@ -404,7 +400,7 @@ class Game:
                         self.room.enemy = None
                         break
             # Check if the user died
-            if attacker.health <= 0:
+            if attacker.is_dead():
                 self.end_game()
 
     def get_choice(self, user: Character) -> str:
@@ -473,7 +469,7 @@ class Game:
             cost = user.spells[spells.index(choice.lower())].cost
             print(f"\nYou used up {cost} mana points")
             time.sleep(1)
-            user.mana = user.mana - cost
+            user.use_mana(cost)
             return user.spells[spells.index(
                 choice.lower())].attack, user.spells[spells.index(choice)]
 
@@ -510,7 +506,6 @@ class Game:
                 valid = False
 
         if selection.lower() == "flask of crimson tears":
-            # Makes sure the health healed does not exceed the maximum health
             healing = user.add_health(FlaskOfCrimsonTears().health)
             print(
                 f"\nYou drank a Flask of Crimson Tears and gained {healing} health"
@@ -519,7 +514,6 @@ class Game:
             user.consume_health_flask(1)
 
         elif selection.lower() == "flask of cerulean tears":
-            # Makes sure the mana gained does not exceed the maximum mana
             healing = user.add_mana(FlaskOfCeruleanTears().mana)
             print(
                 f"\nYou drank a Flask of Cerulean Tears and gained {healing} mana"
@@ -718,20 +712,11 @@ class Game:
 
                 # Removes the stat boost from the previous accessory
                 if user.accessory:
-                    new_health = min(
-                        max(1, user.health - user.accessory.health_boost),
-                        user.max_health)
-                    user.health = new_health
-
-                    new_mana = min(
-                        max(0, user.mana - user.accessory.mana_boost),
-                        user.mana)
-                    user.mana = new_mana
+                    user.take_damage(user.accessory.health_boost)
+                    user.use_mana(user.accessory.mana_boost)
 
                 # Adds the stat boost from the new accessory
                 accessory = user.accessories[items.index(option.lower())]
-                user.health = user.health + accessory.health_boost
-                user.mana = user.mana + accessory.mana_boost
                 user.accessory = accessory
                 self.display_equipment(user)
 
@@ -740,7 +725,7 @@ class Game:
         # Displays the users statistics
         print(f"\nName: {user.name}")
         print(f"Health: {user.health} / {user.get_max_health()}")
-        print(f"Mana: {user.mana} / {user.mana}")
+        print(f"Mana: {user.mana} / {user.get_max_mana()}")
         print(f"Defence: {user.get_defence()}")
         print(f"Strength: {user.get_attack()}")
         time.sleep(1)
