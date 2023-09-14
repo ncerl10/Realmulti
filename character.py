@@ -119,20 +119,6 @@ class Character:
         # Do not go below 0
         self.mana = max(0, self.mana)
 
-    def boost_health(self, boost: int) -> None:
-        if boost < 0:
-            return
-        self.health += boost
-        # Do not go above max_health
-        self.health = min(self.health, self.get_max_health())
-
-    def boost_mana(self, boost: int) -> None:
-        if boost < 0:
-            return
-        self.mana += boost
-        # Do not go above max_mana
-        self.mana = min(self.mana, self.get_max_mana())
-
     def add_health(self, amt: int) -> int:
         """Adds amt to health, without exceeding the maximum.
         Returns the amt of health added.
