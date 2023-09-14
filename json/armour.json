@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Netherite Armour",
+        "description": "Netherite Armour is crafted by combining diamond armor with Netherite ingots, it offers increased damage resistance and durability",
+        "effect": "Provides 10 defence",
+        "defence": 10
+    },
+    {
+        "name": "Ornate Plate",
+        "description": "Ornate Plate is a regal and decorative suit of armor that not only enhances the player's defense but also adds a touch of grandeur to their appearance",
+        "effect": "Provides 15 defence",
+        "defence": 15
+    },
+    {
+        "name": "Power Suit",
+        "description": "The Power Suit provides exceptional protection enabling you to navigate the treacherous alien landscapes and combat formidable foes encountered throughout your missions",
+        "effect": "Provides 30 defence",
+        "defence": 30
+    },
+    {
+        "name": "Dragon Mail",
+        "description": "Dragon Mail is a legendary and formidable piece of armor that offers exceptional defense and protection for the wearer. It features dragon-scale motifs, reflecting its durability and resistance to various forms of damage",
+        "effect": "Provides 20 defence",
+        "defence": 20
+    },
+    {
+        "name": "Cappy",
+        "description": "Cappy is a sentient, shape-shifting hat with the ability to possess objects and enemies",
+        "effect": "Provides 25 defence",
+        "defence": 25
+    }
+]

@@ -1,0 +1,24 @@
+{
+    "health_flask": {
+        "name": "Flask of Crimson Tears",
+        "description": "A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.",
+        "count": 0,
+        "health": 50
+    },
+    "mana_flask": {
+        "name": "Flask of Cerulean Tears",
+        "description": "A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.",
+        "count": 0,
+        "mana": 50
+    },
+    "quest_items": {
+        "DectusMedallionRight": {
+            "name": "Dectus Medallion (right)",
+            "description": "The right half of a medallion with the power to break a powerful spell"
+        },
+        "DectusMedallionLeft": {
+            "name": "Dectus Medallion (left)",
+            "description": "The left half of a medallion with the power to break a powerful spell"
+        }
+    }
+}

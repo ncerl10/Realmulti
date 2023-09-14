@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Wingardium Leviosa",
+        "description": "Wingardium Leviosa is a magic spell that can make objects levitate\nDeals 10 damage\nCost 5 mana",
+        "attack": 10,
+        "cost": 5,
+        "move": " used levitation",
+        "win_front": " levitated ",
+        "win_back": " so high that it breached the atmosphere and exploded"
+    },
+    {
+        "name": "Vengeful Spirit",
+        "description": "Vengeful spirit is a spirit that will fly forward and burn foes in its path\nDeals 20 damage\nCost 10 mana",
+        "attack": 20,
+        "cost": 10,
+        "move": " used Vengeful Spirit",
+        "win_front": " charged up all your soul and shot a massive vengeful spirit at ",
+        "win_back": ""
+    },
+    {
+        "name": "Megidolaon",
+        "description": "Megidolaon is a damage dealing almighty spell\nDeals 30 damage\nCost 20 mana",
+        "attack": 30,
+        "cost": 20,
+        "move": " used Megidolaon",
+        "win_front": " summoned your persona Satanael and dealt massive almighty damage to ",
+        "win_back": ""
+    },
+    {
+        "name": "Glintstone Cometshard",
+        "description": "Glintstone Cometshard fires a comet that moves forward while leaving a trail\nDeals 40 damage\nCost 25 mana",
+        "attack": 40,
+        "cost": 25,
+        "move": " shot a Glinstone Cometshard",
+        "win_front": " Shredded ",
+        "win_back": " into a million pieces"
+    },
+    {
+        "name": "Will O The Wisp",
+        "description": "Will O The Wisp causes the enemy to explode\nDeals 50 damage\nCost 30 mana",
+        "attack": 50,
+        "cost": 30,
+        "move": " exploded",
+        "win_front": " exploded ",
+        "win_back": " until it burnt to a crisp"
+    }
+]
