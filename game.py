@@ -309,7 +309,7 @@ class Game:
     def flask(self, user: Character) -> None:
         """main action for user to drink their flasks"""
         # Check if the user still has available flasks
-        if (user.health_flask + user.mana_flask) == 0:
+        if (user.health_flask.count() + user.mana_flask.count()) == 0:
             print("\nYou ran out of flasks\n")
             time.sleep(1)
         else:
@@ -434,8 +434,8 @@ class Game:
                 )
                 valid = False
             # Check if user has any flask to drink
-            elif decision.lower() == "flask" and (user.health_flask +
-                                                  user.mana_flask) == 0:
+            elif decision.lower() == "flask" and (user.health_flask.count() +
+                                                  user.mana_flask.count()) == 0:
                 print("\nYou ran out of flasks\n")
                 time.sleep(1)
                 decision = input(
@@ -492,14 +492,14 @@ class Game:
                 valid = False
             # Checks if the user has enough flask of crimson tears
             elif selection.lower(
-            ) == "flask of crimson tears" and user.health_flask == 0:
+            ) == "flask of crimson tears" and user.health_flask.count() == 0:
                 print("\nYou ran out of Flask of Crimson Tears\n")
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
             # Checks if the user has enough flask of cerulean tears
             elif selection.lower(
-            ) == "flask of cerulean tears" and user.mana_flask == 0:
+            ) == "flask of cerulean tears" and user.mana_flask.count() == 0:
                 print("\nYou ran out of Flask of Cerulean Tears\n")
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
@@ -542,14 +542,14 @@ class Game:
                 valid = False
             # Checks if the user has enough flask of crimson tears
             elif selection.lower(
-            ) == "flask of crimson tears" and user.health_flask == 0:
+            ) == "flask of crimson tears" and user.health_flask.count() == 0:
                 print("\nYou ran out of Flask of Crimson Tears\n")
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
             # Checks if the user has enough flask of cerulean tears
             elif selection.lower(
-            ) == "flask of cerulean tears" and user.mana_flask == 0:
+            ) == "flask of cerulean tears" and user.mana_flask.count() == 0:
                 print("\nYou ran out of Flask of Cerulean Tears\n")
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
