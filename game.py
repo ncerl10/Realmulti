@@ -30,7 +30,7 @@ class Game:
     - help(self) -> None
     - look(self, room : Room) -> None
     - move(self, room : Room) -> None
-    - loot(self, user : Character, loot : Item) -> None
+    - loot(self, user : Character, loot : item.Item) -> None
     - flask(self, user : Character) -> None
     - attack(self, attacker : Character , victim: Enemy) -> None
     - get_choice(self, user : Character) -> str
@@ -54,7 +54,7 @@ class Game:
     - display_room_name(self) -> None
     - display_room_description(self) -> None
     - get_action(self) -> str
-    - collect_loot(self, attacker : Character, loot : Item) -> None
+    - collect_loot(self, attacker : Character, loot : item.Item) -> None
     - end_game(self) -> None
     - win(self, weapon) -> None
     - die(self) -> None
@@ -261,7 +261,7 @@ class Game:
             time.sleep(1)
             self.attack(self.character, room.enemy)
 
-    def loot(self, user: Character, loot: Item) -> None:
+    def loot(self, user: Character, loot: item.Item) -> None:
         """main action for user to search the room for loot"""
 
         # Generate a random number to see if you successfully loot the room whithout the enemy noticing
@@ -285,12 +285,12 @@ class Game:
                 )
                 time.sleep(1)
 
-            elif isinstance(loot, Flask):
+            elif isinstance(loot, item.Flask):
                 print(f"\nYou found a {loot.name}, a powerful flask")
                 time.sleep(1)
-                if isinstance(loot, HealthFlask):
+                if isinstance(loot, item.HealthFlask):
                     user.take_health_flask(1)
-                elif isinstance(loot, ManaFlask):
+                elif isinstance(loot, item.ManaFlask):
                     user.take_mana_flask(1)
                 self.room.loot = None
             elif isinstance(loot, QuestItem):
@@ -456,22 +456,18 @@ class Game:
         elif decision.lower() == "spell":
             self.display_spells(user)
             time.sleep(1)
-            spells = []
-            for spell in user.spells:
-                spells.append(spell.name.lower())
             choice = input("\nWhich spell would you like to cast?: ")
-            while choice.lower() not in spells:
+            while choice.lower() not in user.spells:
                 print(
                     f"\nYou tried to cast {choice} but it blew up in your face"
                 )
                 time.sleep(1)
                 choice = input("\nWhich spell would you like to cast?: ")
-            cost = user.spells[spells.index(choice.lower())].cost
+            cost = user.spells[choice].cost
             print(f"\nYou used up {cost} mana points")
             time.sleep(1)
             user.use_mana(cost)
-            return user.spells[spells.index(
-                choice.lower())].attack, user.spells[spells.index(choice)]
+            return user.spells[choice].attack, user.spells[choice]
 
     def use_flask_battle(self, user: Character) -> None:
         """sub action from get_choice() to prompt user for the flask to drink"""
@@ -645,14 +641,12 @@ class Game:
         else:
             # Displays the armours the user owns
             print("\nIn your inventory you have: ")
-            items = []
             for armour in user.armours:
-                print(f"- {armour.name}")
-                items.append(armour.name.lower())
+                print(f"- {armour}")
             time.sleep(1)
             option = input("\nWhich armour do you want to equip?: ")
             # Validates the users choice
-            if option.lower() not in items:
+            if option.lower() not in user.armours:
                 print(
                     f"\nYou tried equipping {option} but realised you cant create things out of thin air"
                 )
@@ -660,7 +654,7 @@ class Game:
             else:
                 print(f"\nYou equipped {option}")
                 time.sleep(1)
-                armour = user.armours[items.index(option.lower())]
+                armour = user.armours[option.lower()]
                 user.armour = armour
                 self.display_equipment(user)
 
@@ -672,21 +666,19 @@ class Game:
         else:
             # Displays the weapons the user owns
             print("\nIn your inventory you have: ")
-            items = []
             for weapon in user.weapons:
-                print(f"- {weapon.name}")
-                items.append(weapon.name.lower())
+                print(f"- {weapon}")
             time.sleep(1)
             # Validates the user's choice
             option = input("\nWhich weapon do you want to equip?: ")
-            if option.lower() not in items:
+            if option.lower() not in user.weapons:
                 print(
                     f"\nYou tried equipping {option} but realised you cant create things out of thin air"
                 )
             else:
                 print(f"\nYou equipped {option}")
                 time.sleep(1)
-                user.weapon = user.weapons[items.index(option.lower())]
+                user.weapon = user.weapons[option.lower()]
                 self.display_equipment(user)
 
     def equip_accessory(self, user: Character) -> None:
@@ -696,13 +688,11 @@ class Game:
             time.sleep(1)
         else:
             print("\nIn your inventory you have: ")
-            items = []
             for accessory in user.accessories:
-                print(f"- {accessory.name}")
-                items.append(accessory.name.lower())
+                print(f"- {accessory}")
             time.sleep(1)
             option = input("\nWhich accessory do you want to equip?: ")
-            if option.lower() not in items:
+            if option.lower() not in user.accessories:
                 print(
                     f"\nYou tried equipping {option} but realised you cant create things out of thin air"
                 )
@@ -716,7 +706,7 @@ class Game:
                     user.use_mana(user.accessory.mana_boost)
 
                 # Adds the stat boost from the new accessory
-                accessory = user.accessories[items.index(option.lower())]
+                accessory = user.accessories[option.lower()]
                 user.accessory = accessory
                 self.display_equipment(user)
 
@@ -768,22 +758,20 @@ class Game:
 
         else:
             # Displays the weapons the user owns
-            weapons = []
             print("\nIn your inventory you have: ")
             for weapon in user.weapons:
-                print(f"- {weapon.name}")
-                weapons.append(weapon.name.lower())
+                print(f"- {weapon}")
             time.sleep(1)
 
             decision = input(
                 "\nWhich weapon do you want to find out more about? : ")
-            if decision.lower() not in weapons:
+            if decision.lower() not in user.weapons:
                 print(f"You do not own {decision}")
 
             else:
                 # Displays the description of the weapon
                 print("\n", end="")
-                print(user.weapons[weapons.index(decision)].description)
+                print(user.weapons[decision].description)
                 time.sleep(1)
 
     def spell_info(self, user: Character) -> None:
@@ -794,22 +782,20 @@ class Game:
 
         else:
             # Displays the spells the user knows
-            spells = []
             print("\nIn your inventory you have: ")
             for spell in user.spells:
-                print(f"- {spell.name}")
-                spells.append(spell.name.lower())
+                print(f"- {spell}")
             time.sleep(1)
 
             decision = input(
                 "\nWhich spell do you want to find out more about? : ")
-            if decision.lower() not in spells:
+            if decision.lower() not in user.spells:
                 print(f"You do not own {decision}")
 
             else:
                 # Displays the description of the spell
                 print("\n", end="")
-                print(user.spells[spells.index(decision)].description)
+                print(user.spells[decision].description)
                 time.sleep(1)
 
     def armour_info(self, user: Character) -> None:
@@ -820,22 +806,20 @@ class Game:
 
         else:
             # Displays the armours the user owns
-            armours = []
             print("\nIn your inventory you have: ")
             for armour in user.armours:
-                print(f"- {armour.name}")
-                armours.append(armour.name.lower())
+                print(f"- {armour}")
             time.sleep(1)
 
             decision = input(
                 "\nWhich armour do you want to find out more about? : ")
-            if decision.lower() not in armours:
+            if decision.lower() not in user.armours:
                 print(f"You do not own {decision}")
 
             else:
                 # Displays the description of the armour
                 print("\n", end="")
-                print(user.armours[armours.index(decision)].description)
+                print(user.armours[decision].description)
                 time.sleep(1)
 
     def accessory_info(self, user: Character) -> None:
@@ -849,8 +833,8 @@ class Game:
             accessories = []
             print("\nIn your inventory you have: ")
             for accessory in user.accessories:
-                print(f"- {accessory.name}")
-                accessories.append(accessory.name.lower())
+                print(f"- {accessory}")
+                accessories.append(accessory.lower())
             time.sleep(1)
 
             decision = input(
@@ -862,7 +846,7 @@ class Game:
                 # Displays the description of the accessory
                 print("\n", end="")
                 print(
-                    user.accessories[accessories.index(decision)].description)
+                    user.accessories[decision].description)
                 time.sleep(1)
 
     def flask_info(self) -> None:
@@ -891,22 +875,20 @@ class Game:
             print("\nYou do not own any items yet")
         else:
             # Displays the items the user owns
-            items = []
             print("\nIn your inventory you have: ")
             for item in user.items:
-                print(f"- {item.name}")
-                items.append(item.name.lower())
+                print(f"- {item}")
             time.sleep(1)
 
             decision = input(
                 "\nWhich item do you want to find out more about? : ")
-            if decision.lower() not in items:
+            if decision.lower() not in user.items:
                 print(f"You do not own {decision}")
 
             else:
                 # Displays the description of the items
                 print()
-                print(user.items[items.index(decision)].description)
+                print(user.items[decision].description)
                 time.sleep(1)
 
     def display_room_name(self) -> None:
@@ -941,7 +923,7 @@ class Game:
 
         return decision
 
-    def collect_loot(self, attacker: Character, loot: Item) -> None:
+    def collect_loot(self, attacker: Character, loot: item.Item) -> None:
         """sub method from attack() to collect loot of defeated monster"""
         if loot.type == "weapon":
             attacker.take_weapon(loot)
