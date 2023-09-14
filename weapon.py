@@ -1,3 +1,5 @@
+import json
+
 class Weapon:
     """The parent class for a weapon
 
@@ -38,6 +40,19 @@ class Weapon:
         self.move = move
         self.win_front = win_front
         self.win_back = win_back
+
+
+# Read data from JSON file
+_data = {}
+with open("data/weapon.json", "r") as f:
+    for record in json.load(f):
+        _data[record["name"]] = record
+
+
+def create(name: str) -> Weapon:
+    record = _data[name]
+    # The ** operator unpacks a dict as keyword arguments
+    return Weapon(**record)
 
 
 def BusterSword() -> Weapon:

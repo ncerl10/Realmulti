@@ -1,3 +1,5 @@
+import json
+
 class Armour:
     """The parent class for an armour
 
@@ -30,6 +32,19 @@ class Armour:
         self.description = description
         self.effect = effect
         self.defence = defence
+
+
+# Read data from JSON file
+_data = {}
+with open("data/armour.json", "r") as f:
+    for record in json.load(f):
+        _data[record["name"]] = record
+
+
+def create(name: str) -> Armour:
+    record = _data[name]
+    # The ** operator unpacks a dict as keyword arguments
+    return Armour(**record)
 
 
 def NetheriteArmour() -> Armour:

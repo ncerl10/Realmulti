@@ -1,3 +1,5 @@
+import json
+
 class Spell:
     """The parent class for a spell
 
@@ -41,6 +43,20 @@ class Spell:
         self.move = move
         self.win_front = win_front
         self.win_back = win_back
+
+
+# Read data from JSON file
+_data = {}
+with open("data/spell.json", "r") as f:
+    for record in json.load(f):
+        _data[record["name"]] = record
+
+
+def create(name: str) -> Spell:
+    record = _data[name]
+    # The ** operator unpacks a dict as keyword arguments
+    return Spell(**record)
+
 
 
 def WingardiumLeviosa() -> Spell:

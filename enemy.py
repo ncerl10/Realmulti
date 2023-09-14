@@ -1,3 +1,5 @@
+import json
+
 #importing from other files
 from armour import *
 from weapon import *
@@ -54,6 +56,20 @@ class Enemy:
             damage = 1
         self.health -= damage
         return damage
+
+
+# Read data from JSON file
+_data = {}
+with open("data/enemy.json", "r") as f:
+    for record in json.load(f):
+        _data[record["name"]] = record
+
+
+def create(name: str) -> Enemy:
+    record = _data[name]
+    # The ** operator unpacks a dict as keyword arguments
+    return Enemy(**record)
+
 
 
 _enemy = {
