@@ -46,6 +46,11 @@ class Enemy:
     def is_dead(self) -> bool:
         return self.health <= 0
 
+    def take_damage(self, damage: int) -> None:
+        """Minimum damage that can be dealt is 1"""
+        if damage < 1:
+            damage = 1
+        self.health -= damage
 
 def TheRadiance() -> Enemy:
     return Enemy(
