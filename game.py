@@ -518,14 +518,11 @@ class Game:
 
         if selection.lower() == "flask of crimson tears":
             # Makes sure the health healed does not exceed the maximum health
-            final_health = min(user.max_health,
-                               user.health + FlaskOfCrimsonTears().health)
-            healing = final_health - user.health
+            healing = user.add_health(FlaskOfCrimsonTears().health)
             print(
                 f"\nYou drank a Flask of Crimson Tears and gained {healing} health"
             )
             time.sleep(1)
-            user.health = final_health
             user.consume_health_flask(1)
 
         elif selection.lower() == "flask of cerulean tears":
@@ -575,14 +572,11 @@ class Game:
 
         if selection.lower() == "flask of crimson tears":
             # Makes sure the health healed does not exceed the maximum health
-            final_health = min(user.max_health,
-                               user.health + FlaskOfCrimsonTears().health)
-            healing = final_health - user.health
+            healing = user.add_health(FlaskOfCrimsonTears().health)
             print(
                 f"\nYou drank a Flask of Crimson Tears and gained {healing} health"
             )
             time.sleep(1)
-            user.health = final_health
             user.consume_health_flask(1)
 
         elif selection.lower() == "flask of cerulean tears":
