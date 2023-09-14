@@ -44,460 +44,272 @@ class Enemy:
         self.loot = loot
 
 
-
-class TheRadiance(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("The Radiance")
-        self.set_health(20)
-        self.set_description(
-            "a higher being of light similar to Essence, and as such, opposed to the Void, her ancient enemy. The Moth Tribe is born from her light and in return revered her."
-        )
-        self.set_attack(2)
-        self.set_move("Wall of Light")
-        self.set_loot(VengefulSpirit())
-
-
-class MrOshiro(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Mr Oshiro")
-        self.set_health(80)
-        self.set_description(
-            "a well-meaning but tormented ghostly hotel owner in Celeste, haunted by his past and struggling to maintain his crumbling establishment"
-        )
-        self.set_attack(8)
-        self.set_move("Charge")
-        self.set_loot(GoldenFeather())
-
-
-class TheHighDragun(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("The High Dragun")
-        self.set_health(80)
-        self.set_description(
-            "a powerful dragon armed to the teeth with an array of deadly attacks and a formidable challenge for any gungeoneer"
-        )
-        self.set_attack(15)
-        self.set_move("Bullet Stream")
-        self.set_loot(MasterRound())
-
-
-class GodrickTheGrafted(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Godrick The Grafted")
-        self.set_health(170)
-        self.set_description(
-            "a grotesque and formidable boss, a creature amalgamation of flesh and metal that presents a formidable challenge to you with his overwhelming power and monstrous appearance"
-        )
-        self.set_attack(25)
-        self.set_move("Dragon Arm")
-        self.set_loot(GlintstoneCometshard())
-
-
-class Glados(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Glados")
-        self.set_health(150)
-        self.set_description(
-            "a malevolent AI antagonist, known for her dark sense of humor and penchant for testing subjects with life-threatening puzzles"
-        )
-        self.set_attack(20)
-        self.set_move("Neurotoxin Gas")
-        self.set_loot(PortalGun())
-
-
-class Yaldabaoth(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Yaldabaoth")
-        self.set_health(100)
-        self.set_description(
-            "an imposing and god-like antagonist, representing the oppressive control and distorted order imposed upon society"
-        )
-        self.set_attack(15)
-        self.set_move("Divine Punishment")
-        self.set_loot(Megidolaon())
-
-
-class Ridley(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Ridley")
-        self.set_health(500)
-        self.set_description(
-            "a fearsome space pirate leader and recurring antagonist, known for his ruthless cruelty and iconic draconic appearance"
-        )
-        self.set_attack(45)
-        self.set_move("Fireball")
-        self.set_loot(PowerSuit())
-
-
-class Emil(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Emil")
-        self.set_health(400)
-        self.set_description(
-            "a nightmarish and relentless foe, with multiple heads and powerful attacks"
-        )
-        self.set_attack(40)
-        self.set_move("Emil Clones")
-        self.set_loot(VirtuousTreaty())
-
-
-class TheBoneHyrda(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("The Bone Hydra")
-        self.set_health(150)
-        self.set_description(
-            "a fearsome and multi-headed boss, a relentless adversary that guards the underworld's entrance and challenges you with its deadly attacks."
-        )
-        self.set_attack(20)
-        self.set_move("Ground Slam")
-        self.set_loot(Coronacht())
-
-
-class GeneralMugen(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("General Mugen")
-        self.set_health(350)
-        self.set_description(
-            "a formidable and ruthless military leader, known for his strategic prowess and unwavering dedication to his nation's conquest"
-        )
-        self.set_attack(35)
-        self.set_move("Ordained Punishment")
-        self.set_loot(DragonMail())
-
-
-class DoctorEggman(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Doctor Eggman")
-        self.set_health(200)
-        self.set_description(
-            "a brilliant yet perpetually thwarted scientist with a penchant for constructing nefarious machines and plots to conquer the world"
-        )
-        self.set_attack(20)
-        self.set_move("his Robot Army")
-        self.set_loot(ChaosEmerald())
-
-
-class TheMoonLord(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("The Moon Lord")
-        self.set_health(300)
-        self.set_description(
-            "a towering eldritch entity with a menacing appearance and an array of devastating attacks that challenge you to your limits"
-        )
-        self.set_attack(30)
-        self.set_move("Phantasmal Eyes")
-        self.set_loot(Zenith())
-
-
-class Mithrix(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Mithrix")
-        self.set_health(120)
-        self.set_description(
-            "a vengeful and godlike being with the power to manipulate time and space, posing a significant threat to whoever attempts to escape"
-        )
-        self.set_attack(20)
-        self.set_move("Lunar Hammer Smash")
-        self.set_loot(WillOTheWisp())
-
-
-class Sephiroth(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Sephiroth")
-        self.set_health(20)
-        self.set_description(
-            "a brooding and immensely powerful warrior with a deep-seated desire to harness the destructive force of the planet for his own malevolent purposes"
-        )
-        self.set_attack(10)
-        self.set_move("Super Nova")
-        self.set_loot(BusterSword())
-
-
-class Ganondorf(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Ganondorf")
-        self.set_health(20)
-        self.set_description(
-            "a malevolent Gerudo sorcerer who seeks to obtain the Triforce's power and plunge Hyrule into darkness and chaos"
-        )
-        self.set_attack(10)
-        self.set_move("Dark Magic")
-        self.set_loot(MasterSword())
-
-
-class TheEnderDragon(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("The Ender Dragon")
-        self.set_health(20)
-        self.set_description(
-            "a fearsome and colossal winged creature that challenges you with its destructive abilities and formidable strength"
-        )
-        self.set_attack(10)
-        self.set_move("Dragon's breath")
-        self.set_loot(NetheriteArmour())
-
-
-class Shibusawa(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Shibusawa")
-        self.set_health(20)
-        self.set_description(
-            "a ruthless and power-hungry underworld figure who manipulates events to achieve his sinister goals within the criminal landscape of Kamurocho"
-        )
-        self.set_attack(10)
-        self.set_move("Beast Style")
-        self.set_loot(DragonAmulet())
-
-
-class Enchantress(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Enchantress")
-        self.set_health(20)
-        self.set_description(
-            "a mastermind behind the Order of No Quarter, shrouded in mystery and wielding dark magic"
-        )
-        self.set_attack(10)
-        self.set_move("Pyrokinetic Flames")
-        self.set_loot(OrnatePlate())
-
-
-class Freya(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Freya")
-        self.set_health(20)
-        self.set_description(
-            "a formidable and relentless adversary, harnessing her powerful magic and fierce determination to protect her son, Baldur"
-        )
-        self.set_attack(10)
-        self.set_move("Thamur")
-        self.set_loot(LeviathanAxe())
-
-
-class Reyna(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Reyna")
-        self.set_health(100)
-        self.set_description(
-            "a deadly duelist agent with the ability to absorb the souls of defeated enemies, empowering herself to become an even more formidable threat on the battlefield"
-        )
-        self.set_attack(10)
-        self.set_move("Reaver Vandal")
-        self.set_loot(RGXButterflyKnife())
-
-
-class Voldemort(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Voldemort")
-        self.set_health(1000)
-        self.set_description(
-            "a malevolent dark wizard, seeking power and immortality while spreading fear and chaos throughout the wizarding world"
-        )
-        self.set_attack(60)
-        self.set_move("Avada Kedavra")
-        self.set_loot(ElderWand())
-
-
-class Gabriel(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Gabriel, Apostate of Hate")
-        self.set_health(200)
-        self.set_description(
-            "a seething red angelic crusader wielding twin swords, desperate to prove himself to the council"
-        )
-        self.set_attack(20)
-        self.set_move("Sword Throw")
-        self.set_loot(MarksmanRevolver())
-
-
-class Flowey(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Flowey")
-        self.set_health(350)
-        self.set_description(
-            "a malevolent flower with a cunning and manipulative personality")
-        self.set_attack(35)
-        self.set_move("Flamethrower")
-        self.set_loot(ToyKnife())
-
-
-class TheHeir(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("The Heir")
-        self.set_health(400)
-        self.set_description(
-            "a formidable and relentless opponent, putting the your combat skills to the test in a challenging battle within its enchanting yet treacherous world."
-        )
-        self.set_attack(40)
-        self.set_move("Dark Energy")
-        self.set_loot(HolyCross())
-
-
-class JenaAnderson(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Jena Anderson")
-        self.set_health(400)
-        self.set_description(
-            "a formidable and challenging adversary, wielding her scientific knowledge and powerful Legion to confront you in an intense battle."
-        )
-        self.set_attack(40)
-        self.set_move("Legion")
-        self.set_loot(XBaton())
-
-
-class TheKraken(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("The Kraken")
-        self.set_health(300)
-        self.set_description(
-            "a massive tentacled sea monster that terrorised the ill-fated crew of the ship"
-        )
-        self.set_attack(30)
-        self.set_move("Tentacles")
-        self.set_loot(MementoMortem())
-
-
-class Bowser(Enemy):
-    """
-    An enemey that inherits from the Enemy class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Bowser")
-        self.set_health(300)
-        self.set_description(
-            "the king koopa with a imposing stature and fire-breathing abilities"
-        )
-        self.set_attack(30)
-        self.set_move("Koopa Army")
-        self.set_loot(Cappy())
+def TheRadiance() -> Enemy:
+    return Enemy(
+        name="The Radiance",
+        description="a higher being of light similar to Essence, and as such, opposed to the Void, her ancient enemy. The Moth Tribe is born from her light and in return revered her.",
+        health=20,
+        attack=2,
+        move="Wall of Light",
+        loot=VengefulSpirit()
+    )
+
+def MrOshiro() -> Enemy:
+    return Enemy(
+        name="Mr Oshiro",
+        description="a well-meaning but tormented ghostly hotel owner in Celeste, haunted by his past and struggling to maintain his crumbling establishment",
+        health=80,
+        attack=8,
+        move="Charge",
+        loot=GoldenFeather()
+    )
+
+def TheHighDragun() -> Enemy:
+    return Enemy(
+        name="The High Dragun",
+        description="a powerful dragon armed to the teeth with an array of deadly attacks and a formidable challenge for any gungeoneer",
+        health=80,
+        attack=15,
+        move="Bullet Stream",
+        loot=MasterRound()
+    )
+
+def GodrickTheGrafted() -> Enemy:
+    return Enemy(
+        name="Godrick The Grafted",
+        description="a grotesque and formidable boss, a creature amalgamation of flesh and metal that presents a formidable challenge to you with his overwhelming power and monstrous appearance",
+        health=170,
+        attack=25,
+        move="Dragon Arm",
+        loot=GlintstoneCometshard()
+    )
+
+def Glados() -> Enemy:
+    return Enemy(
+        name="Glados",
+        description="a malevolent AI antagonist, known for her dark sense of humor and penchant for testing subjects with life-threatening puzzles",
+        health=150,
+        attack=20,
+        move="Neurotoxin Gas",
+        loot=PortalGun()
+    )
+
+def Yaldabaoth() -> Enemy:
+    return Enemy(
+        name="Yaldabaoth",
+        description="an imposing and god-like antagonist, representing the oppressive control and distorted order imposed upon society",
+        health=100,
+        attack=15,
+        move="Divine Punishment",
+        loot=Megidolaon()
+    )
+
+def Ridley() -> Enemy:
+    return Enemy(
+        name="Ridley",
+        description="a fearsome space pirate leader and recurring antagonist, known for his ruthless cruelty and iconic draconic appearance",
+        health=500,
+        attack=45,
+        move="Fireball",
+        loot=PowerSuit()
+    )
+
+def Emil() -> Enemy:
+    return Enemy(
+        name="Emil",
+        description="a nightmarish and relentless foe, with multiple heads and powerful attacks",
+        health=400,
+        attack=40,
+        move="Emil Clones",
+        loot=VirtuousTreaty()
+    )
+
+def TheBoneHyrda() -> Enemy:
+    return Enemy(
+        name="The Bone Hydra",
+        description="a fearsome and multi-headed boss, a relentless adversary that guards the underworld's entrance and challenges you with its deadly attacks.",
+        health=150,
+        attack=20,
+        move="Ground Slam",
+        loot=Coronacht()
+    )
+
+def GeneralMugen() -> Enemy:
+    return Enemy(
+        name="General Mugen",
+        description="a formidable and ruthless military leader, known for his strategic prowess and unwavering dedication to his nation's conquest",
+        health=350,
+        attack=35,
+        move="Ordained Punishment",
+        loot=DragonMail()
+    )
+
+def DoctorEggman() -> Enemy:
+    return Enemy(
+        name="Doctor Eggman",
+        description="a brilliant yet perpetually thwarted scientist with a penchant for constructing nefarious machines and plots to conquer the world",
+        health=200,
+        attack=20,
+        move="his Robot Army",
+        loot=ChaosEmerald()
+    )
+
+def TheMoonLord() -> Enemy:
+    return Enemy(
+        name="The Moon Lord",
+        description="a towering eldritch entity with a menacing appearance and an array of devastating attacks that challenge you to your limits",
+        health=300,
+        attack=30,
+        move="Phantasmal Eyes",
+        loot=Zenith()
+    )
+
+def Mithrix() -> Enemy:
+    return Enemy(
+        name="Mithrix",
+        description="a vengeful and godlike being with the power to manipulate time and space, posing a significant threat to whoever attempts to escape",
+        health=120,
+        attack=20,
+        move="Lunar Hammer Smash",
+        loot=WillOTheWisp()
+    )
+
+def Sephiroth() -> Enemy:
+    return Enemy(
+        name="Sephiroth",
+        description="a brooding and immensely powerful warrior with a deep-seated desire to harness the destructive force of the planet for his own malevolent purposes",
+        health=20,
+        attack=10,
+        move="Super Nova",
+        loot=BusterSword()
+    )
+
+def Ganondorf() -> Enemy:
+    return Enemy(
+        name="Ganondorf",
+        description="a malevolent Gerudo sorcerer who seeks to obtain the Triforce's power and plunge Hyrule into darkness and chaos",
+        health=20,
+        attack=10,
+        move="Dark Magic",
+        loot=MasterSword()
+    )
+
+def TheEnderDragon() -> Enemy:
+    return Enemy(
+        name="The Ender Dragon",
+        description="a fearsome and colossal winged creature that challenges you with its destructive abilities and formidable strength",
+        health=20,
+        attack=10,
+        move="Dragon's breath",
+        loot=NetheriteArmour()
+    )
+
+def Shibusawa() -> Enemy:
+    return Enemy(
+        name="Shibusawa",
+        description="a ruthless and power-hungry underworld figure who manipulates events to achieve his sinister goals within the criminal landscape of Kamurocho",
+        health=20,
+        attack=10,
+        move="Beast Style",
+        loot=DragonAmulet()
+    )
+
+def Enchantress() -> Enemy:
+    return Enemy(
+        name="Enchantress",
+        description="a mastermind behind the Order of No Quarter, shrouded in mystery and wielding dark magic",
+        health=20,
+        attack=10,
+        move="Pyrokinetic Flames",
+        loot=OrnatePlate()
+    )
+
+def Freya() -> Enemy:
+    return Enemy(
+        name="Freya",
+        description="a formidable and relentless adversary, harnessing her powerful magic and fierce determination to protect her son, Baldur",
+        health=20,
+        attack=10,
+        move="Thamur",
+        loot=LeviathanAxe()
+    )
+
+def Reyna() -> Enemy:
+    return Enemy(
+        name="Reyna",
+        description="a deadly duelist agent with the ability to absorb the souls of defeated enemies, empowering herself to become an even more formidable threat on the battlefield",
+        health=100,
+        attack=10,
+        move="Reaver Vandal",
+        loot=RGXButterflyKnife()
+    )
+
+def Voldemort() -> Enemy:
+    return Enemy(
+        name="Voldemort",
+        description="a malevolent dark wizard, seeking power and immortality while spreading fear and chaos throughout the wizarding world",
+        health=1000,
+        attack=60,
+        move="Avada Kedavra",
+        loot=ElderWand()
+    )
+
+def Gabriel() -> Enemy:
+    return Enemy(
+        name="Gabriel, Apostate of Hate",
+        description="a seething red angelic crusader wielding twin swords, desperate to prove himself to the council",
+        health=200,
+        attack=20,
+        move="Sword Throw",
+        loot=MarksmanRevolver()
+    )
+
+def Flowey() -> Enemy:
+    return Enemy(
+        name="Flowey",
+        description="a malevolent flower with a cunning and manipulative personality",
+        health=350,
+        attack=35,
+        move="Flamethrower",
+        loot=ToyKnife()
+    )
+
+def TheHeir() -> Enemy:
+    return Enemy(
+        name="The Heir",
+        description="a formidable and relentless opponent, putting your combat skills to the test in a challenging battle within its enchanting yet treacherous world.",
+        health=400,
+        attack=40,
+        move="Dark Energy",
+        loot=HolyCross()
+    )
+
+def JenaAnderson() -> Enemy:
+    return Enemy(
+        name="Jena Anderson",
+        description="a formidable and challenging adversary, wielding her scientific knowledge and powerful Legion to confront you in an intense battle.",
+        health=400,
+        attack=40,
+        move="Legion",
+        loot=XBaton()
+    )
+
+def TheKraken() -> Enemy:
+    return Enemy(
+        name="The Kraken",
+        description="a massive tentacled sea monster that terrorized the ill-fated crew of the ship",
+        health=300,
+        attack=30,
+        move="Tentacles",
+        loot=MementoMortem()
+    )
+
+def Bowser() -> Enemy:
+    return Enemy(
+        name="Bowser",
+        description="the king koopa with an imposing stature and fire-breathing abilities",
+        health=300,
+        attack=30,
+        move="Koopa Army",
+        loot=Cappy()
+    )

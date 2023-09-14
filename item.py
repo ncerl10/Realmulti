@@ -103,27 +103,15 @@ def FlaskOfCeruleanTears() -> ManaFlask:
     )
 
 
-class DectusMedallionRight(Item):
-    """
-    An item that inherits from the Item class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Dectus Medallion (right)")
-        self.set_description(
-            "The right half of a medallion with the power to break a powerful spell"
-        )
+def DectusMedallionRight() -> QuestItem:
+    return QuestItem(
+        name="Dectus Medallion (right)",
+        description="The right half of a medallion with the power to break a powerful spell",
+    )
 
 
-class DectusMedallionLeft(Item):
-    """
-    An item that inherits from the Item class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Dectus Medallion (left)")
-        self.set_description(
-            "The left half of a medallion with the power to break a powerful spell"
-        )
+def DectusMedallionLeft() -> QuestItem:
+    return QuestItem(
+        name="Dectus Medallion (left)",
+        description="The left half of a medallion with the power to break a powerful spell",
+    )

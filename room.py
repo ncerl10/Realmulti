@@ -7,7 +7,7 @@ from item import *
 
 
 class Room:
-    """The parent class for a room
+    """Encapsulates data for a room.
 
     Attributes
     ----------

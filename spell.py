@@ -43,95 +43,57 @@ class Spell:
         self.win_back = win_back
 
 
-class WingardiumLeviosa(Spell):
-    """
-    A spell that inherits from the Spell class
-    """
+def WingardiumLeviosa() -> Spell:
+    return Spell(
+        name="Wingardium Leviosa",
+        description="Wingardium Leviosa is a magic spell that can make objects levitate\nDeals 10 damage\nCost 5 mana",
+        attack=10,
+        cost=5,
+        move=" used levitation",
+        win_front=" levitated ",
+        win_back=" so high that it breached the atmosphere and exploded"
+    )
 
-    def __init__(self):
-        super().__init__()
-        self.set_name("Wingardium Leviosa")
-        self.set_attack(10)
-        self.set_cost(5)
-        self.set_description(
-            f"Wingardium Leviosa is a magic spell that can make objects levitate\nDeals {self.get_attack()} damage\nCost {self.get_cost()} mana"
-        )
-        self.set_move(" used levitation")
-        self.set_win_front(" levitated ")
-        self.set_win_back(
-            " so high that it breached the atmosphere and exploded")
+def VengefulSpirit() -> Spell:
+    return Spell(
+        name="Vengeful Spirit",
+        description="Vengeful spirit is a spirit that will fly forward and burn foes in its path\nDeals 20 damage\nCost 10 mana",
+        attack=20,
+        cost=10,
+        move=" used Vengeful Spirit",
+        win_front=" charged up all your soul and shot a massive vengeful spirit at ",
+        win_back=""
+    )
 
+def Megidolaon() -> Spell:
+    return Spell(
+        name="Megidolaon",
+        description="Megidolaon is a damage dealing almighty spell\nDeals 30 damage\nCost 20 mana",
+        attack=30,
+        cost=20,
+        move=" used Megidolaon",
+        win_front=" summoned your persona Satanael and dealt massive almighty damage to ",
+        win_back=""
+    )
 
-class VengefulSpirit(Spell):
-    """
-    A spell that inherits from the Spell class
-    """
+def GlintstoneCometshard() -> Spell:
+    return Spell(
+        name="Glintstone Cometshard",
+        description="Glintstone Cometshard fires a comet that moves forward while leaving a trail\nDeals 40 damage\nCost 25 mana",
+        attack=40,
+        cost=25,
+        move=" shot a Glinstone Cometshard",
+        win_front=" Shredded ",
+        win_back=" into a million pieces"
+    )
 
-    def __init__(self):
-        super().__init__()
-        self.set_name("Vengeful Spirit")
-        self.set_attack(20)
-        self.set_cost(10)
-        self.set_description(
-            f"Vengeful spirit is a spirit that will fly forward and burn foes in its path\nDeals {self.get_attack()} damage\nCost {self.get_cost()} mana"
-        )
-        self.set_move(" used Vengeful Spirit")
-        self.set_win_front(
-            " charged up all your soul and shot a massive vengeful spirit at ")
-        self.set_win_back("")
-
-
-class Megidolaon(Spell):
-    """
-    A spell that inherits from the Spell class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Megidolaon")
-        self.set_attack(30)
-        self.set_cost(20)
-        self.set_description(
-            f"Megidolaon is a damage dealing almighty spell\nDeals {self.get_attack()} damage\nCost {self.get_cost()} mana"
-        )
-        self.set_move(" used Megidolaon")
-        self.set_win_front(
-            " summoned your persona Satanael and dealt massive almighty damage to "
-        )
-        self.set_win_back("")
-
-
-class GlintstoneCometshard(Spell):
-    """
-    A spell that inherits from the Spell class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Glintstone Cometshard")
-        self.set_attack(40)
-        self.set_cost(25)
-        self.set_description(
-            f"Glintstone Cometshard fires a comet that moves forward while leaving a trail\nDeals {self.get_attack()} damage\nCost {self.get_cost()} mana"
-        )
-        self.set_move(" shot a Glinstone Cometshard")
-        self.set_win_front(" Shredded ")
-        self.set_win_back(" into a million pieces")
-
-
-class WillOTheWisp(Spell):
-    """
-    A spell that inherits from the Spell class
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.set_name("Will O The Wisp")
-        self.set_attack(50)
-        self.set_cost(30)
-        self.set_description(
-            f"Will O The Wisp causes the enemy to explode\nDeals {self.get_attack()} damage\nCost {self.get_cost()} mana"
-        )
-        self.set_move(" exploded")
-        self.set_win_front(" exploded ")
-        self.set_win_back(" until it burnt to a crisp")
+def WillOTheWisp() -> Spell:
+    return Spell(
+        name="Will O The Wisp",
+        description="Will O The Wisp causes the enemy to explode\nDeals 50 damage\nCost 30 mana",
+        attack=50,
+        cost=30,
+        move=" exploded",
+        win_front=" exploded ",
+        win_back=" until it burnt to a crisp"
+    )
