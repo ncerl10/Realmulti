@@ -74,6 +74,34 @@ class Character:
         self.accessories: list[Accessory] = []
         self.items: list[Item] = []
 
+    def get_attack(self) -> int:
+        attack = self.attack
+        if self.weapon:
+            attack += self.weapon.attack
+        if self.accessory:
+            attack += self.accessory.attack_boost
+        return attack
+        
+    def get_defence(self) -> int:
+        defence = self.defence
+        if self.armour:
+            defence += self.armour.defence
+        if self.accessory:
+            defence += self.accessory.defence_boost
+        return defence
+
+    def get_max_health(self) -> int:
+        max_health = self.max_health
+        if self.accessory:
+            max_health += self.accessory.health_boost
+        return max_health
+
+    def get_max_mana(self) -> int:
+        max_mana = self.max_mana
+        if self.accessory:
+            max_mana += self.accessory.mana_boost
+        return max_mana
+
     def add_health(self, amt: int) -> int:
         """Adds amt to health, without exceeding the maximum.
         Returns the amt of health added.
