@@ -1,3 +1,5 @@
+import json
+
 class Accessory:
     """The parent class for an accessory
 
@@ -43,6 +45,19 @@ class Accessory:
         self.attack_boost = attack_boost
         self.mana_boost = mana_boost
         self.defence_boost = defence_boost
+
+
+# Read data from JSON file
+_data = {}
+with open("data/accessory.json", "r") as f:
+    for record in json.load(f):
+        _data[record["name"]] = record
+
+
+def create_accessory(name: str) -> Accessory:
+    record = _data[name]
+    # The ** operator unpacks a dict as keyword arguments
+    return Accessory(**record)
 
 
 def GoldenFeather() -> Accessory:
