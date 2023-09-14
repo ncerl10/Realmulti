@@ -1,9 +1,15 @@
+import json
+
 #importing from other files
 from enemy import Enemy, get_enemy
 from weapon import *
 from armour import *
 from spell import *
+import enemy
 import item
+import armour
+import weapon
+import spell
 
 
 class Room:
@@ -38,8 +44,8 @@ class Room:
     def __init__(self,
                  name: str,
                  description: str,
-                 enemy: str,
-                 loot: str):
+                 enemy,
+                 loot):
         self.name = name
         self.description = description
         self.enemy = enemy
@@ -73,6 +79,27 @@ class Room:
         temp = room
         temp.forward = self
         self.back = temp
+
+
+_data = {}
+with open("data/room.json", "r") as f:
+    for record in json.load(f):
+        _data[record["name"]] = record
+
+
+def create(name: str) -> Room:
+    record = _data[name]
+    # The ** operator unpacks a dict as keyword arguments
+    room = Room(**record)
+    if room.loot in armour._data:
+        loot = armour.create(room.loot)
+    elif room.loot in weapon._data:
+        loot = weapon.create(room.loot)
+    elif room.loot in spell._data:
+        loot = spell.create(room.loot)
+    room.loot = loot
+    room.enemy = enemy.create(room.enemy)
+    return room
 
 
 class Dirtmouth(Room):
