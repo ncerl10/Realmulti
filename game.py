@@ -530,14 +530,11 @@ class Game:
 
         elif selection.lower() == "flask of cerulean tears":
             # Makes sure the mana gained does not exceed the maximum mana
-            final_mana = min(user.mana,
-                             user.mana + FlaskOfCeruleanTears().mana)
-            healing = final_mana - user.mana
+            healing = user.add_mana(FlaskOfCeruleanTears().mana)
             print(
                 f"\nYou drank a Flask of Cerulean Tears and gained {healing} mana"
             )
             time.sleep(1)
-            user.mana = final_mana
             user.consume_mana_flask(1)
 
     def use_flask(self, user: Character) -> None:
@@ -590,14 +587,11 @@ class Game:
 
         elif selection.lower() == "flask of cerulean tears":
             # Makes sure the mana gained does not exceed the maximum mana
-            final_mana = min(user.mana,
-                             user.mana + FlaskOfCeruleanTears().mana)
-            healing = final_mana - user.mana
+            healing = user.add_mana(FlaskOfCeruleanTears().mana)
             print(
                 f"\nYou drank a Flask of Cerulean Tears and gained {healing} mana"
             )
             time.sleep(1)
-            user.mana = final_mana
             user.consume_mana_flask(1)
 
     def display_flask(self, user: Character) -> None:

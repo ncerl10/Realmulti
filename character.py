@@ -74,6 +74,22 @@ class Character:
         self.accessories: list[Accessory] = []
         self.items: list[Item] = []
 
+    def add_health(self, amt: int) -> int:
+        """Adds amt to health, without exceeding the maximum.
+        Returns the amt of health added.
+        """
+        boost = min(amt, self.max_health - self.health)
+        self.health += boost
+        return boost
+
+    def add_mana(self, amt: int) -> int:
+        """Adds amt to mana, without exceeding the maximum
+        Returns the amt of mana added.
+        """
+        boost = min(amt, self.max_mana - self.mana)
+        self.mana += boost
+        return boost
+
     def take_spell(self, spell: Spell) -> None:
         """updates the list of spells of the character"""
         self.spells.append(spell)
