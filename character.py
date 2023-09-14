@@ -113,16 +113,16 @@ class Character:
         self.accessories.append(accessory)
 
     def consume_health_flask(self, number: int = 1) -> None:
-        self.health_flask -= number
+        self.health_flask.count -= number
 
     def consume_mana_flask(self, number: int = 1) -> None:
-        self.mana_flask -= number
+        self.mana_flask.count -= number
 
     def take_health_flask(self, number: int = 1) -> None:
-        self.health_flask += number
+        self.health_flask.count += number
 
     def take_mana_flask(self, number: int = 1) -> None:
-        self.mana_flask += number
+        self.mana_flask.count += number
 
     def take_item(self, item: Item) -> None:
         """updates the list of items of the character"""

@@ -14,7 +14,7 @@ def setup() -> tuple[Room, Character]:
     map = Dirtmouth()
 
     # Generates the character
-    character = Character()
+    character = Character("")
 
     # Sets the default statistics of the character
     character.take_spell(WingardiumLeviosa())
