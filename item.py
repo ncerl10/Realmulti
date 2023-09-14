@@ -87,6 +87,26 @@ class QuestItem(Item):
     """An item required to complete the quest or win the game"""
 
 
+# Read data from JSON file
+with open("data/item.json", "r") as f:
+    record = json.load(f)
+_flask = {
+    "health_flask": record["health_flask"],
+    "mana_flask": record["mana_flask"]
+}
+_quest = record["quest_items"]
+
+
+
+def create(name: str) -> Flask | QuestItem:
+    if name == "health_flask":
+        return HealthFlask(**_flask[name])
+    elif name == "mana_flask":
+        return ManaFlask(**_flask[name])
+    else:
+        return QuestItem(**_quest[name])
+            
+
 def health_flask(count: int = 0) -> HealthFlask:
     return HealthFlask(
         name="Flask of Crimson Tears",
