@@ -204,16 +204,11 @@ class Game:
 
     def move(self, room: Room) -> None:
         """main action for user to traverse from one room to another"""
-        movement = input(
-            '\nWhich direction do you wish to move in? (left, right, forward, back): '
+        choice = get_valid_choice(
+            ["left", "right", "forward", "back"],
+            prompt="Which direction do you wish to move in?",
+            error_callback=text.move_fail,
         )
-
-        # Validates the users choice
-        if movement.lower() not in ["left", "right", "forward", "back"]:
-            print(
-                f"\nYou do not know what direction {movement} is and got confused"
-            )
-            time.sleep(1)
 
         # Generate a random number to see if you managed to sneak past the enemy
         chance = random.randint(1, 3)
@@ -227,24 +222,24 @@ class Game:
                 time.sleep(1)
 
         if not caught:
-            if movement.lower() == "left":
+            if choice == "left":
                 if room.left is None:
                     print()
-                    print(text.hit_wall(movement.lower()))
+                    print(text.hit_wall(choice)
                     time.sleep(1)
                 else:
                     self.room = room.left
-            if movement.lower() == "right":
+            if choice == "right":
                 if room.right is None:
                     print()
-                    print(text.hit_wall(movement.lower()))
+                    print(text.hit_wall(choice)
                     time.sleep(1)
                 else:
                     self.room = room.right
-            if movement.lower() == "forward":
+            if choice == "forward":
                 if room.front is None:
                     print()
-                    print(text.hit_wall(movement.lower()))
+                    print(text.hit_wall(choice)
                     time.sleep(1)
                 # Check if you are going to the final boss room
                 elif room.front.name == "The Shrieking Shack":

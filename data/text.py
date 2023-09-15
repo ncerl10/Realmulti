@@ -170,5 +170,8 @@ def do_not_have(name: str) -> str:
 def action_fail(action: str) -> str:
     return f"You do not have the physical and mental capability to {action}"
 
+def move_fail(direction: str) -> str:
+    return f"You do not know what direction {direction} is and got confused"
+
 def obtain_thing(name: str, type: str) -> str:
     return f"You obtained {name}, a powerful {type}"
