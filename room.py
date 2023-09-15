@@ -45,16 +45,21 @@ class Room:
                  name: str,
                  description: str,
                  enemy,
-                 loot):
+                 loot=None,
+                 *,  # all subsequent parameters are keyword arguments
+                 left=None,
+                 right=None,
+                 front=None,
+                 back=None):
         self.name = name
         self.description = description
         self.enemy = enemy
         self.loot = loot
         self.been_here = False
-        self.left = None
-        self.right = None
-        self.forward = None
-        self.back = None
+        self.left = left
+        self.right = right
+        self.front = front
+        self.back = back
 
     def link_left(self, room: "Room") -> None:
         """updates the room to the left of the home room(self.name)"""
@@ -72,12 +77,12 @@ class Room:
         """updates the room to the up of the home room(self.name)"""
         temp = room
         temp.back = self
-        self.forward = temp
+        self.front = temp
 
     def link_back(self, room: "Room") -> None:
         """updates the room to the down of the home room(self.name)"""
         temp = room
-        temp.forward = self
+        temp.front = self
         self.back = temp
 
 
@@ -95,6 +100,10 @@ def create(name: str) -> Room:
         loot = weapon.create(room.loot)
     elif room.loot in spell._data:
         loot = spell.create(room.loot)
+    elif room.loot in item._flask:
+        loot = item.create(room.loot)
+    elif room.loot in item._quest:
+        loot = item.create(room.loot)
     room.loot = loot
     room.enemy = enemy.create(room.enemy)
     return room

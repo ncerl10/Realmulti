@@ -310,4 +310,4 @@ _enemy = {
     }
 
 def get_enemy(name: str) -> Enemy | None:
-    return _enemy.get(name)
+    return _enemy[name]

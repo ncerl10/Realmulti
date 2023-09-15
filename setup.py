@@ -17,7 +17,7 @@ def setup() -> tuple[room.Room, Character]:
     character = Character("")
 
     # Sets the default statistics of the character
-    character.take_spell(spell.create("WingardiumLeviosa"))
+    character.take_spell(spell.create("Wingardium Leviosa"))
     character.take_weapon(weapon.create("Wand"))
     character.health = 100
     character.max_health = 100
