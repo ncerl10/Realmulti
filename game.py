@@ -218,7 +218,7 @@ class Game:
             if chance == 1:
                 caught = True
             else:
-                print(f"\nYou managed to sneak past {room.enemy.name}")
+                print(text.sneak_success(room.enemy.name))
                 time.sleep(1)
 
         if not caught:
@@ -271,9 +271,7 @@ class Game:
                     self.room = room.back
 
         else:
-            print(
-                f"\nYou tried to sneak to another room but {room.enemy.name} noticed you"
-            )
+            print(text.sneak_fail(room.enemy.name))
             time.sleep(1)
             self.attack(self.character, room.enemy)
 

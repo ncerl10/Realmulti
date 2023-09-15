@@ -175,3 +175,9 @@ def move_fail(direction: str) -> str:
 
 def obtain_thing(name: str, type: str) -> str:
     return f"You obtained {name}, a powerful {type}"
+
+def sneak_success(name: str) -> str:
+    return f"You managed to sneak past {name}"
+
+def sneak_fail(name: str) -> str:
+    return f"You tried to sneak to another room but {name} noticed you"
