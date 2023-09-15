@@ -10,15 +10,22 @@ from setup import *
 
 
 def get_valid_choice(choices: list, prompt: str, err_msg: str) -> str:
+    """Helper function to prompt the player with a list of choices, validate the player's choice, and return it.
+    
+    1. Display choices to the player
+    2. Prompt the player for a choice
+    3. Validate the player's choice (is in the list of choices)
+    4. Display an error message if invalid
+        """
     for choice in choices:
         print("- {choice}")
     choice = None
     while not choice:
-        choice = input(prompt)
+        choice = input(prompt).lower()
         if choice not in choices:
             print(err_msg)
             choice = None
-    return choice.lower()
+    return choice
 
 
 class Game:
