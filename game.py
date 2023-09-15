@@ -287,20 +287,17 @@ class Game:
                 caught = True
             else:
                 print(
-                    f"\nBy some miracle you managed to loot the room without {self.room.enemy.name} noticing"
-                )
+                    text. loot_success(self.room.enemy.name))
                 time.sleep(1)
 
         if not caught:
             # Allow the user to loot the room
             if loot is None:
-                print(
-                    "\nYou searched every nook and cranny but there was nothing to be found"
-                )
+                print(text.loot_none(loot))
                 time.sleep(1)
 
             elif isinstance(loot, item.Flask):
-                print(f"\nYou found a {loot.name}, a powerful flask")
+                print(text.obtain_thing(loot.name, loot type))
                 time.sleep(1)
                 if isinstance(loot, item.HealthFlask):
                     user.take_health_flask(1)
@@ -308,15 +305,13 @@ class Game:
                     user.take_mana_flask(1)
                 self.room.loot = None
             elif isinstance(loot, QuestItem):
-                print(f"\nYou found a {loot.name}, a powerful item")
+                print(text.obtain_thing(loot.name, loot type))
                 time.sleep(1)
                 user.take_item(loot)
                 self.room.loot = None
 
         else:
-            print(
-                f"\n{self.room.enemy.name} noticed you while you tried to loot the room"
-            )
+            print(text. loot_fail(self.room.enemy.name))
             time.sleep(1)
             self.attack(user, self.room.enemy)
 

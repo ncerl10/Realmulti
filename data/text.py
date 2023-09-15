@@ -181,3 +181,12 @@ def sneak_success(name: str) -> str:
 
 def sneak_fail(name: str) -> str:
     return f"You tried to sneak to another room but {name} noticed you"
+
+def loot_success(name: str) -> str:
+    return f"By some miracle you managed to loot the room without {name} noticing"
+
+def loot_fail(name: str) -> str:
+    return f"{name} noticed you while you tried to loot the room"
+
+def loot_none(name: str) -> str:
+    return "You searched every nook and cranny but there was nothing to be found"
