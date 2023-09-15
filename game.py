@@ -3,6 +3,8 @@ import time
 import random
 
 #import from other files
+from enemy import Enemy
+from room import Room
 from setup import *
 
 
