@@ -3,6 +3,7 @@ import time
 import random
 
 #import from other files
+from character import Character
 from data import text
 from enemy import Enemy
 from room import Room
@@ -10,14 +11,16 @@ from setup import *
 
 
 def get_valid_choice(choices: list, prompt: str, error_callback) -> str:
-    """Helper function to prompt the player with a list of choices, validate the player's choice, and return it.
+    """Helper function to prompt the player with a list of choices, validate the
+    player's choice, and return it.
     
     1. Display choices to the player
     2. Prompt the player for a choice
     3. Validate the player's choice (is in the list of choices)
     4. Display an error message if invalid
 
-    The error message is displayed with a callback function that takes in the choice as a str and returns the error message as a str.
+    The error message is displayed with a callback function that takes in the choice as
+    a str and returns the error message as a str.
     """
     choices_lower = [choice.lower() for choice in choices]
     for choice in choices:
@@ -114,9 +117,9 @@ class Game:
             print()
             time.sleep(1)
 
-        decision = input('Do you wish to enter the school? ( yes / no ): ')
+        decision = input('Do you wish to enter the school? ( yes / no ): ').lower()
 
-        if decision.lower() == "yes":
+        if decision == "yes":
             name = input('\nTarnished, key in your name: ')
             self.character.name = name
             # Check if the user used the secret easter egg name
@@ -125,7 +128,7 @@ class Game:
             else:
                 print(text.WELCOME_YES)
                 time.sleep(1)
-        elif decision.lower() == "no":
+        elif decision == "no":
             print(text.WELCOME_NO)
             self.end = True
             time.sleep(1)
@@ -147,27 +150,27 @@ class Game:
 
         decision = self.get_action()
         # Does the action the user selected
-        if decision.lower() == "help":
+        if decision == "help":
             self.help()
-        elif decision.lower() == "look":
+        elif decision == "look":
             self.look(self.room)
-        elif decision.lower() == "move":
+        elif decision == "move":
             self.move(self.room)
-        elif decision.lower() == "attack":
+        elif decision == "attack":
             self.attack(self.character, self.room.enemy)
-        elif decision.lower() == "loot":
+        elif decision == "loot":
             self.loot(self.character, self.room.loot)
-        elif decision.lower() == "flask":
+        elif decision == "flask":
             self.flask(self.character)
-        elif decision.lower() == "equip":
+        elif decision == "equip":
             self.equip(self.character)
-        elif decision.lower() == "status":
+        elif decision == "status":
             self.status(self.character)
-        elif decision.lower() == "info":
+        elif decision == "info":
             self.info(self.character)
-        elif decision.lower() == "die":
+        elif decision == "die":
             self.die()
-        elif decision.lower() == "meow":
+        elif decision == "meow":
             self.meow()
 
     def help(self) -> None:
@@ -181,7 +184,6 @@ class Game:
     def look(self, room: Room) -> None:
         """main action to look around the room including rooms linked to the room and enemies in the room"""
         print()
-
         # Displays the connected rooms
         if room.left:
             print(f"To the left is {room.left.name}")
