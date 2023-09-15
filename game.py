@@ -9,6 +9,18 @@ from room import Room
 from setup import *
 
 
+def get_valid_choice(choices: list, prompt: str, err_msg: str) -> str:
+    for choice in choices:
+        print("- {choice}")
+    choice = None
+    while not choice:
+        choice = input(prompt)
+        if choice not in choices:
+            print(err_msg)
+            choice = None
+    return choice
+
+
 class Game:
     """
     A class that creates an instance of the game
