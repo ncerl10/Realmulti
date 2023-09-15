@@ -125,6 +125,9 @@ _      _____ ____  _
 \_/  \|\____\\____/\_/  \|
                           """
 
+def attack_none(_=None) -> str:
+    return "You attacked the air and realised how insane you looked"
+    
 def hit_wall(direction: str) -> str:
     action = {
         "left": "walked to the left",
@@ -190,3 +193,7 @@ def loot_fail(name: str) -> str:
 
 def loot_none(name: str) -> str:
     return "You searched every nook and cranny but there was nothing to be found"
+
+def win_game(weapon: str) -> str:
+    return f"Using the almighty {weapon}, you struck the Dark Lord Voldemort down, crippling him of all his powers and stop his evil tyranny over the school"
+    

@@ -315,7 +315,7 @@ class Game:
         """main action for user to attack the enemy in the room"""
         # Check if there is an enemy in the room
         if victim is None:
-            show_text("\nYou attacked the air and realised how insane you looked")
+            show_text(text.attack_none(victim))
         else:
             while not attacker.is_dead():
                 # Display users health and mana
@@ -365,11 +365,11 @@ class Game:
                         show_text(f"{victim.name} dropped a {victim.loot.name}")
                         choice = input(
                             f"\nDo you want to pick {victim.loot.name}? ( yes / no ): "
-                        )
-                        if choice.lower() == "yes":
+                        ).lower()
+                        if choice == "yes":
                             self.collect_loot(attacker, victim.loot)
                             show_text(victim.loot.description)
-                        elif choice.lower() == "no":
+                        elif choice == "no":
                             show_text(text.loot_no(victim.loot.name))
                         else:
                             show_text(text.loot_other(victim.loot.name))
@@ -771,9 +771,7 @@ class Game:
 
     def win(self, weapon) -> None:
         """displays scenario when user wins"""
-        show_text(
-            f"Using the almighty {weapon.name}, you struck the Dark Lord Voldemort down, crippling him of all his powers and stop his evil tyranny over the school"
-        )
+        show_text(text.win_game(weapon.name))
         print(text.GOD_SLAIN)
         self.end = True
 
