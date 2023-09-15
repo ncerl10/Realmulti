@@ -17,7 +17,7 @@ DOOR_LOCKED_HINT = "You probably need to find a special item to break the spell 
 
 OUT_OF_MANA = "You do not have enough mana to cast spells"
 
-OUT_OF_FLASKS - "You ran out of flasks"
+OUT_OF_FLASKS = "You ran out of flasks"
 
 NO_ACCESSORIES = "You do not have any accessories to equip"
 

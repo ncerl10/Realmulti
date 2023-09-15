@@ -103,13 +103,13 @@ class Game:
                 print(text.WELCOME_YES)
                 time.sleep(1)
         elif decision.lower() == "no":
-                print(text.WELCOME_NO)
+            print(text.WELCOME_NO)
             self.end = True
             time.sleep(1)
             self.end_game()
             return
         else:
-                print(text.WELCOME_OTHER)
+            print(text.WELCOME_OTHER)
             self.end = True
             time.sleep(1)
             self.end_game()
@@ -164,8 +164,8 @@ class Game:
             print(f"To the left is {room.left.name}")
         if room.right:
             print(f"To the right is {room.right.name}")
-        if room.forward:
-            print(f"In front of you is {room.forward.name}")
+        if room.front:
+            print(f"In front of you is {room.front.name}")
         if room.back:
             print(f"Behind you is {room.back.name}")
         time.sleep(1)
@@ -217,12 +217,12 @@ class Game:
                 else:
                     self.room = room.right
             if movement.lower() == "forward":
-                if room.forward is None:
+                if room.front is None:
                     print()
                     print(text.hit_wall(movement.lower()))
                     time.sleep(1)
                 # Check if you are going to the final boss room
-                elif room.forward.name == "The Shrieking Shack":
+                elif room.front.name == "The Shrieking Shack":
                     items = []
                     for item in self.character.items:
                         items.append(item.name)
@@ -231,7 +231,7 @@ class Game:
                         print()
                         print(text.BREAK_SPELL)
                         time.sleep(1)
-                        self.room = room.forward
+                        self.room = room.front
                     else:
                         print()
                         print(text.DOOR_LOCKED)
@@ -240,7 +240,7 @@ class Game:
                         print(text.DOOR_LOCKED_HINT)
                         time.sleep(1)
                 else:
-                    self.room = room.forward
+                    self.room = room.front
 
             if movement.lower() == "back":
                 if room.back is None:
@@ -736,7 +736,7 @@ class Game:
                 "items"
         ]:
             print()
-            print(text.do_not_own(choice))
+            print(text.do_not_have(choice))
 
         elif choice == "weapons":
             self.weapon_info(user)
@@ -761,7 +761,7 @@ class Game:
         # Check if the user owns any weapons
         if len(user.weapons) == 0:
             print()
-            print(text.do_not_own("weapons"))
+            print(text.do_not_have("weapons"))
         else:
             # Displays the weapons the user owns
             print("\nIn your inventory you have: ")
@@ -773,7 +773,7 @@ class Game:
                 "\nWhich weapon do you want to find out more about? : ")
             if decision.lower() not in user.weapons:
                 print()
-                print(text.do_not_own(choice))
+                print(text.do_not_have(choice))
             else:
                 # Displays the description of the weapon
                 print("\n", end="")
@@ -785,7 +785,7 @@ class Game:
         # Check if the user knows any spells
         if len(user.spells) == 0:
             print()
-            print(text.do_not_own("spells"))
+            print(text.do_not_have("spells"))
 
         else:
             # Displays the spells the user knows
@@ -798,7 +798,7 @@ class Game:
                 "\nWhich spell do you want to find out more about? : ")
             if decision.lower() not in user.spells:
                 print()
-                print(text.do_not_own(decision))
+                print(text.do_not_have(decision))
     
             else:
                 # Displays the description of the spell
@@ -811,7 +811,7 @@ class Game:
         # Check if the user owns any armours
         if len(user.armours) == 0:
             print()
-            print(text.do_not_own("armour"))
+            print(text.do_not_have("armour"))
 
         else:
             # Displays the armours the user owns
@@ -824,7 +824,7 @@ class Game:
                 "\nWhich armour do you want to find out more about? : ")
             if decision.lower() not in user.armours:
                 print()
-                print(text.do_not_own(decision))
+                print(text.do_not_have(decision))
 
             else:
                 # Displays the description of the armour
@@ -837,7 +837,7 @@ class Game:
         # Checks if the user owns any accessories
         if len(user.accessories) == 0:
             print()
-            print(text.do_not_own("accessories"))
+            print(text.do_not_have("accessories"))
 
         else:
             # Displays the accessories the user owns
@@ -852,7 +852,7 @@ class Game:
                 "\nWhich accesssory do you want to find out more about? : ")
             if decision.lower() not in accessories:
                 print()
-                print(text.do_not_own(decision))
+                print(text.do_not_have(decision))
             else:
                 # Displays the description of the accessory
                 print("\n", end="")
@@ -884,7 +884,7 @@ class Game:
         # Check if the user owns any items
         if len(user.items) == 0:
             print()
-            print(text.do_not_own("items"))
+            print(text.do_not_have("items"))
         else:
             # Displays the items the user owns
             print("\nIn your inventory you have: ")
@@ -896,7 +896,7 @@ class Game:
                 "\nWhich item do you want to find out more about? : ")
             if decision.lower() not in user.items:
                 print()
-                print(text.do_not_own(decision))
+                print(text.do_not_have(decision))
             else:
                 # Displays the description of the items
                 print()
