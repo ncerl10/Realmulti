@@ -18,7 +18,7 @@ def get_valid_choice(choices: list, prompt: str, err_msg: str) -> str:
         if choice not in choices:
             print(err_msg)
             choice = None
-    return choice
+    return choice.lower()
 
 
 class Game:
