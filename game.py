@@ -9,13 +9,15 @@ from room import Room
 from setup import *
 
 
-def get_valid_choice(choices: list, prompt: str, err_msg: str) -> str:
+def get_valid_choice(choices: list, prompt: str, error_callback) -> str:
     """Helper function to prompt the player with a list of choices, validate the player's choice, and return it.
     
     1. Display choices to the player
     2. Prompt the player for a choice
     3. Validate the player's choice (is in the list of choices)
     4. Display an error message if invalid
+
+    The error message is displayed with a callback function that takes in the choice as a str and returns the error message as a str.
     """
     choices_lower = [choice.lower() for choice in choices]
     for choice in choices:
@@ -24,7 +26,7 @@ def get_valid_choice(choices: list, prompt: str, err_msg: str) -> str:
     while not choice:
         choice = input(prompt).lower()
         if choice not in choices_lower:
-            print(err_msg)
+            print(error_callback(choice))
             choice = None
     return choice
 
@@ -419,8 +421,12 @@ class Game:
 
     def get_choice(self, user: Character) -> str:
         """sub action from attack() to prompt user for attack methods or use of flask"""
-        decision = input(
-            f"What do you want to use? ({user.weapon.name} / Spell / Flask): ")
+        choices = [user.weapon.name, "Spell", "Flask"]
+        choice = get_valid_choice(
+            choices,
+            prompt="What do you want to use?",
+            err_msg="Nothing happened."
+        )
 
         # Get a list of spell cost
         cost = []

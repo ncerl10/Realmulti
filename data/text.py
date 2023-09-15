@@ -152,6 +152,9 @@ def flask_succeed(name: str, effect: str) -> str:
 def out_of_item(name: str) -> str:
     return f"You ran out of {name}"
 
+def use_fail(name: str) -> str:
+    return f"You tried to use {name} but nothing happened"
+
 def equip_fail(name: str) -> str:
     return f"You tried changing your {name} but nothing happened"
 
