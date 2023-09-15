@@ -449,42 +449,6 @@ class Game:
                 break
         return choice
 
-        valid = False
-        while not valid:
-            valid = True
-            if decision.lower() not in [
-                    user.weapon.name.lower(), "spell", "flask"
-            ]:
-                print(f"\nYou tried to use {decision} but nothing happened")
-                time.sleep(1)
-                decision = input(
-                    f"\nWhat do you want to use? ({user.weapon.name} / Spell / Flask): "
-                )
-                valid = False
-            # Check if user has enough mana to cast spells
-            elif decision.lower() == "spell" and user.mana < min(cost):
-                print()
-                print(text.OUT_OF_MANA)
-                print()
-                time.sleep(1)
-                decision = input(
-                    f"What do you want to use? ({user.weapon.name} / Spell / Flask): "
-                )
-                valid = False
-            # Check if user has any flask to drink
-            elif decision.lower() == "flask" and (user.health_flask.count() +
-                                                  user.mana_flask.count()) == 0:
-                print()
-                print(text.OUT_OF_FLASKS)
-                print()
-                time.sleep(1)
-                decision = input(
-                    f"What do you want to use? ({user.weapon.name} / Spell / Flask): "
-                )
-                valid = False
-
-        return decision
-
     def get_attack(self, user: Character, decision: str) -> tuple[int, Spell]:
         """sub action from attack() to get total damage done to victim"""
 
