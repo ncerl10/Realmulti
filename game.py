@@ -328,7 +328,7 @@ class Game:
     def flask(self, user: Character) -> None:
         """main action for user to drink their flasks"""
         # Check if the user still has available flasks
-        if (user.health_flask.count() + user.mana_flask.count()) == 0:
+        if (user.health_flask.count + user.mana_flask.count == 0):
             print("\nYou ran out of flasks\n")
             time.sleep(1)
         else:
@@ -440,7 +440,7 @@ class Game:
                 print()
                 time.sleep(1)
             # Check if user has any flask to drink
-            elif choice == "flask" and (user.health_flask.count() + user.mana_flask.count()) == 0:
+            elif choice == "flask" and (user.health_flask.count + user.mana_flask.count == 0):
                 print()
                 print(text.OUT_OF_FLASKS)
                 print()
@@ -458,14 +458,18 @@ class Game:
 
         # check if user used spells
         elif decision.lower() == "spell":
-            self.display_spells(user)
+            print("\nSpells:")
+            spell_choices = [
+                # f"- {spell.name} ({spell.cost} mana)"
+                spell.name
+                for spell in user.spells.values()
+            ]
             time.sleep(1)
-            choice = input("\nWhich spell would you like to cast?: ")
-            while choice.lower() not in user.spells:
-                print()
-                print(text.spell_fail(choice))
-                time.sleep(1)
-                choice = input("\nWhich spell would you like to cast?: ")
+            choice = get_valid_choice(
+                spell_choices,
+                prompt="Which spell would you like to cast",
+                error_callback=text.spell_fail
+            )
             cost = user.spells[choice].cost
             print(f"\nYou used up {cost} mana points")
             time.sleep(1)
@@ -475,145 +479,115 @@ class Game:
     def use_flask_battle(self, user: Character) -> None:
         """sub action from get_choice() to prompt user for the flask to drink"""
         user.display_flask()
+        choices = [
+            "flask of crimson tears",
+            "flask of cerulean tears",
+        ]
         time.sleep(1)
-        selection = input("Which flask would you like to drink?: ")
-        valid = False
-        while not valid:
-            valid = True
-            # Validates user selection
-            if selection.lower() not in [
-                    "flask of crimson tears", "flask of cerulean tears"
-            ]:
-                print()
-                print(text.flask_fail(selection))
-                print()
-                time.sleep(1)
-                selection = input("Which flask would you like to drink?: ")
-                valid = False
+        while True:
+            choice = get_valid_choice(
+                choices,
+                prompt="Which flask would you like to drink?",
+                error_callback=text.flask_fail
+            )
             # Checks if the user has enough flask of crimson tears
-            elif selection.lower(
-            ) == "flask of crimson tears" and user.health_flask.count() == 0:
+            if choice == "flask of crimson tears" and user.health_flask.count == 0:
                 print()
-                print(text.out_of(user.health_flask.name))
+                print(text.out_of_item(user.health_flask.name))
                 print()
                 time.sleep(1)
-                selection = input("Which flask would you like to drink?: ")
-                valid = False
             # Checks if the user has enough flask of cerulean tears
-            elif selection.lower(
-            ) == "flask of cerulean tears" and user.mana_flask.count() == 0:
+            elif choice == "flask of cerulean tears" and user.mana_flask.count == 0:
                 print()
-                print(text.out_of(user.mana_flask.name))
+                print(text.out_of_item(user.mana_flask.name))
                 print()
                 time.sleep(1)
-                selection = input("Which flask would you like to drink?: ")
-                valid = False
 
-        if selection.lower() == "flask of crimson tears":
+        if choice == "flask of crimson tears":
             healing = user.add_health(user.health_flask.health)
             print()
             print(text.flask_success(user.health_flask.name, f"{healing} health"))
-            time.sleep(1)
             user.consume_health_flask(1)
+            time.sleep(1)
 
         elif selection.lower() == "flask of cerulean tears":
             healing = user.add_mana(user.mana_flask.mana)
             print()
             print(text.flask_success(user.mana_flask.name, f"{healing} mana"))
-            time.sleep(1)
             user.consume_mana_flask(1)
+            time.sleep(1)
 
     def use_flask(self, user: Character) -> None:
         """Function to allow the user to use flask but also allows them to cancel the action"""
         user.display_flask()
+        choices = [
+            "flask of crimson tears",
+            "flask of cerulean tears",
+            "cancel",
+        ]
         time.sleep(1)
-        selection = input(
-            "Which flask would you like to drink? (type cancel to quit): ")
-        valid = False
-        while not valid:
-            valid = True
-            # Validates user selection
-            if selection.lower() not in [
-                    "flask of crimson tears", "flask of cerulean tears",
-                    "cancel"
-            ]:
-                print()
-                print(text.flask_fail(selection))
-                print()
-                time.sleep(1)
-                selection = input("Which flask would you like to drink?: ")
-                valid = False
-            # Checks if the user has enough flask of crimson tears
-            elif selection.lower(
-            ) == "flask of crimson tears" and user.health_flask.count() == 0:
-                print()
-                print(text.out_of(user.health_flask.name))
-                print()
-                time.sleep(1)
-                selection = input("Which flask would you like to drink?: ")
-                valid = False
-            # Checks if the user has enough flask of cerulean tears
-            elif selection.lower(
-            ) == "flask of cerulean tears" and user.mana_flask.count() == 0:
-                print()
-                print(text.out_of(user.mana_flask.name))
-                print()
-                time.sleep(1)
-                selection = input("Which flask would you like to drink?: ")
-                valid = False
-
-            elif selection.lower() == "cancel":
+        while True:
+            choice = get_valid_choice(
+                choices,
+                prompt="Which flask would you like to drink?",
+                error_callback=text.flask_fail
+            )
+            if choice == "cancel":
                 return
+            # Checks if the user has enough flask of crimson tears
+            if choice == "flask of crimson tears" and user.health_flask.count == 0:
+                print()
+                print(text.out_of_item(user.health_flask.name))
+                print()
+                time.sleep(1)
+            # Checks if the user has enough flask of cerulean tears
+            elif choice == "flask of cerulean tears" and user.mana_flask.count == 0:
+                print()
+                print(text.out_of_item(user.mana_flask.name))
+                print()
+                time.sleep(1)
 
-        if selection.lower() == "flask of crimson tears":
+        if choice == "flask of crimson tears":
             # Makes sure the health healed does not exceed the maximum health
             healing = user.add_health(user.health_flask.health)
             print()
             print(text.flask_success(user.health_flask.name, f"{healing} health"))
-            time.sleep(1)
             user.consume_health_flask(1)
+            time.sleep(1)
 
         elif selection.lower() == "flask of cerulean tears":
             # Makes sure the mana gained does not exceed the maximum mana
             healing = user.add_mana(user.mana_flask.mana)
             print()
             print(text.flask_success(user.mana_flask.name, f"{healing} mana"))
-            time.sleep(1)
             user.consume_mana_flask(1)
+            time.sleep(1)
 
-    def equip(self, user) -> None:
+    def equip(self, user: Character) -> None:
         """main action for user to equip various items"""
 
         self.display_equipment(user)
-
-        decision = input(
-            "\ndo you want to change your equipment? ( yes / no ): ")
-
-        if decision.lower() == "no":
+        choice = get_valid_choice(
+            ["yes", "no"],
+            prompt="do you want to change your equipment? ( yes / no ):",
+            error_callback=lambda _: "Please answer yes or no",
+        )
+        if choice == "no":
             return
-
-        elif decision.lower() == "yes":
-            choice = ""
-            while choice != "finish":
-                choice = input(
-                    "\nwhat do you want to change? (type finish to quit): ")
-                while choice.lower() not in [
-                        "armour", "weapon", "accessory", "finish"
-                ]:
-                    print()
-                    print(text.equip_fail(choice))
-                    choice = input(
-                        "\nwhat do you want to change? (type finish to quit): "
-                    )
-
-                if choice.lower() == "armour":
-                    self.equip_armour(user)
-
-                elif choice.lower() == "weapon":
-                    self.equip_weapon(user)
-
-                elif choice.lower() == "accessory":
-                    self.equip_accessory(user)
+        choices = ["armour", "weapon", "accessory", "finish"]
+        choice = None
+        while choice != "finish":
+            choice = get_valid_choice(
+                choices,
+                prompt="what do you want to change? (type finish to quit):",
+                error_callback=text.equip_fail,
+            )
+        if choice == "armour":
+            self.equip_armour(user)
+        elif choice == "weapon":
+            self.equip_weapon(user)
+        elif choice == "accessory":
+            self.equip_accessory(user)
 
     def display_equipment(self, user: Character) -> None:
         """sub action for equip() to display equipments that the user have"""
@@ -647,25 +621,20 @@ class Game:
             print()
             print(text.NO_ARMOUR)
             time.sleep(1)
-        else:
-            # Displays the armours the user owns
-            print("\nIn your inventory you have: ")
-            for armour in user.armours:
-                print(f"- {armour}")
-            time.sleep(1)
-            option = input("\nWhich armour do you want to equip?: ")
-            # Validates the users choice
-            if option.lower() not in user.armours:
-                print()
-                print(text.equip_nonexistent(option))
-                time.sleep(1)
-            else:
-                print()
-                print(text.equip_succeed(name))
-                time.sleep(1)
-                armour = user.armours[option.lower()]
-                user.armour = armour
-                self.display_equipment(user)
+            return
+        # Displays the armours the user owns
+        print("\nIn your inventory you have: ")
+        choices = [armour.name for armour in user.amours]
+        choice = get_valid_choice(
+            choices,
+            prompt="Which armour do you want to equip?",
+            error_callback=text.equip_nonexistent,
+        )
+        print(text.equip_succeed(choice))
+        time.sleep(1)
+        armour = user.armours[choice]
+        user.armour = armour
+        self.display_equipment(user)
 
     def equip_weapon(self, user: Character) -> None:
         """sub action from equip() for user to choose a weapon to equip"""
@@ -673,23 +642,18 @@ class Game:
             print()
             print(text.NO_WEAPON)
             time.sleep(1)
-        else:
-            # Displays the weapons the user owns
-            print("\nIn your inventory you have: ")
-            for weapon in user.weapons:
-                print(f"- {weapon}")
-            time.sleep(1)
-            # Validates the user's choice
-            option = input("\nWhich weapon do you want to equip?: ")
-            if option.lower() not in user.weapons:
-                print()
-                print(text.equip_nonexistent(option))
-            else:
-                print()
-                print(text.equip_succeed(name))
-                time.sleep(1)
-                user.weapon = user.weapons[option.lower()]
-                self.display_equipment(user)
+            return
+        # Displays the weapons the user owns
+        print("\nIn your inventory you have: ")
+        choices = [weapon.name for weapon in user.weapons]
+        choice = get_valid_choice(
+            choices,
+            prompt="Which weapon do you want to equip?",
+            error_callback=text.equip_nonexistent,
+        )
+        print(text.equip_succeed(choice))
+        user.weapon = user.weapons[choice]
+        self.display_equipment(user)
 
     def equip_accessory(self, user: Character) -> None:
         """sub action from equip() for user to choose an accessory to equip"""
@@ -697,29 +661,27 @@ class Game:
             print()
             print(text.NO_ACCESSORIES)
             time.sleep(1)
-        else:
-            print("\nIn your inventory you have: ")
-            for accessory in user.accessories:
-                print(f"- {accessory}")
-            time.sleep(1)
-            option = input("\nWhich accessory do you want to equip?: ")
-            if option.lower() not in user.accessories:
-                print()
-                print(text.equip_nonexistent(option))
-            else:
-                print()
-                print(text.equip_succeed(name))
-                time.sleep(1)
+            return
+        print("\nIn your inventory you have: ")
+        choices = [accessory.name for accessory in user.accessories]
+        choice = get_valid_choice(
+            choices,
+            prompt="Which accessory do you want to equip?",
+            error_callback=text.equip_nonexistent,
+        )
+        print(text.equip_succeed(choice))
 
-                # Removes the stat boost from the previous accessory
-                if user.accessory:
-                    user.take_damage(user.accessory.health_boost)
-                    user.use_mana(user.accessory.mana_boost)
+        # Undo stat boost from the previous accessory
+        if user.accessory:
+            user.take_damage(user.accessory.health_boost)
+            user.use_mana(user.accessory.mana_boost)
 
-                # Adds the stat boost from the new accessory
-                accessory = user.accessories[option.lower()]
-                user.accessory = accessory
-                self.display_equipment(user)
+        # Adds the stat boost from the new accessory
+        accessory = user.accessories[choice]
+        user.accessory = accessory
+        user.add_health(user.accessory.health_boost)
+        user.add_mana(user.accessory.mana_boost)
+        self.display_equipment(user)
 
     def status(self, user: Character) -> None:
         """main action that prints user's status"""
@@ -733,32 +695,25 @@ class Game:
 
     def info(self, user: Character) -> None:
         """main action that prompts user for the type of item to find out more information about"""
-        choice = input(
-            "\nWhat do you want to find out more about? (weapons, spells, armours, accessories, flasks, items): "
+        choices = [
+            "weapons", "spells", "armours",
+            "accessories", "flasks", "items"
+        ]
+        choice = get_valid_choice(
+            choices,
+            prompt="What do you want to find out more about?",
+            error_callback=text.do_not_have,
         )
-
-        if choice.lower() not in [
-                "weapons", "spells", "armours", "accessories", "flasks",
-                "items"
-        ]:
-            print()
-            print(text.do_not_have(choice))
-
-        elif choice == "weapons":
+        if choice == "weapons":
             self.weapon_info(user)
-
         elif choice == "spells":
             self.spell_info(user)
-
         elif choice == "armours":
             self.armour_info(user)
-
         elif choice == "accessories":
             self.accessory_info(user)
-
         elif choice == "flasks":
             self.flask_info()
-
         elif choice == "items":
             self.item_info(user)
 
@@ -768,23 +723,18 @@ class Game:
         if len(user.weapons) == 0:
             print()
             print(text.do_not_have("weapons"))
-        else:
-            # Displays the weapons the user owns
-            print("\nIn your inventory you have: ")
-            for weapon in user.weapons:
-                print(f"- {weapon}")
-            time.sleep(1)
-
-            decision = input(
-                "\nWhich weapon do you want to find out more about? : ")
-            if decision.lower() not in user.weapons:
-                print()
-                print(text.do_not_have(choice))
-            else:
-                # Displays the description of the weapon
-                print("\n", end="")
-                print(user.weapons[decision].description)
-                time.sleep(1)
+            return
+        # Displays the weapons the user owns
+        print("\nIn your inventory you have: ")
+        choice = get_valid_choice(
+            list(user.weapons.keys()),
+            prompt="Which weapon do you want to find out more about?",
+            error_callback=text.do_not_have,
+        )
+        # Displays the description of the weapon
+        print()
+        print(user.weapons[choice].description)
+        time.sleep(1)
 
     def spell_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific spell to find out more about"""
@@ -792,25 +742,18 @@ class Game:
         if len(user.spells) == 0:
             print()
             print(text.do_not_have("spells"))
-
-        else:
-            # Displays the spells the user knows
-            print("\nIn your inventory you have: ")
-            for spell in user.spells:
-                print(f"- {spell}")
-            time.sleep(1)
-
-            decision = input(
-                "\nWhich spell do you want to find out more about? : ")
-            if decision.lower() not in user.spells:
-                print()
-                print(text.do_not_have(decision))
-    
-            else:
-                # Displays the description of the spell
-                print("\n", end="")
-                print(user.spells[decision].description)
-                time.sleep(1)
+            return
+        # Displays the spells the user knows
+        print("\nIn your inventory you have: ")
+        choice = get_valid_choice(
+            list(user.spells.keys()),
+            prompt="Which spell do you want to find out more about?",
+            error_callback=text.do_not_have,
+        )
+        # Displays the description of the spell
+        print()
+        print(user.spells[choice].description)
+        time.sleep(1)
 
     def armour_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific armour to find out more about"""
@@ -818,25 +761,18 @@ class Game:
         if len(user.armours) == 0:
             print()
             print(text.do_not_have("armour"))
-
-        else:
-            # Displays the armours the user owns
-            print("\nIn your inventory you have: ")
-            for armour in user.armours:
-                print(f"- {armour}")
-            time.sleep(1)
-
-            decision = input(
-                "\nWhich armour do you want to find out more about? : ")
-            if decision.lower() not in user.armours:
-                print()
-                print(text.do_not_have(decision))
-
-            else:
-                # Displays the description of the armour
-                print("\n", end="")
-                print(user.armours[decision].description)
-                time.sleep(1)
+            return
+        # Displays the armours the user owns
+        print("\nIn your inventory you have: ")
+        choice = get_valid_choice(
+            list(user.armours.keys()),
+            prompt="Which armour do you want to find out more about?",
+            error_callback=text.do_not_have,
+        )
+        # Displays the description of the armour
+        print()
+        print(user.armours[choice].description)
+        time.sleep(1)
 
     def accessory_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific accessory to find out more about"""
@@ -844,46 +780,41 @@ class Game:
         if len(user.accessories) == 0:
             print()
             print(text.do_not_have("accessories"))
-
-        else:
-            # Displays the accessories the user owns
-            accessories = []
-            print("\nIn your inventory you have: ")
-            for accessory in user.accessories:
-                print(f"- {accessory}")
-                accessories.append(accessory.lower())
-            time.sleep(1)
-
-            decision = input(
-                "\nWhich accesssory do you want to find out more about? : ")
-            if decision.lower() not in accessories:
-                print()
-                print(text.do_not_have(decision))
-            else:
-                # Displays the description of the accessory
-                print("\n", end="")
-                print(
-                    user.accessories[decision].description)
-                time.sleep(1)
-
-    def flask_info(self) -> None:
-        """sub action from equip() that prompts user for specific flask to find out more about"""
+            return
+        # Displays the accessories the user owns
         print("\nIn your inventory you have: ")
-        print("- Flask of Crimson Tears")
-        print("- Flask of Cerulean Tears")
+        choice = get_valid_choice(
+            list(user.accessories.keys()),
+            prompt="Which accessory do you want to find out more about?",
+            error_callback=text.do_not_have,
+        )
+        # Displays the description of the accessory
+        print()
+        print(user.accessories[choice].description)
+        time.sleep(1)
 
-        decision = input(
-            "\nWhich accesssory do you want to find out more about? : ")
-        if decision.lower() == "flask of crimson tears":
-            print("\n", end="")
+    def flask_info(self, user: Character) -> None:
+        """sub action from equip() that prompts user for specific flask to find out more about"""
+        choices = [
+            user.health_flask.name,
+            user.mana_flask.name,
+        ]
+        print("\nIn your inventory you have: ")
+        choice = get_valid_choice(
+            choices,
+            prompt="Which flask do you want to find out more about?",
+            error_callback=text.do_not_have,
+        )
+        if choice == user.health_flask.name.lower():
+            print()
             print(self.health_flask.description)
             time.sleep(1)
-        elif decision.lower() == "flask of cerulean tears":
-            print("\n", end="")
+        elif choice == user.health_flask.name.lower():
+            print()
             print(self.mana_flask.description)
             time.sleep(1)
         else:
-            print(f"You do not own {decision}")
+            print(text.do_not_have(choice))
 
     def item_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific special item to find out more about"""
@@ -891,23 +822,18 @@ class Game:
         if len(user.items) == 0:
             print()
             print(text.do_not_have("items"))
-        else:
-            # Displays the items the user owns
-            print("\nIn your inventory you have: ")
-            for item in user.items:
-                print(f"- {item}")
-            time.sleep(1)
-
-            decision = input(
-                "\nWhich item do you want to find out more about? : ")
-            if decision.lower() not in user.items:
-                print()
-                print(text.do_not_have(decision))
-            else:
-                # Displays the description of the items
-                print()
-                print(user.items[decision].description)
-                time.sleep(1)
+            return
+        # Displays the items the user owns
+        print("\nIn your inventory you have: ")
+        choice = get_valid_choice(
+            list(user.items.keys()),
+            prompt="Which item do you want to find out more about?",
+            error_callback=text.do_not_have,
+        )
+        # Displays the description of the items
+        print()
+        print(user.items[choice].description)
+        time.sleep(1)
 
     def display_room_name(self) -> None:
         """prints the room's name in a cool way"""
@@ -927,18 +853,12 @@ class Game:
 
     def get_action(self) -> str:
         """sub action for run() that prompts user for a main action"""
-        decision = input(
-            "\nWhat do you wish to do? (type help for list of actions): ")
-
-        # Validate the users decision
-        while decision not in self.actions:
-            print()
-            print(text.action_fail(decision))
-            time.sleep(1)
-            decision = input(
-                "\nWhat do you wish to do? (type help for list of actions): ")
-
-        return decision
+        choice = get_valid_choice(
+            self.actions,
+            prompt="What do you wish to do? (type help for list of actions)",
+            error_callback=text.action_fail,
+        )
+        return choice
 
     def collect_loot(self, attacker: Character, loot: item.Item) -> None:
         """sub method from attack() to collect loot of defeated monster"""
@@ -997,8 +917,8 @@ class Game:
         self.character.max_mana = 999
         self.character.attack = 999
         self.character.defence = 999
-        self.character.health_flask = 997
-        self.character.mana_flask = 997
+        self.character.health_flask.count = 997
+        self.character.mana_flask.count = 997
 
     def meow(self) -> None:
         choice = random.randint(1, 10)
@@ -1022,3 +942,4 @@ class Game:
             print(text.MEOW_9)
         elif choice == 10:
             print(text.MEOW_10)
+            
