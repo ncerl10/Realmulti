@@ -62,8 +62,8 @@ class Character:
         self.attack = 0
         self.defence = 0
         # Equipment
-        self.health_flask = item.health_flask()
-        self.mana_flask = item.mana_flask()
+        self.health_flask = item.create("health_flask")
+        self.mana_flask = item.create("mana_flask")
         self.armour = None
         self.weapon = None
         self.accessory = None
