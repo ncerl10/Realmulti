@@ -21,13 +21,14 @@ def get_valid_choice(choices: list, prompt: str, error_callback) -> str:
     """
     choices_lower = [choice.lower() for choice in choices]
     for choice in choices:
-        print("- {choice}")
+        print(f"- {choice}")
     choice = None
     while not choice:
         choice = input(prompt).lower()
         if choice not in choices_lower:
             print(error_callback(choice))
             choice = None
+        time.sleep(1)
     return choice
 
 
@@ -422,16 +423,31 @@ class Game:
     def get_choice(self, user: Character) -> str:
         """sub action from attack() to prompt user for attack methods or use of flask"""
         choices = [user.weapon.name, "Spell", "Flask"]
-        choice = get_valid_choice(
-            choices,
-            prompt="What do you want to use?",
-            err_msg="Nothing happened."
-        )
-
         # Get a list of spell cost
         cost = []
-        for spell in user.spells:
+        for spell in user.spells.values():
             cost.append(spell.cost)
+
+        while True:
+            choice = get_valid_choice(
+                choices,
+                prompt="What do you want to use?",
+                error_callback=text.use_fail
+            )
+            if choice == "spell" and user.mana < min(cost):
+                print()
+                print(text.OUT_OF_MANA)
+                print()
+                time.sleep(1)
+            # Check if user has any flask to drink
+            elif choice == "flask" and (user.health_flask.count() + user.mana_flask.count()) == 0:
+                print()
+                print(text.OUT_OF_FLASKS)
+                print()
+                time.sleep(1)
+            else:
+                break
+        return choice
 
         valid = False
         while not valid:

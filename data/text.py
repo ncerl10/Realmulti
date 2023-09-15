@@ -132,7 +132,7 @@ def hit_wall(direction: str) -> str:
         "forward": "walked forward",
         "back": "turned back",
     }
-    return f"You {action['direction']} and smashed into a wall"
+    return f"You {action[direction]} and smashed into a wall"
 
 def loot_no(name: str) -> str:
     return f"You left {name} on the ground and allowed the resourceful rat to steal it"
