@@ -97,7 +97,6 @@ _flask = {
 _quest = record["quest_items"]
 
 
-
 def create(name: str) -> Flask | QuestItem:
     if name == "health_flask":
         return HealthFlask(**_flask[name])
@@ -105,36 +104,3 @@ def create(name: str) -> Flask | QuestItem:
         return ManaFlask(**_flask[name])
     else:
         return QuestItem(**_quest[name])
-            
-
-def health_flask(count: int = 0) -> HealthFlask:
-    return HealthFlask(
-        name="Flask of Crimson Tears",
-        description="A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.",
-        count=count,
-        health=50,
-    )
-
-
-def mana_flask(count: int = 0) -> ManaFlask:
-    return ManaFlask(
-        name="Flask of Cerulean Tears",
-        description="A sacred flask modelled after a golden holy chalice that was once graced by a tear of life.",
-        count=count,
-        mana=50,
-    )
-
-
-_quest_items = {
-    "DectusMedallionRight": QuestItem(
-        name="Dectus Medallion (right)",
-        description="The right half of a medallion with the power to break a powerful spell",
-    ),
-    "DectusMedallionLeft": QuestItem(
-        name="Dectus Medallion (left)",
-        description="The left half of a medallion with the power to break a powerful spell",
-    ),
-}
-
-def get_quest_item(name: str) -> QuestItem:
-    return _quest_items[name]
