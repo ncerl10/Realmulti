@@ -16,13 +16,14 @@ def get_valid_choice(choices: list, prompt: str, err_msg: str) -> str:
     2. Prompt the player for a choice
     3. Validate the player's choice (is in the list of choices)
     4. Display an error message if invalid
-        """
+    """
+    choices_lower = [choice.lower() for choice in choices]
     for choice in choices:
         print("- {choice}")
     choice = None
     while not choice:
         choice = input(prompt).lower()
-        if choice not in choices:
+        if choice not in choices_lower:
             print(err_msg)
             choice = None
     return choice
