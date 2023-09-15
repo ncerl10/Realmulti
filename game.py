@@ -68,7 +68,6 @@ class Game:
     - use_flask(self, user : Character) -> None
     - equip(self, user) -> None
     - display_equipment(self, user : Character) -> None
-    - display_spells(self, user : Character) -> None
     - equip_armour(self, user : Character) -> None
     - equip_weapon(self, user : Character) -> None
     - equip_accessory(self, user : Character) -> None
@@ -597,13 +596,6 @@ class Game:
         else:
             print(f"Accessory : {user.accessory.name}")
         time.sleep(1)
-
-    def display_spells(self, user: Character) -> None:
-        """sub action from attack to display spells that the user have"""
-        # Displays all spells owned
-        print("\nSpells:")
-        for i, spell in enumerate(user.spells):
-            print(f"- {spell.name} ({spell.cost} mana)")
 
     def equip_armour(self, user: Character) -> None:
         """sub action from equip() for user to choose an armour to equip"""
