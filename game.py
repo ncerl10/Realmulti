@@ -3,6 +3,7 @@ import time
 import random
 
 #import from other files
+from data import text
 from enemy import Enemy
 from room import Room
 from setup import *
@@ -85,12 +86,10 @@ class Game:
         """print introduction for the start of the game """
 
         # Displays the introduction messages
-        print('Welcome to Hogwarts School of Witchcraft and Wizardry')
-        time.sleep(1)
-        print(
-            "\nThe Dark Lord Voldemort has taken over Hogwarts School and opened multiple interdimensional gates, bringing hoards of enemies into the school. Your job as the chosen one is to traverse the school in order to locate The Shrieking Shack and thwart Voldemort's evil plan to take over the world\n"
-        )
-        time.sleep(2)
+        for line in text.WELCOME:
+            print(line)
+            print()
+            time.sleep(1)
 
         decision = input('Do you wish to enter the school? ( yes / no ): ')
 
@@ -101,22 +100,16 @@ class Game:
             if name == "meow":
                 self.secret()
             else:
-                print(
-                    "\nYou boldly opened the front gates of the school and made your way into the first room\n"
-                )
+                print(text.WELCOME_YES)
                 time.sleep(1)
         elif decision.lower() == "no":
-            print(
-                "\nDue to your utter cowardice, voldemort continued gaining power, spreading his control and chaos all over the world, leading to the complete annihlation of the human race"
-            )
+                print(text.WELCOME_NO)
             self.end = True
             time.sleep(1)
             self.end_game()
             return
         else:
-            print(
-                "\nDue to your indecision, voldemort continued gaining power, spreading his control and chaos all over the world, leading to the complete annihlation of the human race"
-            )
+                print(text.WELCOME_OTHER)
             self.end = True
             time.sleep(1)
             self.end_game()
@@ -164,7 +157,7 @@ class Game:
 
     def look(self, room: Room) -> None:
         """main action to look around the room including rooms linked to the room and enemies in the room"""
-        print("\n", end="")
+        print()
 
         # Displays the connected rooms
         if room.left:
@@ -211,19 +204,22 @@ class Game:
         if not caught:
             if movement.lower() == "left":
                 if room.left is None:
-                    print("\nYou walked to the left and smashed into a wall")
+                    print()
+                    print(text.hit_wall(movement.lower()))
                     time.sleep(1)
                 else:
                     self.room = room.left
             if movement.lower() == "right":
                 if room.right is None:
-                    print("\nYou walked to the right and smashed into a wall")
+                    print()
+                    print(text.hit_wall(movement.lower()))
                     time.sleep(1)
                 else:
                     self.room = room.right
             if movement.lower() == "forward":
                 if room.forward is None:
-                    print("\nYou walked forward and smashed into a wall")
+                    print()
+                    print(text.hit_wall(movement.lower()))
                     time.sleep(1)
                 # Check if you are going to the final boss room
                 elif room.forward.name == "The Shrieking Shack":
@@ -232,26 +228,24 @@ class Game:
                         items.append(item.name)
                     # Checks if you have the required items to enter the final boss room
                     if "Dectus Medallion (right)" in items and "Dectus Medallion (left)" in items:
-                        print(
-                            "\nCongratulations, you placed the two Dectus Medallions together releasing trememndous amounts of energy, breaking the powerful spell on the door"
-                        )
+                        print()
+                        print(text.BREAK_SPELL)
                         time.sleep(1)
                         self.room = room.forward
                     else:
-                        print(
-                            "\nYou tried entering the The Shrieking Shack but the door was locked by a powerful spell"
-                        )
+                        print()
+                        print(text.DOOR_LOCKED)
                         time.sleep(1)
-                        print(
-                            "\nYou probably need to find a special item to break the spell (remember to loot all the rooms)"
-                        )
+                        print()
+                        print(text.DOOR_LOCKED_HINT)
                         time.sleep(1)
                 else:
                     self.room = room.forward
 
             if movement.lower() == "back":
                 if room.back is None:
-                    print("\nYou turned back and smashed into a wall")
+                    print()
+                    print(text.hit_wall(movement.lower()))
                     time.sleep(1)
                 else:
                     self.room = room.back
@@ -389,14 +383,12 @@ class Game:
                             time.sleep(1)
 
                         elif choice.lower() == "no":
-                            print(
-                                f"\nYou left {victim.loot.name} on the ground and allowed the resourceful rat to steal it"
-                            )
+                            print()
+                            print(text.loot_no(victim.loot.name))
                             time.sleep(1)
                         else:
-                            print(
-                                f"\nYour indecisiveness allowed the resourceful rat to steal the {victim.loot.name} when you weren't looking"
-                            )
+                            print()
+                            print(text.loot_other(victim.loot.name))
                             time.sleep(1)
                         # Removes the enemy from the room
                         self.room.enemy = None
@@ -429,7 +421,9 @@ class Game:
                 valid = False
             # Check if user has enough mana to cast spells
             elif decision.lower() == "spell" and user.mana < min(cost):
-                print("\nYou do not have enough mana to cast spells\n")
+                print()
+                print(text.OUT_OF_MANA)
+                print()
                 time.sleep(1)
                 decision = input(
                     f"What do you want to use? ({user.weapon.name} / Spell / Flask): "
@@ -438,7 +432,9 @@ class Game:
             # Check if user has any flask to drink
             elif decision.lower() == "flask" and (user.health_flask.count() +
                                                   user.mana_flask.count()) == 0:
-                print("\nYou ran out of flasks\n")
+                print()
+                print(text.OUT_OF_FLASKS)
+                print()
                 time.sleep(1)
                 decision = input(
                     f"What do you want to use? ({user.weapon.name} / Spell / Flask): "
@@ -460,9 +456,8 @@ class Game:
             time.sleep(1)
             choice = input("\nWhich spell would you like to cast?: ")
             while choice.lower() not in user.spells:
-                print(
-                    f"\nYou tried to cast {choice} but it blew up in your face"
-                )
+                print()
+                print(text.spell_fail(choice))
                 time.sleep(1)
                 choice = input("\nWhich spell would you like to cast?: ")
             cost = user.spells[choice].cost
@@ -483,39 +478,42 @@ class Game:
             if selection.lower() not in [
                     "flask of crimson tears", "flask of cerulean tears"
             ]:
-                print(
-                    f"\nYou tried drinking {selection} but nothing happened\n")
+                print()
+                print(text.flask_fail(selection))
+                print()
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
             # Checks if the user has enough flask of crimson tears
             elif selection.lower(
             ) == "flask of crimson tears" and user.health_flask.count() == 0:
-                print("\nYou ran out of Flask of Crimson Tears\n")
+                print()
+                print(text.out_of(user.health_flask.name))
+                print()
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
             # Checks if the user has enough flask of cerulean tears
             elif selection.lower(
             ) == "flask of cerulean tears" and user.mana_flask.count() == 0:
-                print("\nYou ran out of Flask of Cerulean Tears\n")
+                print()
+                print(text.out_of(user.mana_flask.name))
+                print()
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
 
         if selection.lower() == "flask of crimson tears":
             healing = user.add_health(user.health_flask.health)
-            print(
-                f"\nYou drank a Flask of Crimson Tears and gained {healing} health"
-            )
+            print()
+            print(text.flask_success(user.health_flask.name, f"{healing} health"))
             time.sleep(1)
             user.consume_health_flask(1)
 
         elif selection.lower() == "flask of cerulean tears":
             healing = user.add_mana(user.mana_flask.mana)
-            print(
-                f"\nYou drank a Flask of Cerulean Tears and gained {healing} mana"
-            )
+            print()
+            print(text.flask_success(user.mana_flask.name, f"{healing} mana"))
             time.sleep(1)
             user.consume_mana_flask(1)
 
@@ -533,22 +531,27 @@ class Game:
                     "flask of crimson tears", "flask of cerulean tears",
                     "cancel"
             ]:
-                print(
-                    f"\nYou tried drinking {selection} but nothing happened\n")
+                print()
+                print(text.flask_fail(selection))
+                print()
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
             # Checks if the user has enough flask of crimson tears
             elif selection.lower(
             ) == "flask of crimson tears" and user.health_flask.count() == 0:
-                print("\nYou ran out of Flask of Crimson Tears\n")
+                print()
+                print(text.out_of(user.health_flask.name))
+                print()
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
             # Checks if the user has enough flask of cerulean tears
             elif selection.lower(
             ) == "flask of cerulean tears" and user.mana_flask.count() == 0:
-                print("\nYou ran out of Flask of Cerulean Tears\n")
+                print()
+                print(text.out_of(user.mana_flask.name))
+                print()
                 time.sleep(1)
                 selection = input("Which flask would you like to drink?: ")
                 valid = False
@@ -559,18 +562,16 @@ class Game:
         if selection.lower() == "flask of crimson tears":
             # Makes sure the health healed does not exceed the maximum health
             healing = user.add_health(user.health_flask.health)
-            print(
-                f"\nYou drank a Flask of Crimson Tears and gained {healing} health"
-            )
+            print()
+            print(text.flask_success(user.health_flask.name, f"{healing} health"))
             time.sleep(1)
             user.consume_health_flask(1)
 
         elif selection.lower() == "flask of cerulean tears":
             # Makes sure the mana gained does not exceed the maximum mana
             healing = user.add_mana(user.mana_flask.mana)
-            print(
-                f"\nYou drank a Flask of Cerulean Tears and gained {healing} mana"
-            )
+            print()
+            print(text.flask_success(user.mana_flask.name, f"{healing} mana"))
             time.sleep(1)
             user.consume_mana_flask(1)
 
@@ -593,9 +594,8 @@ class Game:
                 while choice.lower() not in [
                         "armour", "weapon", "accessory", "finish"
                 ]:
-                    print(
-                        f"\nYou tried changing your {choice} but nothing happened"
-                    )
+                    print()
+                    print(text.equip_fail(choice))
                     choice = input(
                         "\nwhat do you want to change? (type finish to quit): "
                     )
@@ -638,7 +638,8 @@ class Game:
     def equip_armour(self, user: Character) -> None:
         """sub action from equip() for user to choose an armour to equip"""
         if len(user.armours) == 0:
-            print("\nYou do not have any armour to equip")
+            print()
+            print(text.NO_ARMOUR)
             time.sleep(1)
         else:
             # Displays the armours the user owns
@@ -649,12 +650,12 @@ class Game:
             option = input("\nWhich armour do you want to equip?: ")
             # Validates the users choice
             if option.lower() not in user.armours:
-                print(
-                    f"\nYou tried equipping {option} but realised you cant create things out of thin air"
-                )
+                print()
+                print(text.equip_nonexistent(option))
                 time.sleep(1)
             else:
-                print(f"\nYou equipped {option}")
+                print()
+                print(text.equip_succeed(name))
                 time.sleep(1)
                 armour = user.armours[option.lower()]
                 user.armour = armour
@@ -663,7 +664,8 @@ class Game:
     def equip_weapon(self, user: Character) -> None:
         """sub action from equip() for user to choose a weapon to equip"""
         if len(user.weapons) == 0:
-            print("\nYou do not have any weapon to equip")
+            print()
+            print(text.NO_WEAPON)
             time.sleep(1)
         else:
             # Displays the weapons the user owns
@@ -674,11 +676,11 @@ class Game:
             # Validates the user's choice
             option = input("\nWhich weapon do you want to equip?: ")
             if option.lower() not in user.weapons:
-                print(
-                    f"\nYou tried equipping {option} but realised you cant create things out of thin air"
-                )
+                print()
+                print(text.equip_nonexistent(option))
             else:
-                print(f"\nYou equipped {option}")
+                print()
+                print(text.equip_succeed(name))
                 time.sleep(1)
                 user.weapon = user.weapons[option.lower()]
                 self.display_equipment(user)
@@ -686,7 +688,8 @@ class Game:
     def equip_accessory(self, user: Character) -> None:
         """sub action from equip() for user to choose an accessory to equip"""
         if len(user.accessories) == 0:
-            print("\nYou do not have any accessories to equip")
+            print()
+            print(text.NO_ACCESSORIES)
             time.sleep(1)
         else:
             print("\nIn your inventory you have: ")
@@ -695,11 +698,11 @@ class Game:
             time.sleep(1)
             option = input("\nWhich accessory do you want to equip?: ")
             if option.lower() not in user.accessories:
-                print(
-                    f"\nYou tried equipping {option} but realised you cant create things out of thin air"
-                )
+                print()
+                print(text.equip_nonexistent(option))
             else:
-                print(f"\nYou equipped {option}")
+                print()
+                print(text.equip_succeed(name))
                 time.sleep(1)
 
                 # Removes the stat boost from the previous accessory
@@ -732,7 +735,8 @@ class Game:
                 "weapons", "spells", "armours", "accessories", "flasks",
                 "items"
         ]:
-            print(f"\nYou do not own any {choice}")
+            print()
+            print(text.do_not_own(choice))
 
         elif choice == "weapons":
             self.weapon_info(user)
@@ -756,8 +760,8 @@ class Game:
         """sub action from equip() that prompts user for specific weapon to find out more about"""
         # Check if the user owns any weapons
         if len(user.weapons) == 0:
-            print("\nYou do not own any weapons yet")
-
+            print()
+            print(text.do_not_own("weapons"))
         else:
             # Displays the weapons the user owns
             print("\nIn your inventory you have: ")
@@ -768,8 +772,8 @@ class Game:
             decision = input(
                 "\nWhich weapon do you want to find out more about? : ")
             if decision.lower() not in user.weapons:
-                print(f"You do not own {decision}")
-
+                print()
+                print(text.do_not_own(choice))
             else:
                 # Displays the description of the weapon
                 print("\n", end="")
@@ -780,7 +784,8 @@ class Game:
         """sub action from equip() that prompts user for specific spell to find out more about"""
         # Check if the user knows any spells
         if len(user.spells) == 0:
-            print("\nYou do not own any spells yet")
+            print()
+            print(text.do_not_own("spells"))
 
         else:
             # Displays the spells the user knows
@@ -792,8 +797,9 @@ class Game:
             decision = input(
                 "\nWhich spell do you want to find out more about? : ")
             if decision.lower() not in user.spells:
-                print(f"You do not own {decision}")
-
+                print()
+                print(text.do_not_own(decision))
+    
             else:
                 # Displays the description of the spell
                 print("\n", end="")
@@ -804,7 +810,8 @@ class Game:
         """sub action from equip() that prompts user for specific armour to find out more about"""
         # Check if the user owns any armours
         if len(user.armours) == 0:
-            print("\nYou do not own any amours yet")
+            print()
+            print(text.do_not_own("armour"))
 
         else:
             # Displays the armours the user owns
@@ -816,7 +823,8 @@ class Game:
             decision = input(
                 "\nWhich armour do you want to find out more about? : ")
             if decision.lower() not in user.armours:
-                print(f"You do not own {decision}")
+                print()
+                print(text.do_not_own(decision))
 
             else:
                 # Displays the description of the armour
@@ -828,7 +836,8 @@ class Game:
         """sub action from equip() that prompts user for specific accessory to find out more about"""
         # Checks if the user owns any accessories
         if len(user.accessories) == 0:
-            print("\nYou do not own any accessories yet")
+            print()
+            print(text.do_not_own("accessories"))
 
         else:
             # Displays the accessories the user owns
@@ -842,8 +851,8 @@ class Game:
             decision = input(
                 "\nWhich accesssory do you want to find out more about? : ")
             if decision.lower() not in accessories:
-                print(f"You do not own {decision}")
-
+                print()
+                print(text.do_not_own(decision))
             else:
                 # Displays the description of the accessory
                 print("\n", end="")
@@ -874,7 +883,8 @@ class Game:
         """sub action from equip() that prompts user for specific special item to find out more about"""
         # Check if the user owns any items
         if len(user.items) == 0:
-            print("\nYou do not own any items yet")
+            print()
+            print(text.do_not_own("items"))
         else:
             # Displays the items the user owns
             print("\nIn your inventory you have: ")
@@ -885,8 +895,8 @@ class Game:
             decision = input(
                 "\nWhich item do you want to find out more about? : ")
             if decision.lower() not in user.items:
-                print(f"You do not own {decision}")
-
+                print()
+                print(text.do_not_own(decision))
             else:
                 # Displays the description of the items
                 print()
@@ -916,9 +926,8 @@ class Game:
 
         # Validate the users decision
         while decision not in self.actions:
-            print(
-                f"\nYou do not have the physical and mental capability to {decision}"
-            )
+            print()
+            print(text.action_fail(decision))
             time.sleep(1)
             decision = input(
                 "\nWhat do you wish to do? (type help for list of actions): ")
@@ -929,32 +938,31 @@ class Game:
         """sub method from attack() to collect loot of defeated monster"""
         if loot.type == "weapon":
             attacker.take_weapon(loot)
-            print(f"\nYou obtained a {loot.name}, a powerful weapon")
+            print()
+            print(text.obtain_thing(loot.name, loot.type))
             time.sleep(1)
 
         elif loot.type == "spell":
             attacker.take_spell(loot)
-            print(f"\nYou obtained a {loot.name}, a powerful spell")
+            print()
+            print(text.obtain_thing(loot.name, loot.type))
             time.sleep(1)
 
         elif loot.type == "armour":
             attacker.take_armour(loot)
-            print(f"\nYou obtained a {loot.name}, a powerful armour")
+            print()
+            print(text.obtain_thing(loot.name, loot.type))
             time.sleep(1)
 
         elif loot.type == "accessory":
             attacker.take_accessory(loot)
-            print(f"\nYou obtained a {loot.name}, a powerful accessory")
+            print()
+            print(text.obtain_thing(loot.name, loot.type))
             time.sleep(1)
 
     def end_game(self) -> None:
         """displays scenario when user dies"""
-        print("__   _______ _   _  ______ _____ ___________")
-        print("\ \ / /  _  | | | | |  _  \_   _|  ___|  _  \\")
-        print(" \ V /| | | | | | | | | | | | | | |__ | | | |")
-        print("  \ / | | | | | | | | | | | | | |  __|| | | |")
-        print("  | | \ \_/ / |_| | | |/ / _| |_| |___| |/ /")
-        print("  \_/  \___/ \___/  |___/  \___/\____/|___/ ")
+        print(text.YOU_DIED)
         self.end = True
 
     def win(self, weapon) -> None:
@@ -963,12 +971,7 @@ class Game:
             f"\nUsing the almighty {weapon.name}, you struck the Dark Lord Voldemort down, crippling him of all his powers and stop his evil tyranny over the school"
         )
         time.sleep(1)
-        print(" _____ ___________   _____ _       ___  _____ _   _ ")
-        print("|  __ \  _  |  _  \ /  ___| |     / _ \|_   _| \ | |")
-        print("| |  \/ | | | | | | \ `--.| |    / /_\ \ | | |  \| |")
-        print("| | __| | | | | | |  `--. \ |    |  _  | | | | . ` |")
-        print("| |_\ \ \_/ / |/ /  /\__/ / |____| | | |_| |_| |\  |")
-        print(" \____/\___/|___/   \____/\_____/\_| |_/\___/\_| \_/")
+        print(text.GOD_SLAIN)
         self.end = True
 
     def die(self) -> None:
@@ -994,93 +997,22 @@ class Game:
     def meow(self) -> None:
         choice = random.randint(1, 10)
         if choice == 1:
-            print("""  
-  __  __  U _____ u U  ___ u             
-U|' \/ '|u\| ___"|/  \/"_ \/__        __ 
-\| |\/| |/ |  _|"    | | | |\"\      /"/ 
- | |  | |  | |___.-,_| |_| |/\ \ /\ / /\ 
- |_|  |_|  |_____|\_)-\___/U  \ V  V /  U
-<<,-,,-.   <<   >>     \\  .-,_\ /\ /_,-.
- (./  \.) (__) (__)   (__)  \_)-'  '-(_/ """)
+            print(text.MEOW_1)
         elif choice == 2:
-            print("""                                
-   ____ ___  ___  ____ _      __
-  / __ `__ \/ _ \/ __ \ | /| / /
- / / / / / /  __/ /_/ / |/ |/ / 
-/_/ /_/ /_/\___/\____/|__/|__/  
-                                """)
+            print(text.MEOW_2)
         elif choice == 3:
-            print(""" 
- .----------------.  .----------------.  .----------------.  .----------------. 
-| .--------------. || .--------------. || .--------------. || .--------------. |
-| | ____    ____ | || |  _________   | || |     ____     | || | _____  _____ | |
-| ||_   \  /   _|| || | |_   ___  |  | || |   .'    `.   | || ||_   _||_   _|| |
-| |  |   \/   |  | || |   | |_  \_|  | || |  /  .--.  \  | || |  | | /\ | |  | |
-| |  | |\  /| |  | || |   |  _|  _   | || |  | |    | |  | || |  | |/  \| |  | |
-| | _| |_\/_| |_ | || |  _| |___/ |  | || |  \  `--'  /  | || |  |   /\   |  | |
-| ||_____||_____|| || | |_________|  | || |   `.____.'   | || |  |__/  \__|  | |
-| |              | || |              | || |              | || |              | |
-| '--------------' || '--------------' || '--------------' || '--------------' |
- '----------------'  '----------------'  '----------------'  '----------------' """
-                  )
-
+            print(text.MEOW_3)
         elif choice == 4:
-            print("""                              
-                              
- _ __ ___   ___  _____      __
-| '_ ` _ \ / _ \/ _ \ \ /\ / /
-| | | | | |  __/ (_) \ V  V / 
-|_| |_| |_|\___|\___/ \_/\_/  
-                              
-                              """)
-
+            print(text.MEOW_4)
         elif choice == 5:
-            print(""" 
- _  _  ____  __   _  _ 
-( \/ )(  __)/  \ / )( \
-/ \/ \ ) _)(  O )\ /\ /
-\_)(_/(____)\__/ (_/\_)""")
-
+            print(text.MEOW_5)
         elif choice == 6:
-            print("""                              
- _ __ ___   ___  _____      __
-| '_ ` _ \ / _ \/ _ \ \ /\ / /
-| | | | | |  __/ (_) \ V  V / 
-|_| |_| |_|\___|\___/ \_/\_/  
-                              """)
-
+            print(text.MEOW_6)
         elif choice == 7:
-            print("""                                    
-                                    
-,--,--,--. ,---.  ,---. ,--.   ,--. 
-|        || .-. :| .-. ||  |.'.|  | 
-|  |  |  |\   --.' '-' '|   .'.   | 
-`--`--`--' `----' `---' '--'   '--' 
-                                    """)
-
+            print(text.MEOW_7)
         elif choice == 8:
-            print(""" 
- __    __     ______     ______     __     __    
-/\ "-./  \   /\  ___\   /\  __ \   /\ \  _ \ \   
-\ \ \-./\ \  \ \  __\   \ \ \/\ \  \ \ \/ ".\ \  
- \ \_\ \ \_\  \ \_____\  \ \_____\  \ \__/".~\_\ 
-  \/_/  \/_/   \/_____/   \/_____/   \/_/   \/_/ 
-                                                 """)
-
+            print(text.MEOW_8)
         elif choice == 9:
-            print("""                                        
-                                        
- _ .--..--.  .---.   .--.   _   _   __  
-[ `.-. .-. |/ /__\\/ .'`\ \[ \ [ \ [  ] 
- | | | | | || \__.,| \__. | \ \/\ \/ /  
-[___||__||__]'.__.' '.__.'   \__/\__/   
-                                        """)
-
+            print(text.MEOW_9)
         elif choice == 10:
-            print(""" 
-_      _____ ____  _     
-/ \__/|/  __//  _ \/ \  /|
-| |\/|||  \  | / \|| |  ||
-| |  |||  /_ | \_/|| |/\||
-\_/  \|\____\\____/\_/  \|
-                          """)
+            print(text.MEOW_10)
