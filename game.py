@@ -225,21 +225,21 @@ class Game:
             if choice == "left":
                 if room.left is None:
                     print()
-                    print(text.hit_wall(choice)
+                    print(text.hit_wall(choice))
                     time.sleep(1)
                 else:
                     self.room = room.left
             if choice == "right":
                 if room.right is None:
                     print()
-                    print(text.hit_wall(choice)
+                    print(text.hit_wall(choice))
                     time.sleep(1)
                 else:
                     self.room = room.right
             if choice == "forward":
                 if room.front is None:
                     print()
-                    print(text.hit_wall(choice)
+                    print(text.hit_wall(choice))
                     time.sleep(1)
                 # Check if you are going to the final boss room
                 elif room.front.name == "The Shrieking Shack":
@@ -297,7 +297,7 @@ class Game:
                 time.sleep(1)
 
             elif isinstance(loot, item.Flask):
-                print(text.obtain_thing(loot.name, loot type))
+                print(text.obtain_thing(loot.name, loot.type))
                 time.sleep(1)
                 if isinstance(loot, item.HealthFlask):
                     user.take_health_flask(1)
@@ -305,7 +305,7 @@ class Game:
                     user.take_mana_flask(1)
                 self.room.loot = None
             elif isinstance(loot, QuestItem):
-                print(text.obtain_thing(loot.name, loot type))
+                print(text.obtain_thing(loot.name, loot.type))
                 time.sleep(1)
                 user.take_item(loot)
                 self.room.loot = None
@@ -319,7 +319,7 @@ class Game:
         """main action for user to drink their flasks"""
         # Check if the user still has available flasks
         if (user.health_flask.count + user.mana_flask.count == 0):
-            print("\nYou ran out of flasks\n")
+            print(text.out_of_item("flasks"))
             time.sleep(1)
         else:
             self.use_flask(user)
@@ -614,9 +614,8 @@ class Game:
             return
         # Displays the armours the user owns
         print("\nIn your inventory you have: ")
-        choices = [armour.name for armour in user.amours]
         choice = get_valid_choice(
-            choices,
+            list(user.armours.keys()),
             prompt="Which armour do you want to equip?",
             error_callback=text.equip_nonexistent,
         )
@@ -635,9 +634,8 @@ class Game:
             return
         # Displays the weapons the user owns
         print("\nIn your inventory you have: ")
-        choices = [weapon.name for weapon in user.weapons]
         choice = get_valid_choice(
-            choices,
+            list(user.weapons.keys()),
             prompt="Which weapon do you want to equip?",
             error_callback=text.equip_nonexistent,
         )
@@ -653,9 +651,8 @@ class Game:
             time.sleep(1)
             return
         print("\nIn your inventory you have: ")
-        choices = [accessory.name for accessory in user.accessories]
         choice = get_valid_choice(
-            choices,
+            list(user.accessories.keys()),
             prompt="Which accessory do you want to equip?",
             error_callback=text.equip_nonexistent,
         )
