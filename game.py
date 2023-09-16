@@ -227,7 +227,6 @@ class Game:
         )
 
         # Generate a random number to see if you managed to sneak past the enemy
-        chance = random.randint(1, 3)
         caught = False if not room.enemy else dice_roll(3, 1)
 
         if not caught:
@@ -692,7 +691,7 @@ class Game:
         space = " " * int((25 - len(self.room.name)) / 2)
         print(f"{space}{self.room.name}{space}")
         print("=" * 25)
-        time.sleep(1)
+        pause()
 
     def display_room_description(self) -> None:
         """prints the room's description"""
