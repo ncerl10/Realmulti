@@ -449,8 +449,8 @@ class Game:
         """Function to allow the user to use flask but also allows them to cancel the action"""
         user.display_flask()
         choices = [
-            "flask of crimson tears",
-            "flask of cerulean tears",
+            user.health_flask.name,
+            user.mana_flask.name,
             "cancel",
         ]
         while True:
@@ -462,7 +462,7 @@ class Game:
             if choice == "cancel":
                 return
             # Checks if the user has enough flask of crimson tears
-            if choice == "flask of crimson tears" and user.health_flask.count == 0:
+            if choice == user.health_flask.name.lower() and user.health_flask.count == 0:
                 show_text(text.out_of_item(user.health_flask.name))
             # Checks if the user has enough flask of cerulean tears
             elif choice == user.mana_flask.name.lower() and user.mana_flask.count == 0:
@@ -474,7 +474,7 @@ class Game:
             show_text(text.flask_success(user.health_flask.name, f"{healing} health"))
             user.consume_health_flask(1)
 
-        elif choice == "flask of cerulean tears":
+        elif choice == user.mana_flask.name.lower():
             # Makes sure the mana gained does not exceed the maximum mana
             healing = user.add_mana(user.mana_flask.mana)
             show_text(text.flask_success(user.mana_flask.name, f"{healing} mana"))
