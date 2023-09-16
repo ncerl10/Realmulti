@@ -148,23 +148,23 @@ class Character:
 
     def take_spell(self, spell: Spell) -> None:
         """updates the list of spells of the character"""
-        self.spells[spell.name] = spell
+        self.spells[str(spell)] = spell
 
     def take_weapon(self, weapon: Weapon) -> None:
         """updates the list of weapons of the character"""
-        self.weapons[weapon.name] = weapon
+        self.weapons[str(weapon)] = weapon
 
     def take_armour(self, armour: Armour) -> None:
         """updates the list of armours of the character"""
-        self.armours[armour.name] = armour
+        self.armours[str(armour)] = armour
 
     def take_accessory(self, accessory: Accessory) -> None:
         """updates the equipped accessory of the character"""
-        self.accessories[accessory.name] = accessory
+        self.accessories[str(accessory)] = accessory
 
     def take_item(self, item: item.Item) -> None:
         """updates the list of items of the character"""
-        self.items[item.name] = item
+        self.items[str(item)] = item
 
     def consume_health_flask(self, number: int = 1) -> None:
         self.health_flask.count -= number

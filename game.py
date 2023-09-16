@@ -203,19 +203,19 @@ class Game:
         """main action to look around the room including rooms linked to the room and enemies in the room"""
         # Displays the connected rooms
         if room.left:
-            print(f"To the left is {room.left.name}")
+            print(f"To the left is {room.left}")
         if room.right:
-            print(f"To the right is {room.right.name}")
+            print(f"To the right is {room.right}")
         if room.front:
-            print(f"In front of you is {room.front.name}")
+            print(f"In front of you is {room.front}")
         if room.back:
-            print(f"Behind you is {room.back.name}")
+            print(f"Behind you is {room.back}")
         pause()
 
         # Displays the enemy in the room
         if room.enemy:
             show_text(
-                f"In the middle of the room is {room.enemy.name}, {room.enemy.description}"
+                f"In the middle of the room is {room.enemy}, {room.enemy.description}"
             )
 
     def move(self, room: Room) -> None:
@@ -272,24 +272,24 @@ class Game:
         # Generate a random number to see if you successfully loot the room whithout the enemy noticing
         caught = False if not self.room.enemy else dice_roll(3, 2)
         if not caught:
-            show_text(text. loot_success(self.room.enemy.name))
+            show_text(text. loot_success(self.room.enemy))
             # Allow the user to loot the room
             if loot is None:
                 show_text(text.loot_none(loot))
             elif isinstance(loot, item.Flask):
-                show_text(text.obtain_thing(loot.name, loot.type))
+                show_text(text.obtain_thing(loot, loot.type))
                 if isinstance(loot, item.HealthFlask):
                     user.take_health_flask(1)
                 elif isinstance(loot, item.ManaFlask):
                     user.take_mana_flask(1)
                 self.room.loot = None
             elif isinstance(loot, item.QuestItem):
-                show_text(text.obtain_thing(loot.name, loot.type))
+                show_text(text.obtain_thing(loot, loot.type))
                 user.take_item(loot)
                 self.room.loot = None
 
         else:
-            show_text(text. loot_fail(self.room.enemy.name))
+            show_text(text. loot_fail(self.room.enemy))
             self.attack(user, self.room.enemy)
 
     def flask(self, user: Character) -> None:
@@ -309,17 +309,17 @@ class Game:
             while not attacker.is_dead():
                 # Display users health and mana
                 print(f"\n{'-'*50}\n")
-                print(f"{attacker.name} has {attacker.health} health")
-                print(f"{attacker.name} has {attacker.mana} mana")
+                print(f"{attacker} has {attacker.health} health")
+                print(f"{attacker} has {attacker.mana} mana")
                 print(
-                    f"{attacker.name} has {attacker.health_flask.count} {attacker.health_flask.name}"
+                    f"{attacker} has {attacker.health_flask.count} {attacker.health_flask}"
                 )
                 print(
-                    f"{attacker.name} has {attacker.mana_flask.count} {attacker.mana_flask.name}"
+                    f"{attacker} has {attacker.mana_flask.count} {attacker.mana_flask}"
                 )
                 pause()
                 # Display enemy's health
-                show_text(f"{victim.name} has {victim.health} health")
+                show_text(f"{victim} has {victim.health} health")
 
                 decision = self.get_choice(attacker)
                 if decision == "flask":
@@ -327,7 +327,7 @@ class Game:
                     if not victim.is_dead():
                         damage = attacker.take_damage(victim.attack - attacker.get_defence())
                         show_text(
-                            f"{victim.name} used {victim.move}, dealing {damage} damage to {attacker.name}"
+                            f"{victim} used {victim.move}, dealing {damage} damage to {attacker}"
                         )
                 else:
                     damage, weapon = self.get_attack(attacker, decision)
@@ -335,13 +335,13 @@ class Game:
                     victim.take_damage(damage + attacker.get_attack())
                     if not victim.is_dead():
                         show_text(
-                            f"{attacker.name}{weapon.move}, dealing {damage} damage to {victim.name}"
+                            f"{attacker}{weapon.move}, dealing {damage} damage to {victim}"
                         )
                     # Allow enemy to attack if it didn't die yet
                     if not victim.is_dead():
                         damage = attacker.take_damage(victim.attack - attacker.get_defence())
                         show_text(
-                            f"{victim.name} used {victim.move}, dealing {damage} damage to {attacker.name}"
+                            f"{victim} used {victim.move}, dealing {damage} damage to {attacker}"
                         )
                     else:
                         # Check if dead enemy is the final boss
@@ -349,19 +349,19 @@ class Game:
                             self.win(weapon)
                             return
                         show_text(
-                            f"{attacker.name}{weapon.win_front}{victim.name}{weapon.win_back}"
+                            f"{attacker}{weapon.win_front}{victim}{weapon.win_back}"
                         )
-                        show_text(f"{victim.name} dropped a {victim.loot.name}")
+                        show_text(f"{victim} dropped a {victim.loot}")
                         choice = input(
-                            f"\nDo you want to pick {victim.loot.name}? ( yes / no ): "
+                            f"\nDo you want to pick {victim.loot}? ( yes / no ): "
                         ).lower()
                         if choice == "yes":
                             self.collect_loot(attacker, victim.loot)
                             show_text(victim.loot.description)
                         elif choice == "no":
-                            show_text(text.loot_no(victim.loot.name))
+                            show_text(text.loot_no(victim.loot))
                         else:
-                            show_text(text.loot_other(victim.loot.name))
+                            show_text(text.loot_other(victim.loot.))
                         # Removes the enemy from the room
                         self.room.enemy = None
                         break
@@ -371,7 +371,7 @@ class Game:
 
     def get_choice(self, user: Character) -> str:
         """sub action from attack() to prompt user for attack methods or use of flask"""
-        choices = [user.weapon.name, "Spell", "Flask"]
+        choices = [str(user.weapon), "Spell", "Flask"]
         # Get a list of spell cost
         cost = []
         for spell in user.spells.values():
@@ -396,7 +396,7 @@ class Game:
         """sub action from attack() to get total damage done to victim"""
 
         # Check if user used his weapon
-        if decision.lower() == user.weapon.name.lower():
+        if decision.lower() == str(user.weapon).lower():
             return user.weapon.attack, user.weapon
 
         # check if user used spells
@@ -417,8 +417,8 @@ class Game:
         """Function to allow the user to use flask but also allows them to cancel the action"""
         user.display_flask()
         choices = [
-            user.health_flask.name,
-            user.mana_flask.name,
+            str(user.health_flask),
+            str(user.mana_flask),
         ]
         if cancel:
             choices.append("cancel")
@@ -431,22 +431,22 @@ class Game:
             if choice == "cancel":
                 return
             # Checks if the user has enough flask of crimson tears
-            if choice == user.health_flask.name.lower() and user.health_flask.count == 0:
-                show_text(text.out_of_item(user.health_flask.name))
+            if choice == str(user.health_flask).lower() and user.health_flask.count == 0:
+                show_text(text.out_of_item(user.health_flask))
             # Checks if the user has enough flask of cerulean tears
-            elif choice == user.mana_flask.name.lower() and user.mana_flask.count == 0:
-                show_text(text.out_of_item(user.mana_flask.name))
+            elif choice == str(user.mana_flask).lower() and user.mana_flask.count == 0:
+                show_text(text.out_of_item(user.mana_flask))
 
-        if choice == user.health_flask.name.lower():
+        if choice == str(user.health_flask).lower():
             # Makes sure the health healed does not exceed the maximum health
             healing = user.add_health(user.health_flask.health)
-            show_text(text.flask_success(user.health_flask.name, f"{healing} health"))
+            show_text(text.flask_success(user.health_flask, f"{healing} health"))
             user.consume_health_flask(1)
 
-        elif choice == user.mana_flask.name.lower():
+        elif choice == str(user.mana_flask).lower():
             # Makes sure the mana gained does not exceed the maximum mana
             healing = user.add_mana(user.mana_flask.mana)
-            show_text(text.flask_success(user.mana_flask.name, f"{healing} mana"))
+            show_text(text.flask_success(user.mana_flask, f"{healing} mana"))
             user.consume_mana_flask(1)
 
     def equip(self, user: Character) -> None:
@@ -481,17 +481,17 @@ class Game:
         if user.armour is None:
             print("\nArmour : Empty")
         else:
-            print(f"\nArmour : {user.armour.name}")
+            print(f"\nArmour : {user.armour}")
 
         if user.weapon is None:
             print("Weapon : Empty")
         else:
-            print(f"Weapon : {user.weapon.name}")
+            print(f"Weapon : {user.weapon}")
 
         if user.accessory is None:
             print("Accessory : Empty")
         else:
-            print(f"Accessory : {user.accessory.name}")
+            print(f"Accessory : {user.accessory}")
         pause()
 
     def equip_armour(self, user: Character) -> None:
@@ -653,8 +653,8 @@ class Game:
     def flask_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific flask to find out more about"""
         choices = [
-            user.health_flask.name,
-            user.mana_flask.name,
+            str(user.health_flask),
+            str(user.mana_flask),
         ]
         print("\nIn your inventory you have: ")
         choice = get_valid_choice(
@@ -662,9 +662,9 @@ class Game:
             prompt="Which flask do you want to find out more about?",
             error_callback=text.do_not_have,
         )
-        if choice == user.health_flask.name.lower():
+        if choice == str(user.health_flask).lower():
             show_text(self.health_flask.description)
-        elif choice == user.health_flask.name.lower():
+        elif choice == str(user.health_flask).lower():
             show_text(self.mana_flask.description)
         else:
             show_text(text.do_not_have(choice))
@@ -688,8 +688,8 @@ class Game:
     def display_room_name(self) -> None:
         """prints the room's name in a cool way"""
         print("=" * 25)
-        space = " " * int((25 - len(self.room.name)) / 2)
-        print(f"{space}{self.room.name}{space}")
+        space = " " * int((25 - len(str(self.room))) / 2)
+        print(f"{space}{self.room}{space}")
         print("=" * 25)
         pause()
 
@@ -713,16 +713,16 @@ class Game:
         """sub method from attack() to collect loot of defeated monster"""
         if loot.type == "weapon":
             attacker.take_weapon(loot)
-            show_text(text.obtain_thing(loot.name, loot.type))
+            show_text(text.obtain_thing(loot, loot.type))
         elif loot.type == "spell":
             attacker.take_spell(loot)
-            show_text(text.obtain_thing(loot.name, loot.type))
+            show_text(text.obtain_thing(loot, loot.type))
         elif loot.type == "armour":
             attacker.take_armour(loot)
-            show_text(text.obtain_thing(loot.name, loot.type))
+            show_text(text.obtain_thing(loot, loot.type))
         elif loot.type == "accessory":
             attacker.take_accessory(loot)
-            show_text(text.obtain_thing(loot.name, loot.type))
+            show_text(text.obtain_thing(loot, loot.type))
 
     def end_game(self) -> None:
         """displays scenario when user dies"""
@@ -731,7 +731,7 @@ class Game:
 
     def win(self, weapon) -> None:
         """displays scenario when user wins"""
-        show_text(text.win_game(weapon.name))
+        show_text(text.win_game(weapon))
         print(text.GOD_SLAIN)
         self.end = True
 
