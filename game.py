@@ -361,7 +361,7 @@ class Game:
                         elif choice == "no":
                             show_text(text.loot_no(victim.loot))
                         else:
-                            show_text(text.loot_other(victim.loot.))
+                            show_text(text.loot_other(victim.loot))
                         # Removes the enemy from the room
                         self.room.enemy = None
                         break
@@ -372,18 +372,13 @@ class Game:
     def get_choice(self, user: Character) -> str:
         """sub action from attack() to prompt user for attack methods or use of flask"""
         choices = [str(user.weapon), "Spell", "Flask"]
-        # Get a list of spell cost
-        cost = []
-        for spell in user.spells.values():
-            cost.append(spell.cost)
-
         while True:
             choice = get_valid_choice(
                 choices,
                 prompt="What do you want to use?",
                 error_callback=text.use_fail
             )
-            if choice == "spell" and user.mana < min(cost):
+            if choice == "spell" and user.mana < min(user.spells, key=lambda s: s.cost, default=0).cost:
                 show_text(text.OUT_OF_MANA)
             # Check if user has any flask to drink
             elif choice == "flask" and (user.health_flask.count + user.mana_flask.count == 0):
@@ -414,7 +409,7 @@ class Game:
             return user.spells[choice].attack, user.spells[choice]
 
     def use_flask(self, user: Character, cancel: bool=True) -> None:
-        """Function to allow the user to use flask but also allows them to cancel the action"""
+        """Function to allow the user to use flask, with option to cancel the action"""
         user.display_flask()
         choices = [
             str(user.health_flask),
@@ -477,21 +472,10 @@ class Game:
 
     def display_equipment(self, user: Character) -> None:
         """sub action for equip() to display equipments that the user have"""
-
-        if user.armour is None:
-            print("\nArmour : Empty")
-        else:
-            print(f"\nArmour : {user.armour}")
-
-        if user.weapon is None:
-            print("Weapon : Empty")
-        else:
-            print(f"Weapon : {user.weapon}")
-
-        if user.accessory is None:
-            print("Accessory : Empty")
-        else:
-            print(f"Accessory : {user.accessory}")
+        print()
+        print(f"Armour : {user.armour or 'Empty'}")
+        print(f"Weapon : {user.weapon or 'Empty'}")
+        print(f"Accessory : {user.accessory or 'Empty'}")
         pause()
 
     def equip_armour(self, user: Character) -> None:
