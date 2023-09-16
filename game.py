@@ -757,25 +757,16 @@ class Game:
         self.character.mana_flask.count = 997
 
     def meow(self) -> None:
-        choice = random.randint(1, 10)
-        if choice == 1:
-            print(text.MEOW_1)
-        elif choice == 2:
-            print(text.MEOW_2)
-        elif choice == 3:
-            print(text.MEOW_3)
-        elif choice == 4:
-            print(text.MEOW_4)
-        elif choice == 5:
-            print(text.MEOW_5)
-        elif choice == 6:
-            print(text.MEOW_6)
-        elif choice == 7:
-            print(text.MEOW_7)
-        elif choice == 8:
-            print(text.MEOW_8)
-        elif choice == 9:
-            print(text.MEOW_9)
-        elif choice == 10:
-            print(text.MEOW_10)
-            
+        choices = [
+            text.MEOW_1,
+            text.MEOW_2,
+            text.MEOW_3,
+            text.MEOW_4,
+            text.MEOW_5,
+            text.MEOW_6,
+            text.MEOW_7,
+            text.MEOW_8,
+            text.MEOW_9,
+            text.MEOW_10,
+        ]
+        print(random.choice(choices))
