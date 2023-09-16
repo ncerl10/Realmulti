@@ -88,7 +88,6 @@ class Game:
     - attack(self, attacker : Character , victim: Enemy) -> None
     - get_choice(self, user : Character) -> str
     - get_attack(self, user : Character, decision : str) -> [int, Weapon]
-    - use_flask_battle(self, user : Character) -> None
     - use_flask(self, user : Character) -> None
     - equip(self, user) -> None
     - display_equipment(self, user : Character) -> None
@@ -325,7 +324,7 @@ class Game:
 
                 decision = self.get_choice(attacker)
                 if decision == "flask":
-                    self.use_flask_battle(attacker)
+                    self.use_flask(attacker, cancel=False)
                     if not victim.is_dead():
                         damage = attacker.take_damage(victim.attack - attacker.get_defence())
                         show_text(
@@ -415,44 +414,15 @@ class Game:
             user.use_mana(cost)
             return user.spells[choice].attack, user.spells[choice]
 
-    def use_flask_battle(self, user: Character) -> None:
-        """sub action from get_choice() to prompt user for the flask to drink"""
-        user.display_flask()
-        choices = [
-            "flask of crimson tears",
-            "flask of cerulean tears",
-        ]
-        while True:
-            choice = get_valid_choice(
-                choices,
-                prompt="Which flask would you like to drink?",
-                error_callback=text.flask_fail
-            )
-            # Checks if the user has enough flask of crimson tears
-            if choice == "flask of crimson tears" and user.health_flask.count == 0:
-                show_text(text.out_of_item(user.health_flask.name))
-            # Checks if the user has enough flask of cerulean tears
-            elif choice == "flask of cerulean tears" and user.mana_flask.count == 0:
-                show_text(text.out_of_item(user.mana_flask.name))
-
-        if choice == user.health_flask.name.lower():
-            healing = user.add_health(user.health_flask.health)
-            show_text(text.flask_success(user.health_flask.name, f"{healing} health"))
-            user.consume_health_flask(1)
-
-        elif choice == user.mana_flask.name.lower():
-            healing = user.add_mana(user.mana_flask.mana)
-            show_text(text.flask_success(user.mana_flask.name, f"{healing} mana"))
-            user.consume_mana_flask(1)
-
-    def use_flask(self, user: Character) -> None:
+    def use_flask(self, user: Character, cancel: bool=True) -> None:
         """Function to allow the user to use flask but also allows them to cancel the action"""
         user.display_flask()
         choices = [
             user.health_flask.name,
             user.mana_flask.name,
-            "cancel",
         ]
+        if cancel:
+            choices.append("cancel")
         while True:
             choice = get_valid_choice(
                 choices,
