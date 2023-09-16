@@ -26,6 +26,14 @@ def show_text(text: str, *, break_before: bool=True, break_after: bool=True) -> 
     pause()
 
 
+def dice_roll(n: int, m: int) -> bool:
+    """Roll a die with n sides, of which m are considered successful"""
+    assert n > 1, f"Dice cannot have {n} sides"
+    assert m > 0, f"Success chance cannot be {m}/{n}"
+    assert n >= m, f"Success chance cannot be {m}/{n}"
+    return random.randint(0, n) in range(0, m)
+
+
 def get_valid_choice(choices: list, prompt: str, error_callback) -> str:
     """Helper function to prompt the player with a list of choices, validate the
     player's choice, and return it.
@@ -221,15 +229,10 @@ class Game:
 
         # Generate a random number to see if you managed to sneak past the enemy
         chance = random.randint(1, 3)
-        caught = False
-
-        if room.enemy:
-            if chance == 1:
-                caught = True
-            else:
-                show_text(text.sneak_success(room.enemy.name))
+        caught = False if not room.enemy else dice_roll(3, 1)
 
         if not caught:
+            show_text(text.sneak_success(room.enemy.name))
             if choice == "left":
                 if room.left is None:
                     show_text(text.hit_wall(choice))
@@ -269,17 +272,9 @@ class Game:
         """main action for user to search the room for loot"""
 
         # Generate a random number to see if you successfully loot the room whithout the enemy noticing
-        chance = random.randint(1, 3)
-        caught = False
-
-        if self.room.enemy:
-            if chance != 1:
-                caught = True
-            else:
-                show_text(
-                    text. loot_success(self.room.enemy.name))
-
+        caught = False if not self.room.enemy else dice_roll(3, 2)
         if not caught:
+            show_text(text. loot_success(self.room.enemy.name))
             # Allow the user to loot the room
             if loot is None:
                 show_text(text.loot_none(loot))
