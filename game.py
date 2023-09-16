@@ -480,7 +480,7 @@ class Game:
 
     def equip_armour(self, user: Character) -> None:
         """sub action from equip() for user to choose an armour to equip"""
-        if len(user.armours) == 0:
+        if not user.armours:
             show_text(text.NO_ARMOUR)
             return
         # Displays the armours the user owns
@@ -497,7 +497,7 @@ class Game:
 
     def equip_weapon(self, user: Character) -> None:
         """sub action from equip() for user to choose a weapon to equip"""
-        if len(user.weapons) == 0:
+        if not user.weapons:
             show_text(text.NO_WEAPON)
             return
         # Displays the weapons the user owns
@@ -513,7 +513,7 @@ class Game:
 
     def equip_accessory(self, user: Character) -> None:
         """sub action from equip() for user to choose an accessory to equip"""
-        if len(user.accessories) == 0:
+        if not user.accessories:
             show_text(text.NO_ACCESSORIES)
             return
         print("\nIn your inventory you have: ")
@@ -573,7 +573,7 @@ class Game:
     def weapon_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific weapon to find out more about"""
         # Check if the user owns any weapons
-        if len(user.weapons) == 0:
+        if not user.weapons:
             show_text(text.do_not_have("weapons"))
             return
         # Displays the weapons the user owns
@@ -589,7 +589,7 @@ class Game:
     def spell_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific spell to find out more about"""
         # Check if the user knows any spells
-        if len(user.spells) == 0:
+        if not user.spells:
             show_text(text.do_not_have("spells"))
             return
         # Displays the spells the user knows
@@ -605,7 +605,7 @@ class Game:
     def armour_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific armour to find out more about"""
         # Check if the user owns any armours
-        if len(user.armours) == 0:
+        if not user.armours:
             show_text(text.do_not_have("armour"))
             return
         # Displays the armours the user owns
@@ -621,7 +621,7 @@ class Game:
     def accessory_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific accessory to find out more about"""
         # Checks if the user owns any accessories
-        if len(user.accessories) == 0:
+        if not user.accessories:
             show_text(text.do_not_have("accessories"))
             return
         # Displays the accessories the user owns
@@ -656,7 +656,7 @@ class Game:
     def item_info(self, user: Character) -> None:
         """sub action from equip() that prompts user for specific special item to find out more about"""
         # Check if the user owns any items
-        if len(user.items) == 0:
+        if not user.items:
             show_text(text.do_not_have("items"))
             return
         # Displays the items the user owns
