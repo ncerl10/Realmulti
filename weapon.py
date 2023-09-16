@@ -41,6 +41,9 @@ class Weapon:
         self.win_front = win_front
         self.win_back = win_back
 
+    def __str__(self) -> str:
+        return self.name
+
 
 # Read data from JSON file
 _data = {}

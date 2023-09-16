@@ -61,6 +61,9 @@ class Room:
         self.front = front
         self.back = back
 
+    def __str__(self) -> str:
+        return self.name
+
     def link_left(self, room: "Room") -> None:
         """updates the room to the left of the home room(self.name)"""
         temp = room

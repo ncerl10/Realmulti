@@ -74,6 +74,9 @@ class Character:
         self.items: dict[str, Item] = {}
         self.accessories: dict[str, Accessory] = {}
 
+    def __str__(self) -> str:
+        return self.name
+        
     def get_attack(self) -> int:
         attack = self.attack
         if self.accessory:

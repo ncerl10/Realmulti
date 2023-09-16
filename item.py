@@ -25,6 +25,8 @@ class Item:
         self.name = name
         self.description = description
 
+    def __str__(self) -> str:
+        return self.name
 
 class Flask(Item):
     """A flask that provides a boost to one or more stats.

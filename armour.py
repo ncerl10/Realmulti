@@ -33,6 +33,9 @@ class Armour:
         self.effect = effect
         self.defence = defence
 
+    def __str__(self) -> str:
+        return self.name
+
 
 # Read data from JSON file
 _data = {}

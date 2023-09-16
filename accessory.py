@@ -46,6 +46,9 @@ class Accessory:
         self.mana_boost = mana_boost
         self.defence_boost = defence_boost
 
+    def __str__(self) -> str:
+        return self.name
+
 
 # Read data from JSON file
 _data = {}

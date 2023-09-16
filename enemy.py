@@ -50,6 +50,9 @@ class Enemy:
         self.move = move
         self.loot = loot
 
+    def __str__(self) -> str:
+        return self.name
+
     def is_dead(self) -> bool:
         return self.health <= 0
 
