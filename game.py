@@ -31,7 +31,7 @@ def dice_roll(n: int, m: int) -> bool:
     assert n > 1, f"Dice cannot have {n} sides"
     assert m > 0, f"Success chance cannot be {m}/{n}"
     assert n >= m, f"Success chance cannot be {m}/{n}"
-    return random.randint(0, n) in range(0, m)
+    return 0 <= random.randint(0, n) < m
 
 
 def get_valid_choice(choices: list, prompt: str, error_callback) -> str:
