@@ -18,7 +18,7 @@ class Item:
     -------
     None
     """
-
+    type = "item"
     def __init__(self,
                  name: str,
                  description: str):
@@ -41,6 +41,7 @@ class Flask(Item):
     - report() -> str
       Reports the name, count, and effect of each item
     """
+    type = "flask"
     def __init__(self,
                  name: str,
                  description: str,
@@ -85,6 +86,7 @@ class ManaFlask(Flask):
 
 class QuestItem(Item):
     """An item required to complete the quest or win the game"""
+    type = "questitem"
 
 
 # Read data from JSON file

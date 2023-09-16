@@ -190,11 +190,10 @@ class Game:
         print("\nYou are able to:")
         for i, action in enumerate(self.actions):
             print(f"- {action} ({self.description[i]})")
-        time.sleep(1)
+        pause()
 
     def look(self, room: Room) -> None:
         """main action to look around the room including rooms linked to the room and enemies in the room"""
-        print()
         # Displays the connected rooms
         if room.left:
             print(f"To the left is {room.left.name}")
@@ -204,7 +203,7 @@ class Game:
             print(f"In front of you is {room.front.name}")
         if room.back:
             print(f"Behind you is {room.back.name}")
-        time.sleep(1)
+        pause()
 
         # Displays the enemy in the room
         if room.enemy:
@@ -246,11 +245,8 @@ class Game:
                     show_text(text.hit_wall(choice))
                 # Check if you are going to the final boss room
                 elif room.front.name == "The Shrieking Shack":
-                    items = []
-                    for item in self.character.items:
-                        items.append(item.name)
                     # Checks if you have the required items to enter the final boss room
-                    if "Dectus Medallion (right)" in items and "Dectus Medallion (left)" in items:
+                    if "Dectus Medallion (right)" in self.character.items and "Dectus Medallion (left)" in self.character.items:
                         show_text(text.BREAK_SPELL)
                         self.room = room.front
                     else:
@@ -259,9 +255,9 @@ class Game:
                 else:
                     self.room = room.front
 
-            if movement.lower() == "back":
+            if choice == "back":
                 if room.back is None:
-                    show_text(text.hit_wall(movement.lower()))
+                    show_text(text.hit_wall(choice))
                 else:
                     self.room = room.back
 
@@ -294,7 +290,7 @@ class Game:
                 elif isinstance(loot, item.ManaFlask):
                     user.take_mana_flask(1)
                 self.room.loot = None
-            elif isinstance(loot, QuestItem):
+            elif isinstance(loot, item.QuestItem):
                 show_text(text.obtain_thing(loot.name, loot.type))
                 user.take_item(loot)
                 self.room.loot = None
@@ -323,12 +319,12 @@ class Game:
                 print(f"{attacker.name} has {attacker.health} health")
                 print(f"{attacker.name} has {attacker.mana} mana")
                 print(
-                    f"{attacker.name} has {attacker.health_flask.count} Flask of Crimson Tears"
+                    f"{attacker.name} has {attacker.health_flask.count} {attacker.health_flask.name}"
                 )
                 print(
-                    f"{attacker.name} has {attacker.mana_flask.count} Flask of Cerulean Tears"
+                    f"{attacker.name} has {attacker.mana_flask.count} {attacker.mana_flask.name}"
                 )
-                time.sleep(1)
+                pause()
                 # Display enemy's health
                 show_text(f"{victim.name} has {victim.health} health")
 
